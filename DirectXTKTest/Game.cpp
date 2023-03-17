@@ -57,7 +57,9 @@ void Game::Update(DX::StepTimer const& timer)
 {
     float elapsedTime = float(timer.GetElapsedSeconds());
 
-    // TODO: Add your game logic here.
+    auto time = static_cast<float>(timer.GetTotalSeconds());
+    m_world = Matrix::CreateRotationZ(cosf(time) * 2.f);
+
     elapsedTime;
 }
 #pragma endregion
@@ -72,17 +74,19 @@ void Game::Render()
     m_deviceResources->PIXBeginEvent(L"Render");
     auto context = m_deviceResources->GetD3DDeviceContext();
 
-    context->OMSetBlendState(m_states->Opaque(), nullptr, 0xFFFFFFFF);
-    context->OMSetDepthStencilState(m_states->DepthNone(), 0);
-    context->RSSetState(m_states->CullNone());
-    m_effect->Apply(context);
-    context->IASetInputLayout(m_inputLayout.Get());
-    m_batch->Begin();
-    VertexPositionColor v1(Vector3(0.f, 0.5f, 0.5f), Colors::Yellow);
-    VertexPositionColor v2(Vector3(0.5f, -0.5f, 0.5f), Colors::Yellow);
-    VertexPositionColor v3(Vector3(-0.5f, -0.5f, 0.5f), Colors::Yellow);
-    m_batch->DrawTriangle(v1, v2, v3);
-    m_batch->End();
+    // context->OMSetBlendState(m_states->Opaque(), nullptr, 0xFFFFFFFF);
+    // context->OMSetDepthStencilState(m_states->DepthNone(), 0);
+    // context->RSSetState(m_states->CullNone());
+    // m_effect->Apply(context);
+    // context->IASetInputLayout(m_inputLayout.Get());
+    // m_batch->Begin();
+    // VertexPositionColor v1(Vector3(0.f, 0.5f, 0.5f), Colors::Yellow);
+    // VertexPositionColor v2(Vector3(0.5f, -0.5f, 0.5f), Colors::Yellow);
+    // VertexPositionColor v3(Vector3(-0.5f, -0.5f, 0.5f), Colors::Yellow);
+    // m_batch->DrawTriangle(v1, v2, v3);
+    // m_batch->End();
+
+    m_shape->Draw(m_world, m_view, m_proj);
 
     m_deviceResources->PIXEndEvent();
     m_deviceResources->Present();
@@ -168,31 +172,39 @@ void Game::GetDefaultSize(int& width, int& height) const noexcept
 // These are the resources that depend on the device.
 void Game::CreateDeviceDependentResources()
 {
-    auto device = m_deviceResources->GetD3DDevice();
-
-    m_states = std::make_unique<CommonStates>(device);
-
-    m_effect = std::make_unique<BasicEffect>(device);
-    m_effect->SetVertexColorEnabled(true);
-
-    DX::ThrowIfFailed(
-        CreateInputLayoutFromEffect<VertexType>(device, m_effect.get(),
-            m_inputLayout.ReleaseAndGetAddressOf())
-        );
-
     auto context = m_deviceResources->GetD3DDeviceContext();
-    m_batch = std::make_unique<PrimitiveBatch<VertexType>>(context);
+    m_shape = GeometricPrimitive::CreateSphere(context);
+    m_world = Matrix::Identity;
+
+    // auto device = m_deviceResources->GetD3DDevice();
+
+    // m_states = std::make_unique<CommonStates>(device);
+
+    // m_effect = std::make_unique<BasicEffect>(device);
+    // m_effect->SetVertexColorEnabled(true);
+
+    // DX::ThrowIfFailed(
+    //     CreateInputLayoutFromEffect<VertexType>(device, m_effect.get(),
+    //         m_inputLayout.ReleaseAndGetAddressOf())
+    //     );
+
+    // auto context = m_deviceResources->GetD3DDeviceContext();
+    // m_batch = std::make_unique<PrimitiveBatch<VertexType>>(context);
 }
 
 // Allocate all memory resources that change on a window SizeChanged event.
 void Game::CreateWindowSizeDependentResources()
 {
-    // TODO: Initialize windows-size dependent objects here.
+    auto size = m_deviceResources->GetOutputSize();
+    m_view = Matrix::CreateLookAt(Vector3(2.f, 2.f, 2.f),
+        Vector3::Zero, Vector3::UnitY);
+    m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f,
+        float(size.right) / float(size.bottom), 0.1f, 10.f);
 }
 
 void Game::OnDeviceLost()
 {
-    // TODO: Add Direct3D resource cleanup here.
+    m_shape.reset();
 }
 
 void Game::OnDeviceRestored()
