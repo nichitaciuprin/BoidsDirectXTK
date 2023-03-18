@@ -8,7 +8,6 @@
 extern void ExitGame() noexcept;
 
 using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 using Microsoft::WRL::ComPtr;
 
@@ -56,28 +55,8 @@ void Game::Tick()
 void Game::Update(DX::StepTimer const& timer)
 {
     float elapsedTime = float(timer.GetElapsedSeconds());
-    float time = float(m_timer.GetTotalSeconds());
-    auto size = m_deviceResources->GetOutputSize();
-    // Vector3 cameraPos = Vector3::Lerp(Vector3(2.f, 2.f, 2.f),Vector3(2.f, 0.f, 2.f), cos(time));
-    // Vector3 cameraPos = Vector3::Lerp(Vector3(2.f, 2.f, 2.f),Vector3::Zero, cos(time));
-    // Vector3 cameraPos = Vector3(2,0,5);
-    // Vector3 cameraPos = Vector3::Backward*5;
-    Vector3 cameraPos = Vector3::Zero;
-    Vector3 looktAt = cameraPos+Vector3::Forward;
-    // Vector3 looktAt = Vector3::Zero;
 
-    // m_world = Matrix::CreateRotationX(time);
-    m_world = Matrix::CreateWorld(Vector3::Forward*20,Vector3::Forward,Vector3::Up);
-    m_world_2 = Matrix::CreateWorld(Vector3::Forward*20+Vector3::Right*2,Vector3::Forward,Vector3::Up);
-    // m_world_2 = Matrix::Identity;
-    m_view = Matrix::CreateLookAt(cameraPos, looktAt, Vector3::UnitY);
-
-
-    m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, float(size.right) / float(size.bottom), 0.1f, 100.f);
-    // m_proj = Matrix::CreateOrthographicOffCenter(-10,10,-10,10,0,10);
-
-    // m_world = Matrix::CreateRotationZ(cosf(time) * 2.f);
-
+    // TODO: Add your game logic here.
     elapsedTime;
 }
 #pragma endregion
@@ -87,15 +66,22 @@ void Game::Update(DX::StepTimer const& timer)
 void Game::Render()
 {
     // Don't try to render anything before the first Update.
-    if (m_timer.GetFrameCount() == 0) return;
+    if (m_timer.GetFrameCount() == 0)
+    {
+        return;
+    }
+
     Clear();
+
     m_deviceResources->PIXBeginEvent(L"Render");
     auto context = m_deviceResources->GetD3DDeviceContext();
 
-    m_shape->Draw(m_world, m_view, m_proj);
-    m_shape->Draw(m_world_2, m_view, m_proj);
+    // TODO: Add your rendering code here.
+    context;
 
     m_deviceResources->PIXEndEvent();
+
+    // Show the new frame.
     m_deviceResources->Present();
 }
 
@@ -179,41 +165,21 @@ void Game::GetDefaultSize(int& width, int& height) const noexcept
 // These are the resources that depend on the device.
 void Game::CreateDeviceDependentResources()
 {
-    auto context = m_deviceResources->GetD3DDeviceContext();
-    // m_shape = GeometricPrimitive::CreateSphere(context);
-    m_shape = GeometricPrimitive::CreateCube(context);
-    m_shape_2 = GeometricPrimitive::CreateCube(context);
-    m_world = Matrix::Identity;
-    m_world_2 = Matrix::Identity;
+    auto device = m_deviceResources->GetD3DDevice();
 
-    // auto device = m_deviceResources->GetD3DDevice();
-
-    // m_states = std::make_unique<CommonStates>(device);
-
-    // m_effect = std::make_unique<BasicEffect>(device);
-    // m_effect->SetVertexColorEnabled(true);
-
-    // DX::ThrowIfFailed(
-    //     CreateInputLayoutFromEffect<VertexType>(device, m_effect.get(),
-    //         m_inputLayout.ReleaseAndGetAddressOf())
-    //     );
-
-    // auto context = m_deviceResources->GetD3DDeviceContext();
-    // m_batch = std::make_unique<PrimitiveBatch<VertexType>>(context);
+    // TODO: Initialize device dependent objects here (independent of window size).
+    device;
 }
 
 // Allocate all memory resources that change on a window SizeChanged event.
 void Game::CreateWindowSizeDependentResources()
 {
-    // auto size = m_deviceResources->GetOutputSize();
-    // // m_view = Matrix::CreateLookAt(Vector3(2.f, 2.f, 2.f), Vector3::Zero, Vector3::UnitY);
-    // m_view = Matrix::CreateLookAt(Vector3::Forward*5, Vector3::Zero, Vector3::UnitY);
-    // m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, float(size.right) / float(size.bottom), 0.1f, 10.f);
+    // TODO: Initialize windows-size dependent objects here.
 }
 
 void Game::OnDeviceLost()
 {
-    m_shape.reset();
+    // TODO: Add Direct3D resource cleanup here.
 }
 
 void Game::OnDeviceRestored()

@@ -91,10 +91,10 @@ namespace DX
             // Query the current time.
             LARGE_INTEGER currentTime;
 
-            // long time1 = clock();
-
             if (!QueryPerformanceCounter(&currentTime))
+            {
                 throw std::exception();
+            }
 
             uint64_t timeDelta = static_cast<uint64_t>(currentTime.QuadPart - m_qpcLastTime.QuadPart);
 
@@ -103,7 +103,9 @@ namespace DX
 
             // Clamp excessively large time deltas (e.g. after paused in the debugger).
             if (timeDelta > m_qpcMaxDelta)
+            {
                 timeDelta = m_qpcMaxDelta;
+            }
 
             // Convert QPC units into a canonical tick format. This cannot overflow due to the previous clamp.
             timeDelta *= TicksPerSecond;
@@ -162,10 +164,6 @@ namespace DX
                 m_framesThisSecond = 0;
                 m_qpcSecondCounter %= static_cast<uint64_t>(m_qpcFrequency.QuadPart);
             }
-
-            // long time2 = clock();
-            // long diff = time2 - time1;
-            // printf("%ld\n",diff);
         }
 
     private:
