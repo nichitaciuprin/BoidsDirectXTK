@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Game.h"
+#include <iostream>
 
 using namespace DirectX;
 
@@ -8,11 +9,21 @@ using namespace DirectX;
 #pragma clang diagnostic ignored "-Wswitch-enum"
 #endif
 
+extern "C"
+{
+    __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+
 namespace
 {
     std::unique_ptr<Game> g_game;
 }
 
+void ExitGame() noexcept
+{
+    PostQuitMessage(0);
+}
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     static bool s_in_sizemove = false;
@@ -174,23 +185,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         // A menu is active and the user presses a key that does not correspond
         // to any mnemonic or accelerator key. Ignore so we don't produce an error beep.
         return MAKELRESULT(0, MNC_CLOSE);
+
+    case WM_KEYDOWN:
+        switch (wParam)
+        {
+            case VK_ESCAPE:
+                ExitGame();
+                break;
+
+            default:
+                break;
+        }
     }
 
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
-void ExitGame() noexcept
-{
-    PostQuitMessage(0);
-}
-
-// Indicates to hybrid graphics systems to prefer the discrete part by default
-extern "C"
-{
-    __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
-    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
-}
-
-// Entry point
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
@@ -270,5 +279,3 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     return static_cast<int>(msg.wParam);
 }
-
-// Windows procedure
