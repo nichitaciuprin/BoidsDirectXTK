@@ -92,18 +92,6 @@ void Game::Render()
     m_deviceResources->PIXBeginEvent(L"Render");
     auto context = m_deviceResources->GetD3DDeviceContext();
 
-    // context->OMSetBlendState(m_states->Opaque(), nullptr, 0xFFFFFFFF);
-    // context->OMSetDepthStencilState(m_states->DepthNone(), 0);
-    // context->RSSetState(m_states->CullNone());
-    // m_effect->Apply(context);
-    // context->IASetInputLayout(m_inputLayout.Get());
-    // m_batch->Begin();
-    // VertexPositionColor v1(Vector3(0.f, 0.5f, 0.5f), Colors::Yellow);
-    // VertexPositionColor v2(Vector3(0.5f, -0.5f, 0.5f), Colors::Yellow);
-    // VertexPositionColor v3(Vector3(-0.5f, -0.5f, 0.5f), Colors::Yellow);
-    // m_batch->DrawTriangle(v1, v2, v3);
-    // m_batch->End();
-
     m_shape->Draw(m_world, m_view, m_proj);
     m_shape->Draw(m_world_2, m_view, m_proj);
 
