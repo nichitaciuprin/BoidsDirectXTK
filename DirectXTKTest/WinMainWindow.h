@@ -4,6 +4,8 @@ bool s_in_sizemove = false;
 bool s_in_suspend = false;
 bool s_minimized = false;
 bool s_fullscreen = false;
+// HWND hWnd;
+MSG msg = {};
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -175,13 +177,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
-HWND WinMainWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, Game* game)
+bool WinMainWindow_ShouldQuit()
+{
+    return msg.message == WM_QUIT;
+}
+void WinMainWindow_Render(Game* game)
+{
+    if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+    game->Tick();
+}
+int WinMainWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, Game* game)
 {
     // auto sgame = game.lock();
     // if (sgame) return NULL;
     // auto game_ptr = sgame.get();
 
-    if (!game) return NULL;
+    if (!game) return 1;
 
     // Register class
     WNDCLASSEXW wcex = {};
@@ -195,7 +211,7 @@ HWND WinMainWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, Game* gam
     wcex.lpszClassName = L"TEMPWindowClass";
     wcex.hIconSm = LoadIconW(wcex.hInstance, L"IDI_ICON");
 
-    if (!RegisterClassExW(&wcex)) return NULL;
+    if (!RegisterClassExW(&wcex)) return 1;
 
     // Create window
     int w, h;
@@ -212,7 +228,7 @@ HWND WinMainWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, Game* gam
     // TODO: Change to CreateWindowExW(WS_EX_TOPMOST, L"TEMPWindowClass", g_szAppName, WS_POPUP,
     // to default to fullscreen.
 
-    if (!hwnd) return NULL;
+    if (!hwnd) return 1;
 
     ShowWindow(hwnd, nCmdShow);
     // TODO: Change nCmdShow to SW_SHOWMAXIMIZED to default to fullscreen.
@@ -223,5 +239,5 @@ HWND WinMainWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, Game* gam
 
     game->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-    return hwnd;
+    return 0;
 }
