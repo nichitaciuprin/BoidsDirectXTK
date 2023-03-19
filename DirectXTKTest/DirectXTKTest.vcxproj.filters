@@ -16,22 +16,19 @@
     <ClInclude Include="src\Main2.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\WinMainWindow.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\guicon.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\StepTimer.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\WinMainHelper.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\DeviceResources.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameWindow.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
