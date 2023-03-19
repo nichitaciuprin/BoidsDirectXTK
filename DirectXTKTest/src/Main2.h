@@ -1,3 +1,4 @@
+#pragma once
 #include "pch.h"
 #include "Game.h"
 #include "GameWindow.h"
@@ -6,6 +7,7 @@ void wWinMain2(HINSTANCE hInstance, int nCmdShow)
 {
     auto game = make_unique<Game>();
     if (GameWindow_Create(hInstance,nCmdShow,game.get())) return;
+
     while(true)
     {
         if (GameWindow_ShouldQuit()) break;
@@ -14,5 +16,6 @@ void wWinMain2(HINSTANCE hInstance, int nCmdShow)
 
         GameWindow_Render(game.get());
     }
+
     game.reset();
 }
