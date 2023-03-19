@@ -10,7 +10,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="src\Game.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -32,9 +31,11 @@
     <ClInclude Include="src\DeviceResources.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\pch.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Game.cpp">
       <Filter>src</Filter>
@@ -43,6 +44,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\DeviceResources.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
