@@ -8,26 +8,49 @@
       <UniqueIdentifier>b48553c4-031a-4956-ad0f-f601b9358488</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{749869c0-e379-45d7-ae4a-fde73d80a79d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="StepTimer.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="DeviceResources.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="guicon.h" />
+    <ClInclude Include="src\Game.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Main2.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WinMainWindow.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guicon.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StepTimer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WinMainHelper.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="DeviceResources.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="guicon.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Game.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guicon.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
