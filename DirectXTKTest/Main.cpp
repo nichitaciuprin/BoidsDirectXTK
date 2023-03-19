@@ -20,10 +20,6 @@ namespace
     std::unique_ptr<Game> g_game;
 }
 
-void ExitGame() noexcept
-{
-    PostQuitMessage(0);
-}
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     static bool s_in_sizemove = false;
@@ -190,7 +186,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         switch (wParam)
         {
             case VK_ESCAPE:
-                ExitGame();
+                PostQuitMessage(0);
                 break;
 
             default:
