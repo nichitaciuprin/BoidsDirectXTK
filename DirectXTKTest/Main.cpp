@@ -15,10 +15,7 @@ extern "C"
     __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 
-namespace
-{
-    std::unique_ptr<Game> g_game;
-}
+std::unique_ptr<Game> g_game;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
