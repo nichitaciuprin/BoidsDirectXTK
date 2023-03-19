@@ -178,21 +178,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
-bool GameWindow_ShouldQuit()
-{
-    return msg.message == WM_QUIT;
-}
-void GameWindow_Render(Game* game)
-{
-    if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
 
-    game->Tick();
-}
-int GameWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, Game* game)
+int GameWindow_Create(HINSTANCE hInstance, int nCmdShow, Game* game)
 {
     // auto sgame = game.lock();
     // if (sgame) return NULL;
@@ -241,4 +228,18 @@ int GameWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, Game* game)
     game->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
     return 0;
+}
+void GameWindow_Render(Game* game)
+{
+    if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+    game->Tick();
+}
+bool GameWindow_ShouldQuit()
+{
+    return msg.message == WM_QUIT;
 }
