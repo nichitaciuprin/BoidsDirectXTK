@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "Game.h"
 #include "WinMainWindow.h"
+using namespace std;
 
 void wWinMain2(HINSTANCE hInstance, int nCmdShow)
 {
-    auto game = std::make_unique<Game>();
+    auto game = make_unique<Game>();
     if (WinMainWindow_Create(hInstance,nCmdShow,game.get())) return;
     while(true)
     {
