@@ -3,8 +3,6 @@
 #include <iostream>
 #include "WinMainWindow.h"
 
-using namespace DirectX;
-
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wcovered-switch-default"
 #pragma clang diagnostic ignored "-Wswitch-enum"
@@ -20,7 +18,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
-    if (!XMVerifyCPUSupport()) return 1;
+    if (!DirectX::XMVerifyCPUSupport()) return 1;
     HRESULT hr = CoInitializeEx(nullptr, COINITBASE_MULTITHREADED);
     if (FAILED(hr)) return 1;
 
@@ -44,6 +42,5 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     game.reset();
 
     CoUninitialize();
-
     return static_cast<int>(msg.wParam);
 }
