@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Common">
-      <UniqueIdentifier>3c17d96b-0e3b-4b71-b654-d5ba488b44db</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>b48553c4-031a-4956-ad0f-f601b9358488</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -14,12 +11,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="StepTimer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceResources.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="src\Game.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -38,17 +29,20 @@
     <ClInclude Include="src\WinMainHelper.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\DeviceResources.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="DeviceResources.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Game.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\guicon.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeviceResources.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
