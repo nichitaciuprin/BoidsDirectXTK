@@ -27,3 +27,7 @@ private:
     std::unique_ptr<DX::DeviceResources>    m_deviceResources;
     DX::StepTimer                           m_timer;
 };
+
+int GameWindow_Create(HINSTANCE hInstance, int nCmdShow, Game* game);
+void GameWindow_Render(Game* game);
+bool GameWindow_ShouldQuit();

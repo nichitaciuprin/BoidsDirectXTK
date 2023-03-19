@@ -1,7 +1,6 @@
 #pragma once
 #include "pch.h"
 #include "Game.h"
-#include "GameWindow.h"
 
 void wWinMain2(HINSTANCE hInstance, int nCmdShow)
 {
