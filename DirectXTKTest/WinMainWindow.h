@@ -7,8 +7,6 @@ bool s_fullscreen = false;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    // TODO: Set s_fullscreen to true if defaulting to fullscreen.
-
     auto game = reinterpret_cast<Game*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 
     switch (message)
