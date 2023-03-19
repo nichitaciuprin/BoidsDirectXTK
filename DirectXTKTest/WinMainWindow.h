@@ -175,12 +175,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
-HWND WinMainWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, std::weak_ptr<Game> game)
+HWND WinMainWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, Game* game)
 {
-    auto sgame = game.lock();
-    if (sgame) return NULL;
-    auto game_ptr = sgame.get();
+    // auto sgame = game.lock();
+    // if (sgame) return NULL;
+    // auto game_ptr = sgame.get();
 
+    if (!game) return NULL;
+
+    // Register class
     WNDCLASSEXW wcex = {};
     wcex.cbSize = sizeof(WNDCLASSEXW);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -192,10 +195,11 @@ HWND WinMainWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, std::weak
     wcex.lpszClassName = L"TEMPWindowClass";
     wcex.hIconSm = LoadIconW(wcex.hInstance, L"IDI_ICON");
 
-    if (!RegisterClassExW(&wcex)) return nullptr;
+    if (!RegisterClassExW(&wcex)) return NULL;
 
+    // Create window
     int w, h;
-    game_ptr->GetDefaultSize(w, h);
+    game->GetDefaultSize(w, h);
 
     RECT rc = { 0, 0, static_cast<LONG>(w), static_cast<LONG>(h) };
 
@@ -208,17 +212,16 @@ HWND WinMainWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, std::weak
     // TODO: Change to CreateWindowExW(WS_EX_TOPMOST, L"TEMPWindowClass", g_szAppName, WS_POPUP,
     // to default to fullscreen.
 
-    if (!hwnd) return nullptr;
+    if (!hwnd) return NULL;
 
     ShowWindow(hwnd, nCmdShow);
     // TODO: Change nCmdShow to SW_SHOWMAXIMIZED to default to fullscreen.
 
-    SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(game_ptr));
+    SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(game));
 
     GetClientRect(hwnd, &rc);
 
-    game_ptr->GetDefaultSize(w, h);
-    game_ptr->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
+    game->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
     return hwnd;
 }
