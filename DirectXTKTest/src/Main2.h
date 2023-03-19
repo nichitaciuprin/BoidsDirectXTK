@@ -1,19 +1,18 @@
 #include "pch.h"
 #include "Game.h"
-#include "WinMainWindow.h"
-using namespace std;
+#include "GameWindow.h"
 
 void wWinMain2(HINSTANCE hInstance, int nCmdShow)
 {
     auto game = make_unique<Game>();
-    if (WinMainWindow_Create(hInstance,nCmdShow,game.get())) return;
+    if (GameWindow_Create(hInstance,nCmdShow,game.get())) return;
     while(true)
     {
-        if (WinMainWindow_ShouldQuit()) break;
+        if (GameWindow_ShouldQuit()) break;
 
         // Game logic must be here
 
-        WinMainWindow_Render(game.get());
+        GameWindow_Render(game.get());
     }
     game.reset();
 }

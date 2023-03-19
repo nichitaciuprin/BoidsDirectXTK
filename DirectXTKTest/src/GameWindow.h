@@ -177,11 +177,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
-bool WinMainWindow_ShouldQuit()
+bool GameWindow_ShouldQuit()
 {
     return msg.message == WM_QUIT;
 }
-void WinMainWindow_Render(Game* game)
+void GameWindow_Render(Game* game)
 {
     if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
     {
@@ -191,7 +191,7 @@ void WinMainWindow_Render(Game* game)
 
     game->Tick();
 }
-int WinMainWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, Game* game)
+int GameWindow_Create(_In_ HINSTANCE hInstance, _In_ int nCmdShow, Game* game)
 {
     // auto sgame = game.lock();
     // if (sgame) return NULL;
