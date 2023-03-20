@@ -207,9 +207,12 @@ WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
 
     AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
+    auto width = rc.right - rc.left;
+    auto height = rc.bottom - rc.top;
+
     LPCWSTR g_szAppName = L"TEMP";
-    HWND hwnd = CreateWindowExW(0, L"TEMPWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
+    hwnd = CreateWindowExW(0, L"TEMPWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, hInstance,
         nullptr);
     // TODO: Change to CreateWindowExW(WS_EX_TOPMOST, L"TEMPWindowClass", g_szAppName, WS_POPUP,
     // to default to fullscreen.
@@ -222,9 +225,6 @@ WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
     SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
     GetClientRect(hwnd, &rc);
-
-    auto width = rc.right - rc.left;
-    auto height = rc.bottom - rc.top;
 
     m_deviceResources->SetWindow(hwnd, width, height);
     m_deviceResources->CreateDeviceResources();
