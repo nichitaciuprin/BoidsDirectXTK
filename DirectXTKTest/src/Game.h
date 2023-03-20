@@ -1,8 +1,11 @@
 #pragma once
+#include "pch.h"
 #include "DeviceResources.h"
 #include "StepTimer.h"
 
-class Game final : public DX::IDeviceNotify
+using namespace DX;
+
+class Game final : public IDeviceNotify
 {
 public:
     Game(HINSTANCE hInstance, int nCmdShow);
@@ -20,10 +23,10 @@ public:
     void GetDefaultSize(int& width, int& height ) const noexcept;
     void Paint();
 private:
-    void Update(DX::StepTimer const& timer);
+    void Update(StepTimer const& timer);
     void Clear();
     void CreateDeviceDependentResources();
     void CreateWindowSizeDependentResources();
-    std::unique_ptr<DX::DeviceResources>    m_deviceResources;
-    DX::StepTimer                           m_timer;
+    unique_ptr<DeviceResources> m_deviceResources;
+    StepTimer m_timer;
 };
