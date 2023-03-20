@@ -179,6 +179,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\DeviceResources.h" />
+    <ClInclude Include="src\World.h" />
     <ClInclude Include="src\WorldWindow.h" />
     <ClInclude Include="src\guicon.h" />
     <ClInclude Include="src\Main2.h" />
@@ -187,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeviceResources.cpp" />
+    <ClCompile Include="src\World.cpp" />
     <ClCompile Include="src\WorldWindow.cpp" />
     <ClCompile Include="src\guicon.cpp" />
     <ClCompile Include="src\Main.cpp" />
