@@ -4,8 +4,7 @@
 
 void wWinMain2(HINSTANCE hInstance, int nCmdShow)
 {
-    auto game = make_unique<Game>();
-    if (GameWindow_Create(hInstance,nCmdShow,game.get())) return;
+    auto game = make_unique<Game>(hInstance,nCmdShow);
 
     while(true)
     {

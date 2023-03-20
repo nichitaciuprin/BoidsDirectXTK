@@ -184,10 +184,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 int GameWindow_Create(HINSTANCE hInstance, int nCmdShow, Game* game)
 {
-    // auto sgame = game.lock();
-    // if (sgame) return NULL;
-    // auto game_ptr = sgame.get();
-
     if (!game) return 1;
 
     // Register class
@@ -247,10 +243,49 @@ bool GameWindow_ShouldQuit()
     return msg.message == WM_QUIT;
 }
 
-Game::Game()
+Game::Game(HINSTANCE hInstance, int nCmdShow)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
+
+    WNDCLASSEXW wcex = {};
+    wcex.cbSize = sizeof(WNDCLASSEXW);
+    wcex.style = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc = WndProc;
+    wcex.hInstance = hInstance;
+    wcex.hIcon = LoadIconW(hInstance, L"IDI_ICON");
+    wcex.hCursor = LoadCursorW(nullptr, IDC_ARROW);
+    wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
+    wcex.lpszClassName = L"TEMPWindowClass";
+    wcex.hIconSm = LoadIconW(wcex.hInstance, L"IDI_ICON");
+
+    if (!RegisterClassExW(&wcex)) throw;
+
+    // Create window
+    int w, h;
+    GetDefaultSize(w, h);
+
+    RECT rc = { 0, 0, static_cast<LONG>(w), static_cast<LONG>(h) };
+
+    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+
+    LPCWSTR g_szAppName = L"TEMP";
+    HWND hwnd = CreateWindowExW(0, L"TEMPWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
+        nullptr);
+    // TODO: Change to CreateWindowExW(WS_EX_TOPMOST, L"TEMPWindowClass", g_szAppName, WS_POPUP,
+    // to default to fullscreen.
+
+    if (!hwnd) throw;
+
+    ShowWindow(hwnd, nCmdShow);
+    // TODO: Change nCmdShow to SW_SHOWMAXIMIZED to default to fullscreen.
+
+    SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+
+    GetClientRect(hwnd, &rc);
+
+    Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
 }
 void Game::Initialize(HWND window, int width, int height)
 {

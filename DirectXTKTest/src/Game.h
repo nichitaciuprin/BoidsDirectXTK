@@ -5,7 +5,7 @@
 class Game final : public DX::IDeviceNotify
 {
 public:
-    Game();
+    Game(HINSTANCE hInstance, int nCmdShow);
     void Initialize(HWND window, int width, int height);
     void Tick();
     void OnDeviceLost() override;
