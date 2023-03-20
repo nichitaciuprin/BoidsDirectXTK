@@ -182,7 +182,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-void GameWindow_Render(Game* game)
+void Game::Render()
 {
     if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
     {
@@ -190,7 +190,7 @@ void GameWindow_Render(Game* game)
         DispatchMessage(&msg);
     }
 
-    game->Paint();
+    Paint();
 }
 bool Game::ShouldQuit()
 {
@@ -251,7 +251,7 @@ void Game::Initialize(HWND window, int width, int height)
 }
 void Game::Update(DX::StepTimer const& timer)
 {
-    float elapsedTime = float(timer.GetElapsedSeconds());
+    // float elapsedTime = float(timer.GetElapsedSeconds());
 }
 void Game::Paint()
 {

@@ -7,6 +7,7 @@ class Game final : public DX::IDeviceNotify
 public:
     Game(HINSTANCE hInstance, int nCmdShow);
     void Initialize(HWND window, int width, int height);
+    void Render();
     bool ShouldQuit();
     void OnDeviceLost() override;
     void OnDeviceRestored() override;
@@ -27,5 +28,3 @@ private:
     std::unique_ptr<DX::DeviceResources>    m_deviceResources;
     DX::StepTimer                           m_timer;
 };
-
-void GameWindow_Render(Game* game);

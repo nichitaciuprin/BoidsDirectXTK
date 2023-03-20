@@ -12,7 +12,7 @@ void wWinMain2(HINSTANCE hInstance, int nCmdShow)
 
         // Game logic must be here
 
-        GameWindow_Render(game.get());
+        game->Render();
     }
 
     game.reset();
