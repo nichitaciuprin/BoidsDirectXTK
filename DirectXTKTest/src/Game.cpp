@@ -8,7 +8,6 @@ bool s_in_sizemove = false;
 bool s_in_suspend = false;
 bool s_minimized = false;
 bool s_fullscreen = false;
-// HWND hWnd;
 MSG msg = {};
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -182,21 +181,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-void Game::Render()
-{
-    if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
-
-    Paint();
-}
-bool Game::ShouldQuit()
-{
-    return msg.message == WM_QUIT;
-}
-
 Game::Game(HINSTANCE hInstance, int nCmdShow)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
@@ -239,11 +223,10 @@ Game::Game(HINSTANCE hInstance, int nCmdShow)
 
     GetClientRect(hwnd, &rc);
 
-    Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
-}
-void Game::Initialize(HWND window, int width, int height)
-{
-    m_deviceResources->SetWindow(window, width, height);
+    auto width = rc.right - rc.left;
+    auto height = rc.bottom - rc.top;
+
+    m_deviceResources->SetWindow(hwnd, width, height);
     m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
     m_deviceResources->CreateWindowSizeDependentResources();
@@ -252,6 +235,20 @@ void Game::Initialize(HWND window, int width, int height)
 void Game::Update(DX::StepTimer const& timer)
 {
     // float elapsedTime = float(timer.GetElapsedSeconds());
+}
+void Game::Render()
+{
+    if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+    Paint();
+}
+bool Game::ShouldQuit()
+{
+    return msg.message == WM_QUIT;
 }
 void Game::Paint()
 {
@@ -268,7 +265,6 @@ void Game::Paint()
     // Show the new frame.
     m_deviceResources->Present();
 }
-// Helper method to clear the back buffers.
 void Game::Clear()
 {
     m_deviceResources->PIXBeginEvent(L"Clear");
@@ -329,7 +325,6 @@ void Game::GetDefaultSize(int& width, int& height) const noexcept
     width = 800;
     height = 600;
 }
-// These are the resources that depend on the device.
 void Game::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
@@ -337,7 +332,6 @@ void Game::CreateDeviceDependentResources()
     // TODO: Initialize device dependent objects here (independent of window size).
     device;
 }
-// Allocate all memory resources that change on a window SizeChanged event.
 void Game::CreateWindowSizeDependentResources()
 {
     // TODO: Initialize windows-size dependent objects here.
