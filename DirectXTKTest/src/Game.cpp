@@ -20,7 +20,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         if (s_in_sizemove && game)
         {
-            game->Tick();
+            game->Render();
         }
         else
         {
@@ -190,7 +190,7 @@ void GameWindow_Render(Game* game)
         DispatchMessage(&msg);
     }
 
-    game->Tick();
+    game->Render();
 }
 bool Game::ShouldQuit()
 {
@@ -251,11 +251,6 @@ void Game::Initialize(HWND window, int width, int height)
 }
 void Game::Tick()
 {
-    m_timer.Tick([&]()
-    {
-        Update(m_timer);
-    });
-
     Render();
 }
 void Game::Update(DX::StepTimer const& timer)
@@ -264,12 +259,6 @@ void Game::Update(DX::StepTimer const& timer)
 }
 void Game::Render()
 {
-    // Don't try to render anything before the first Update.
-    if (m_timer.GetFrameCount() == 0)
-    {
-        return;
-    }
-
     Clear();
 
     m_deviceResources->PIXBeginEvent(L"Render");

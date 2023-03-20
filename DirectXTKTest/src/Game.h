@@ -19,9 +19,9 @@ public:
     void OnDisplayChange();
     void OnWindowSizeChanged(int width, int height);
     void GetDefaultSize(int& width, int& height ) const noexcept;
+    void Render();
 private:
     void Update(DX::StepTimer const& timer);
-    void Render();
     void Clear();
     void CreateDeviceDependentResources();
     void CreateWindowSizeDependentResources();
