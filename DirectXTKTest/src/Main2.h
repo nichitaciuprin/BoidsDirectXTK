@@ -8,7 +8,7 @@ void wWinMain2(HINSTANCE hInstance, int nCmdShow)
 
     while(true)
     {
-        if (GameWindow_ShouldQuit()) break;
+        if (game->ShouldQuit()) break;
 
         // Game logic must be here
 

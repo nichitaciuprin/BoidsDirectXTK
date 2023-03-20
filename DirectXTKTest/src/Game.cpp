@@ -192,7 +192,7 @@ void GameWindow_Render(Game* game)
 
     game->Tick();
 }
-bool GameWindow_ShouldQuit()
+bool Game::ShouldQuit()
 {
     return msg.message == WM_QUIT;
 }

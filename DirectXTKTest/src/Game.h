@@ -8,6 +8,7 @@ public:
     Game(HINSTANCE hInstance, int nCmdShow);
     void Initialize(HWND window, int width, int height);
     void Tick();
+    bool ShouldQuit();
     void OnDeviceLost() override;
     void OnDeviceRestored() override;
     void OnActivated();
@@ -29,4 +30,3 @@ private:
 };
 
 void GameWindow_Render(Game* game);
-bool GameWindow_ShouldQuit();
