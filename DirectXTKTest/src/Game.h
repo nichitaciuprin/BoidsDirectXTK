@@ -28,5 +28,4 @@ private:
     void CreateDeviceDependentResources();
     void CreateWindowSizeDependentResources();
     unique_ptr<DeviceResources> m_deviceResources;
-    StepTimer m_timer;
 };
