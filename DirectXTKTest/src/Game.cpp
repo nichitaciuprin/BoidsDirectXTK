@@ -20,7 +20,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         if (s_in_sizemove && game)
         {
-            game->Render();
+            game->Paint();
         }
         else
         {
@@ -190,7 +190,7 @@ void GameWindow_Render(Game* game)
         DispatchMessage(&msg);
     }
 
-    game->Render();
+    game->Paint();
 }
 bool Game::ShouldQuit()
 {
@@ -253,7 +253,7 @@ void Game::Update(DX::StepTimer const& timer)
 {
     float elapsedTime = float(timer.GetElapsedSeconds());
 }
-void Game::Render()
+void Game::Paint()
 {
     Clear();
 
