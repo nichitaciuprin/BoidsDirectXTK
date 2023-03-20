@@ -10,9 +10,9 @@ bool s_minimized = false;
 bool s_fullscreen = false;
 MSG msg = {};
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    auto worldWindow = reinterpret_cast<WorldWindow*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+    auto worldWindow = reinterpret_cast<WorldWindow*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
     switch (message)
     {
@@ -24,8 +24,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         else
         {
             PAINTSTRUCT ps;
-            std::ignore = BeginPaint(hWnd, &ps);
-            EndPaint(hWnd, &ps);
+            std::ignore = BeginPaint(hwnd, &ps);
+            EndPaint(hwnd, &ps);
         }
         break;
 
@@ -76,7 +76,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         if (worldWindow)
         {
             RECT rc;
-            GetClientRect(hWnd, &rc);
+            GetClientRect(hwnd, &rc);
 
             worldWindow->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
         }
@@ -135,26 +135,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Implements the classic ALT+ENTER fullscreen toggle
             if (s_fullscreen)
             {
-                SetWindowLongPtr(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
-                SetWindowLongPtr(hWnd, GWL_EXSTYLE, 0);
+                SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
+                SetWindowLongPtr(hwnd, GWL_EXSTYLE, 0);
 
                 int width = 800;
                 int height = 600;
                 if (worldWindow)
                     worldWindow->GetDefaultSize(width, height);
 
-                ShowWindow(hWnd, SW_SHOWNORMAL);
+                ShowWindow(hwnd, SW_SHOWNORMAL);
 
-                SetWindowPos(hWnd, HWND_TOP, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
+                SetWindowPos(hwnd, HWND_TOP, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
             }
             else
             {
-                SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP);
-                SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_TOPMOST);
+                SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP);
+                SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
 
-                SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+                SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 
-                ShowWindow(hWnd, SW_SHOWMAXIMIZED);
+                ShowWindow(hwnd, SW_SHOWMAXIMIZED);
             }
 
             s_fullscreen = !s_fullscreen;
@@ -178,7 +178,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
     }
 
-    return DefWindowProc(hWnd, message, wParam, lParam);
+    return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
 WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
