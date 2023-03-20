@@ -1,19 +1,19 @@
 #pragma once
 #include "pch.h"
-#include "Game.h"
+#include "WorldWindow.h"
 
 void wWinMain2(HINSTANCE hInstance, int nCmdShow)
 {
-    auto game = make_unique<Game>(hInstance,nCmdShow);
+    auto worldWindow = make_unique<WorldWindow>(hInstance,nCmdShow);
 
     while(true)
     {
-        if (game->ShouldQuit()) break;
+        if (worldWindow->ShouldQuit()) break;
 
         // Game logic must be here
 
-        game->Render();
+        worldWindow->Render();
     }
 
-    game.reset();
+    worldWindow.reset();
 }

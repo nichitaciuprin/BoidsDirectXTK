@@ -10,7 +10,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Game.h">
+    <ClInclude Include="src\WorldWindow.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Main2.h">
@@ -30,7 +30,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Game.cpp">
+    <ClCompile Include="src\WorldWindow.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\guicon.cpp">

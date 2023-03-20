@@ -5,10 +5,10 @@
 
 using namespace DX;
 
-class Game final : public IDeviceNotify
+class WorldWindow final : public IDeviceNotify
 {
 public:
-    Game(HINSTANCE hInstance, int nCmdShow);
+    WorldWindow(HINSTANCE hInstance, int nCmdShow);
     void Render();
     bool ShouldQuit();
     void OnDeviceLost() override;

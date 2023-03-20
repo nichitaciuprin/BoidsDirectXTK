@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Game.h"
+#include "WorldWindow.h"
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
@@ -12,14 +12,14 @@ MSG msg = {};
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    auto game = reinterpret_cast<Game*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+    auto worldWindow = reinterpret_cast<WorldWindow*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 
     switch (message)
     {
     case WM_PAINT:
-        if (s_in_sizemove && game)
+        if (s_in_sizemove && worldWindow)
         {
-            // game->Paint();
+            // worldWindow->Paint();
         }
         else
         {
@@ -30,16 +30,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_DISPLAYCHANGE:
-        if (game)
+        if (worldWindow)
         {
-            game->OnDisplayChange();
+            worldWindow->OnDisplayChange();
         }
         break;
 
     case WM_MOVE:
-        if (game)
+        if (worldWindow)
         {
-            game->OnWindowMoved();
+            worldWindow->OnWindowMoved();
         }
         break;
 
@@ -49,21 +49,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             if (!s_minimized)
             {
                 s_minimized = true;
-                if (!s_in_suspend && game)
-                    game->OnSuspending();
+                if (!s_in_suspend && worldWindow)
+                    worldWindow->OnSuspending();
                 s_in_suspend = true;
             }
         }
         else if (s_minimized)
         {
             s_minimized = false;
-            if (s_in_suspend && game)
-                game->OnResuming();
+            if (s_in_suspend && worldWindow)
+                worldWindow->OnResuming();
             s_in_suspend = false;
         }
-        else if (!s_in_sizemove && game)
+        else if (!s_in_sizemove && worldWindow)
         {
-            game->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
+            worldWindow->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
         }
         break;
 
@@ -73,12 +73,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_EXITSIZEMOVE:
         s_in_sizemove = false;
-        if (game)
+        if (worldWindow)
         {
             RECT rc;
             GetClientRect(hWnd, &rc);
 
-            game->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
+            worldWindow->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
         }
         break;
 
@@ -92,15 +92,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_ACTIVATEAPP:
-        if (game)
+        if (worldWindow)
         {
             if (wParam)
             {
-                game->OnActivated();
+                worldWindow->OnActivated();
             }
             else
             {
-                game->OnDeactivated();
+                worldWindow->OnDeactivated();
             }
         }
         break;
@@ -109,16 +109,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         switch (wParam)
         {
         case PBT_APMQUERYSUSPEND:
-            if (!s_in_suspend && game)
-                game->OnSuspending();
+            if (!s_in_suspend && worldWindow)
+                worldWindow->OnSuspending();
             s_in_suspend = true;
             return TRUE;
 
         case PBT_APMRESUMESUSPEND:
             if (!s_minimized)
             {
-                if (s_in_suspend && game)
-                    game->OnResuming();
+                if (s_in_suspend && worldWindow)
+                    worldWindow->OnResuming();
                 s_in_suspend = false;
             }
             return TRUE;
@@ -140,8 +140,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 int width = 800;
                 int height = 600;
-                if (game)
-                    game->GetDefaultSize(width, height);
+                if (worldWindow)
+                    worldWindow->GetDefaultSize(width, height);
 
                 ShowWindow(hWnd, SW_SHOWNORMAL);
 
@@ -181,7 +181,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-Game::Game(HINSTANCE hInstance, int nCmdShow)
+WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
@@ -232,11 +232,11 @@ Game::Game(HINSTANCE hInstance, int nCmdShow)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 }
-void Game::Update(DX::StepTimer const& timer)
+void WorldWindow::Update(DX::StepTimer const& timer)
 {
     // float elapsedTime = float(timer.GetElapsedSeconds());
 }
-void Game::Render()
+void WorldWindow::Render()
 {
     if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
     {
@@ -246,11 +246,11 @@ void Game::Render()
 
     Paint();
 }
-bool Game::ShouldQuit()
+bool WorldWindow::ShouldQuit()
 {
     return msg.message == WM_QUIT;
 }
-void Game::Paint()
+void WorldWindow::Paint()
 {
     Clear();
     m_deviceResources->PIXBeginEvent(L"Render");
@@ -261,7 +261,7 @@ void Game::Paint()
     m_deviceResources->PIXEndEvent();
     m_deviceResources->Present();
 }
-void Game::Clear()
+void WorldWindow::Clear()
 {
     m_deviceResources->PIXBeginEvent(L"Clear");
 
@@ -280,31 +280,31 @@ void Game::Clear()
 
     m_deviceResources->PIXEndEvent();
 }
-void Game::OnActivated()
+void WorldWindow::OnActivated()
 {
     // TODO: Game is becoming active window.
 }
-void Game::OnDeactivated()
+void WorldWindow::OnDeactivated()
 {
     // TODO: Game is becoming background window.
 }
-void Game::OnSuspending()
+void WorldWindow::OnSuspending()
 {
     // TODO: Game is being power-suspended (or minimized).
 }
-void Game::OnResuming()
+void WorldWindow::OnResuming()
 {
 }
-void Game::OnWindowMoved()
+void WorldWindow::OnWindowMoved()
 {
     auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 }
-void Game::OnDisplayChange()
+void WorldWindow::OnDisplayChange()
 {
     m_deviceResources->UpdateColorSpace();
 }
-void Game::OnWindowSizeChanged(int width, int height)
+void WorldWindow::OnWindowSizeChanged(int width, int height)
 {
     if (!m_deviceResources->WindowSizeChanged(width, height))
         return;
@@ -313,28 +313,28 @@ void Game::OnWindowSizeChanged(int width, int height)
 
     // TODO: Game window is being resized.
 }
-void Game::GetDefaultSize(int& width, int& height) const noexcept
+void WorldWindow::GetDefaultSize(int& width, int& height) const noexcept
 {
     // TODO: Change to desired default window size (note minimum size is 320x200).
     width = 800;
     height = 600;
 }
-void Game::CreateDeviceDependentResources()
+void WorldWindow::CreateDeviceDependentResources()
 {
     auto device = m_deviceResources->GetD3DDevice();
 
     // TODO: Initialize device dependent objects here (independent of window size).
     device;
 }
-void Game::CreateWindowSizeDependentResources()
+void WorldWindow::CreateWindowSizeDependentResources()
 {
     // TODO: Initialize windows-size dependent objects here.
 }
-void Game::OnDeviceLost()
+void WorldWindow::OnDeviceLost()
 {
     // TODO: Add Direct3D resource cleanup here.
 }
-void Game::OnDeviceRestored()
+void WorldWindow::OnDeviceRestored()
 {
     CreateDeviceDependentResources();
 
