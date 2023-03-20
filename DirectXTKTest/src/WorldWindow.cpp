@@ -8,7 +8,6 @@ bool s_in_sizemove = false;
 bool s_in_suspend = false;
 bool s_minimized = false;
 bool s_fullscreen = false;
-MSG msg = {};
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -211,22 +210,22 @@ WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
     auto height = rc.bottom - rc.top;
 
     LPCWSTR g_szAppName = L"TEMP";
-    hwnd = CreateWindowExW(0, L"TEMPWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
+    m_hwnd = CreateWindowExW(0, L"TEMPWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, hInstance,
         nullptr);
     // TODO: Change to CreateWindowExW(WS_EX_TOPMOST, L"TEMPWindowClass", g_szAppName, WS_POPUP,
     // to default to fullscreen.
 
-    if (!hwnd) throw;
+    if (!m_hwnd) throw;
 
-    ShowWindow(hwnd, nCmdShow);
+    ShowWindow(m_hwnd, nCmdShow);
     // TODO: Change nCmdShow to SW_SHOWMAXIMIZED to default to fullscreen.
 
-    SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+    SetWindowLongPtr(m_hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
-    GetClientRect(hwnd, &rc);
+    GetClientRect(m_hwnd, &rc);
 
-    m_deviceResources->SetWindow(hwnd, width, height);
+    m_deviceResources->SetWindow(m_hwnd, width, height);
     m_deviceResources->CreateDeviceResources();
     CreateDeviceDependentResources();
     m_deviceResources->CreateWindowSizeDependentResources();
