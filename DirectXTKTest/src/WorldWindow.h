@@ -10,7 +10,7 @@ class WorldWindow final : public IDeviceNotify
 public:
     WorldWindow(HINSTANCE hInstance, int nCmdShow);
     void Render();
-    bool ShouldQuit();
+    bool quit = false;
     void OnDeviceLost() override;
     void OnDeviceRestored() override;
     void OnActivated();

@@ -125,6 +125,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_DESTROY:
+        worldWindow->quit = true;
         PostQuitMessage(0);
         break;
 
@@ -169,6 +170,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
         switch (wParam)
         {
             case VK_ESCAPE:
+                worldWindow->quit = true;
                 PostQuitMessage(0);
                 break;
 
@@ -237,17 +239,13 @@ void WorldWindow::Update(DX::StepTimer const& timer)
 }
 void WorldWindow::Render()
 {
-    if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+    if (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
 
     Paint();
-}
-bool WorldWindow::ShouldQuit()
-{
-    return msg.message == WM_QUIT;
 }
 void WorldWindow::Paint()
 {
@@ -336,6 +334,5 @@ void WorldWindow::OnDeviceLost()
 void WorldWindow::OnDeviceRestored()
 {
     CreateDeviceDependentResources();
-
     CreateWindowSizeDependentResources();
 }
