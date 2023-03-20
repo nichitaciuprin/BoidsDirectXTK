@@ -232,10 +232,6 @@ WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 }
-void WorldWindow::Update(DX::StepTimer const& timer)
-{
-    // float elapsedTime = float(timer.GetElapsedSeconds());
-}
 void WorldWindow::Render()
 {
     if (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
@@ -244,11 +240,11 @@ void WorldWindow::Render()
         DispatchMessage(&msg);
     }
 
+    Clear();
     Paint();
 }
 void WorldWindow::Paint()
 {
-    Clear();
     m_deviceResources->PIXBeginEvent(L"Render");
     auto context = m_deviceResources->GetD3DDeviceContext();
 

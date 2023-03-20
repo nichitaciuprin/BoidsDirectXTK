@@ -1,7 +1,6 @@
 #pragma once
 #include "pch.h"
 #include "DeviceResources.h"
-#include "StepTimer.h"
 
 using namespace DX;
 
@@ -23,7 +22,6 @@ public:
     void GetDefaultSize(int& width, int& height ) const noexcept;
     void Paint();
 private:
-    void Update(StepTimer const& timer);
     void Clear();
     void CreateDeviceDependentResources();
     void CreateWindowSizeDependentResources();
