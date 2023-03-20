@@ -187,20 +187,19 @@ WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
 
-    WNDCLASSEXW wcex = {};
-    wcex.cbSize = sizeof(WNDCLASSEXW);
-    wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = WndProc;
-    wcex.hInstance = hInstance;
-    wcex.hIcon = LoadIconW(hInstance, L"IDI_ICON");
-    wcex.hCursor = LoadCursorW(nullptr, IDC_ARROW);
-    wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
-    wcex.lpszClassName = L"TEMPWindowClass";
-    wcex.hIconSm = LoadIconW(wcex.hInstance, L"IDI_ICON");
+    WNDCLASSEXW windowClass = {};
+    windowClass.cbSize = sizeof(WNDCLASSEXW);
+    windowClass.style = CS_HREDRAW | CS_VREDRAW;
+    windowClass.lpfnWndProc = WndProc;
+    windowClass.hInstance = hInstance;
+    windowClass.hIcon = LoadIconW(hInstance, L"IDI_ICON");
+    windowClass.hCursor = LoadCursorW(nullptr, IDC_ARROW);
+    windowClass.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
+    windowClass.lpszClassName = L"TEMPWindowClass";
+    windowClass.hIconSm = LoadIconW(windowClass.hInstance, L"IDI_ICON");
 
-    if (!RegisterClassExW(&wcex)) throw;
+    if (!RegisterClassExW(&windowClass)) throw;
 
-    // Create window
     int w, h;
     GetDefaultSize(w, h);
 
