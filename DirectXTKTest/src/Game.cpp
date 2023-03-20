@@ -253,16 +253,12 @@ bool Game::ShouldQuit()
 void Game::Paint()
 {
     Clear();
-
     m_deviceResources->PIXBeginEvent(L"Render");
     auto context = m_deviceResources->GetD3DDeviceContext();
 
     // TODO: Add your rendering code here.
-    context;
 
     m_deviceResources->PIXEndEvent();
-
-    // Show the new frame.
     m_deviceResources->Present();
 }
 void Game::Clear()
