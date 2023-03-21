@@ -24,24 +24,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             worldWindow->OnWindowMoved();
             break;
         case WM_SIZE:
-            if (wParam == SIZE_MINIMIZED)
+            if (wParam == SIZE_MINIMIZED && !s_minimized)
             {
-                if (!s_minimized)
-                {
-                    s_minimized = true;
-                    if (!s_in_suspend && worldWindow)
-                        worldWindow->OnSuspending();
-                    s_in_suspend = true;
-                }
+                s_minimized = true;
+                if (!s_in_suspend)
+                    worldWindow->OnSuspending();
+                s_in_suspend = true;
             }
             else if (s_minimized)
             {
                 s_minimized = false;
-                if (s_in_suspend && worldWindow)
+                if (s_in_suspend)
                     worldWindow->OnResuming();
                 s_in_suspend = false;
             }
-            else if (!s_in_sizemove && worldWindow)
+            else if (!s_in_sizemove)
             {
                 worldWindow->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
             }
