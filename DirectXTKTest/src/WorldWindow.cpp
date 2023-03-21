@@ -12,36 +12,17 @@ bool s_fullscreen = false;
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     auto worldWindow = reinterpret_cast<WorldWindow*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+    if (worldWindow == NULL)
+        return DefWindowProc(hwnd, message, wParam, lParam);
 
     switch (message)
     {
-    case WM_PAINT:
-        if (s_in_sizemove && worldWindow)
-        {
-            // worldWindow->Paint();
-        }
-        else
-        {
-            PAINTSTRUCT ps;
-            std::ignore = BeginPaint(hwnd, &ps);
-            EndPaint(hwnd, &ps);
-        }
-        break;
-
     case WM_DISPLAYCHANGE:
-        if (worldWindow)
-        {
-            worldWindow->OnDisplayChange();
-        }
+        worldWindow->OnDisplayChange();
         break;
-
     case WM_MOVE:
-        if (worldWindow)
-        {
-            worldWindow->OnWindowMoved();
-        }
+        worldWindow->OnWindowMoved();
         break;
-
     case WM_SIZE:
         if (wParam == SIZE_MINIMIZED)
         {
@@ -65,22 +46,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             worldWindow->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
         }
         break;
-
     case WM_ENTERSIZEMOVE:
         s_in_sizemove = true;
         break;
-
     case WM_EXITSIZEMOVE:
         s_in_sizemove = false;
-        if (worldWindow)
-        {
-            RECT rc;
-            GetClientRect(hwnd, &rc);
-
-            worldWindow->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
-        }
+        RECT rc;
+        GetClientRect(hwnd, &rc);
+        worldWindow->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
         break;
-
     case WM_GETMINMAXINFO:
         if (lParam)
         {
@@ -89,21 +63,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             info->ptMinTrackSize.y = 200;
         }
         break;
-
     case WM_ACTIVATEAPP:
-        if (worldWindow)
-        {
-            if (wParam)
-            {
-                worldWindow->OnActivated();
-            }
-            else
-            {
-                worldWindow->OnDeactivated();
-            }
-        }
+        if (wParam)
+            worldWindow->OnActivated();
+        else
+            worldWindow->OnDeactivated();
         break;
-
     case WM_POWERBROADCAST:
         switch (wParam)
         {
@@ -112,7 +77,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                 worldWindow->OnSuspending();
             s_in_suspend = true;
             return TRUE;
-
         case PBT_APMRESUMESUSPEND:
             if (!s_minimized)
             {
@@ -123,12 +87,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             return TRUE;
         }
         break;
-
     case WM_DESTROY:
         worldWindow->quit = true;
         PostQuitMessage(0);
         break;
-
     case WM_SYSKEYDOWN:
         if (wParam == VK_RETURN && (lParam & 0x60000000) == 0x20000000)
         {
@@ -137,35 +99,26 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
                 SetWindowLongPtr(hwnd, GWL_EXSTYLE, 0);
-
                 int width = 800;
                 int height = 600;
-                if (worldWindow)
-                    worldWindow->GetDefaultSize(width, height);
-
+                worldWindow->GetDefaultSize(width, height);
                 ShowWindow(hwnd, SW_SHOWNORMAL);
-
                 SetWindowPos(hwnd, HWND_TOP, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
             }
             else
             {
                 SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP);
                 SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
-
                 SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
-
                 ShowWindow(hwnd, SW_SHOWMAXIMIZED);
             }
-
             s_fullscreen = !s_fullscreen;
         }
         break;
-
     case WM_MENUCHAR:
         // A menu is active and the user presses a key that does not correspond
         // to any mnemonic or accelerator key. Ignore so we don't produce an error beep.
         return MAKELRESULT(0, MNC_CLOSE);
-
     case WM_KEYDOWN:
         switch (wParam)
         {
@@ -173,12 +126,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                 worldWindow->quit = true;
                 PostQuitMessage(0);
                 break;
-
             default:
                 break;
         }
     }
-
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
