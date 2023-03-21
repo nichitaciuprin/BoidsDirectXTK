@@ -7,7 +7,7 @@ using namespace DX;
 class WorldWindow final : public IDeviceNotify
 {
 public:
-    WorldWindow(HINSTANCE hInstance, int nCmdShow);
+    WorldWindow(HINSTANCE hInstance);
     void Render();
     bool quit = false;
     void OnDeviceLost() override;

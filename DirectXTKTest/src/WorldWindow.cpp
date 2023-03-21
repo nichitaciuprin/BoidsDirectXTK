@@ -130,23 +130,33 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
-WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
-{
-    m_deviceResources = std::make_unique<DX::DeviceResources>();
-    m_deviceResources->RegisterDeviceNotify(this);
+LPCWSTR lpszClassName = L"TEMPWindowClass";
+LPCWSTR lpIconName = L"IDI_ICON";
 
+bool classRegistered = false;
+void MaybeRegisterClass(HINSTANCE hInstance)
+{
+    if (classRegistered) return;
     WNDCLASSEXW windowClass = {};
     windowClass.cbSize = sizeof(WNDCLASSEXW);
     windowClass.style = CS_HREDRAW | CS_VREDRAW;
     windowClass.lpfnWndProc = WndProc;
     windowClass.hInstance = hInstance;
-    windowClass.hIcon = LoadIconW(hInstance, L"IDI_ICON");
+    windowClass.hIcon = LoadIconW(hInstance, lpIconName);
     windowClass.hCursor = LoadCursorW(nullptr, IDC_ARROW);
     windowClass.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
-    windowClass.lpszClassName = L"TEMPWindowClass";
-    windowClass.hIconSm = LoadIconW(windowClass.hInstance, L"IDI_ICON");
-
+    windowClass.lpszClassName = lpszClassName;
+    windowClass.hIconSm = LoadIconW(windowClass.hInstance, lpIconName);
     if (!RegisterClassExW(&windowClass)) throw;
+    classRegistered = true;
+}
+
+WorldWindow::WorldWindow(HINSTANCE hInstance)
+{
+    m_deviceResources = std::make_unique<DX::DeviceResources>();
+    m_deviceResources->RegisterDeviceNotify(this);
+
+    MaybeRegisterClass(hInstance);
 
     int w, h;
     GetDefaultSize(w, h);
@@ -159,7 +169,7 @@ WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
     auto height = rc.bottom - rc.top;
 
     LPCWSTR g_szAppName = L"TEMP";
-    m_hwnd = CreateWindowExW(0, L"TEMPWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
+    m_hwnd = CreateWindowExW(0, lpszClassName, g_szAppName, WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, hInstance,
         nullptr);
     // TODO: Change to CreateWindowExW(WS_EX_TOPMOST, L"TEMPWindowClass", g_szAppName, WS_POPUP,
@@ -167,8 +177,7 @@ WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
 
     if (!m_hwnd) throw;
 
-    ShowWindow(m_hwnd, nCmdShow);
-    // TODO: Change nCmdShow to SW_SHOWMAXIMIZED to default to fullscreen.
+    ShowWindow(m_hwnd, SW_SHOWNORMAL);
 
     SetWindowLongPtr(m_hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 

@@ -3,10 +3,10 @@
 #include "World.h"
 #include "WorldWindow.h"
 
-void wWinMain2(HINSTANCE hInstance, int nCmdShow)
+void wWinMain2(HINSTANCE hInstance)
 {
     auto world = make_unique<World>();
-    auto worldWindow = make_unique<WorldWindow>(hInstance,nCmdShow);
+    auto worldWindow = make_unique<WorldWindow>(hInstance);
 
     while(true)
     {
