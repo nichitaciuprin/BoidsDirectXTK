@@ -231,6 +231,9 @@ WorldWindow::WorldWindow(HINSTANCE hInstance, int nCmdShow)
     CreateDeviceDependentResources();
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
+
+    auto context = m_deviceResources->GetD3DDeviceContext();
+    m_shape = GeometricPrimitive::CreateSphere(context);
 }
 void WorldWindow::Render()
 {
@@ -246,9 +249,17 @@ void WorldWindow::Render()
 void WorldWindow::Paint()
 {
     m_deviceResources->PIXBeginEvent(L"Render");
-    auto context = m_deviceResources->GetD3DDeviceContext();
 
-    // TODO: Add your rendering code here.
+    auto context = m_deviceResources->GetD3DDeviceContext();
+    auto size = m_deviceResources->GetOutputSize();
+    auto cameraPosition = Vector3::Backward*5;
+    auto cameraTarget = cameraPosition+Vector3::Forward;
+    auto m_view = Matrix::CreateLookAt(cameraPosition, cameraTarget, Vector3::UnitY);
+    auto m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, float(size.right) / float(size.bottom), 0.1f, 10.f);
+    auto m_world_1 = Matrix::CreateWorld(Vector3::Zero, Vector3::Forward, Vector3::Up);
+    auto m_world_2 = Matrix::CreateWorld(Vector3::Zero+Vector3::Right*3, Vector3::Forward, Vector3::Up);
+    m_shape->Draw(m_world_1,m_view,m_proj);
+    m_shape->Draw(m_world_2,m_view,m_proj);
 
     m_deviceResources->PIXEndEvent();
     m_deviceResources->Present();
