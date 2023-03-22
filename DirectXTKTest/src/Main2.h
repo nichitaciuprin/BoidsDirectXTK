@@ -6,18 +6,22 @@
 
 void wWinMain2(HINSTANCE hInstance)
 {
-    auto world = make_unique<World>();
-    auto worldWindow = make_unique<WorldWindow>(hInstance);
+    // auto world = make_unique<World>();
 
-    Console_Test();
+    auto worldWindow = make_unique<WorldWindow>(hInstance);
+    // auto worldWindow_2 = make_unique<WorldWindow>(hInstance);
+
+    // Console_Test();
 
     while(true)
     {
         if (worldWindow->quit) break;
+        // if (worldWindow_2->quit) break;
 
-        world->Update(0.02f);
+        // world->Update(0.02f);
 
         worldWindow->Render();
+        // worldWindow_2->Render();
     }
 
     worldWindow.reset();

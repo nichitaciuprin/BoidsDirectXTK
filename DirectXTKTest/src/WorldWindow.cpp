@@ -4,10 +4,10 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 
-bool s_in_sizemove = false;
-bool s_in_suspend = false;
-bool s_minimized = false;
-bool s_fullscreen = false;
+bool sizemove = false;
+bool suspend = false;
+bool minimized = false;
+bool fullscreen = false;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -24,30 +24,30 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             worldWindow->OnWindowMoved();
             break;
         case WM_SIZE:
-            if (wParam == SIZE_MINIMIZED && !s_minimized)
+            if (wParam == SIZE_MINIMIZED && !minimized)
             {
-                s_minimized = true;
-                if (!s_in_suspend)
+                minimized = true;
+                if (!suspend)
                     worldWindow->OnSuspending();
-                s_in_suspend = true;
+                suspend = true;
             }
-            else if (s_minimized)
+            else if (minimized)
             {
-                s_minimized = false;
-                if (s_in_suspend)
+                minimized = false;
+                if (suspend)
                     worldWindow->OnResuming();
-                s_in_suspend = false;
+                suspend = false;
             }
-            else if (!s_in_sizemove)
+            else if (!sizemove)
             {
                 worldWindow->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
             }
             break;
         case WM_ENTERSIZEMOVE:
-            s_in_sizemove = true;
+            sizemove = true;
             break;
         case WM_EXITSIZEMOVE:
-            s_in_sizemove = false;
+            sizemove = false;
             RECT rc;
             GetClientRect(hwnd, &rc);
             worldWindow->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
@@ -70,16 +70,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wParam)
             {
                 case PBT_APMQUERYSUSPEND:
-                    if (!s_in_suspend && worldWindow)
+                    if (!suspend && worldWindow)
                         worldWindow->OnSuspending();
-                    s_in_suspend = true;
+                    suspend = true;
                     return TRUE;
                 case PBT_APMRESUMESUSPEND:
-                    if (!s_minimized)
+                    if (!minimized)
                     {
-                        if (s_in_suspend && worldWindow)
+                        if (suspend && worldWindow)
                             worldWindow->OnResuming();
-                        s_in_suspend = false;
+                        suspend = false;
                     }
                     return TRUE;
             }
@@ -92,7 +92,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             if (wParam == VK_RETURN && (lParam & 0x60000000) == 0x20000000)
             {
                 // Implements the classic ALT+ENTER fullscreen toggle
-                if (s_fullscreen)
+                if (fullscreen)
                 {
                     SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
                     SetWindowLongPtr(hwnd, GWL_EXSTYLE, 0);
@@ -109,7 +109,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
                     ShowWindow(hwnd, SW_SHOWMAXIMIZED);
                 }
-                s_fullscreen = !s_fullscreen;
+                fullscreen = !fullscreen;
             }
             break;
         case WM_MENUCHAR:
@@ -185,7 +185,6 @@ WorldWindow::WorldWindow(HINSTANCE hInstance)
 
     m_deviceResources->SetWindow(m_hwnd, width, height);
     m_deviceResources->CreateDeviceResources();
-    CreateDeviceDependentResources();
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
@@ -279,13 +278,6 @@ void WorldWindow::GetDefaultSize(int& width, int& height) const noexcept
     width = 800;
     height = 600;
 }
-void WorldWindow::CreateDeviceDependentResources()
-{
-    auto device = m_deviceResources->GetD3DDevice();
-
-    // TODO: Initialize device dependent objects here (independent of window size).
-    device;
-}
 void WorldWindow::CreateWindowSizeDependentResources()
 {
     // TODO: Initialize windows-size dependent objects here.
@@ -296,6 +288,5 @@ void WorldWindow::OnDeviceLost()
 }
 void WorldWindow::OnDeviceRestored()
 {
-    CreateDeviceDependentResources();
     CreateWindowSizeDependentResources();
 }
