@@ -23,7 +23,7 @@ public:
     void GetDefaultSize(int& width, int& height ) const noexcept;
 private:
     void Clear();
-    void Paint();
+    void Paint(World* World);
     void CreateDeviceDependentResources();
     void CreateWindowSizeDependentResources();
     unique_ptr<DeviceResources> m_deviceResources;

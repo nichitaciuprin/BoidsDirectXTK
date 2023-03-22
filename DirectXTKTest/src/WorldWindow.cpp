@@ -201,15 +201,15 @@ void WorldWindow::Render(World* world)
     }
 
     Clear();
-    Paint();
+    Paint(world);
 }
-void WorldWindow::Paint()
+void WorldWindow::Paint(World* world)
 {
     m_deviceResources->PIXBeginEvent(L"Render");
 
     auto context = m_deviceResources->GetD3DDeviceContext();
     auto size = m_deviceResources->GetOutputSize();
-    auto cameraPosition = Vector3::Backward*5;
+    auto cameraPosition = world->cameraPosition;
     auto cameraTarget = cameraPosition+Vector3::Forward;
     auto m_view = Matrix::CreateLookAt(cameraPosition, cameraTarget, Vector3::UnitY);
     auto m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, float(size.right) / float(size.bottom), 0.1f, 10.f);
