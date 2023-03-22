@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "World.h"
 #include "DeviceResources.h"
 
 using namespace DX;
@@ -8,7 +9,7 @@ class WorldWindow final : public IDeviceNotify
 {
 public:
     WorldWindow(HINSTANCE hInstance);
-    void Render();
+    void Render(World* World);
     bool quit = false;
     void OnDeviceLost() override;
     void OnDeviceRestored() override;

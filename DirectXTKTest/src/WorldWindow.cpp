@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "World.h"
 #include "WorldWindow.h"
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -191,7 +192,7 @@ WorldWindow::WorldWindow(HINSTANCE hInstance)
     auto context = m_deviceResources->GetD3DDeviceContext();
     m_shape = GeometricPrimitive::CreateSphere(context);
 }
-void WorldWindow::Render()
+void WorldWindow::Render(World* world)
 {
     if (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
     {
