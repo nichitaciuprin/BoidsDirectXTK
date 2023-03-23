@@ -21,6 +21,7 @@
         "xtree": "cpp",
         "*.rh": "cpp",
         "coroutine": "cpp",
-        "xmemory": "cpp"
+        "xmemory": "cpp",
+        "chrono": "cpp"
     }
 }

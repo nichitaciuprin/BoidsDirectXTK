@@ -217,7 +217,7 @@ Vector2 DirectionWASD()
     auto value_2 = key_a ? -1 : 0;
     auto value_3 = key_s ? -1 : 0;
     auto value_4 = key_d ? 1 : 0;
-    auto axisY = value_1 + value_3;
+    auto axisY = value_3 + value_1;
     auto axisX = value_2 + value_4;
     Vector2 result = Vector2(axisX, axisY);
     result.Normalize();
@@ -230,8 +230,6 @@ void WorldWindow::Render(World* world)
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
-
-    // auto wasdDirection = Vector2()
 
     world->MoveCamera(DirectionWASD());
 
