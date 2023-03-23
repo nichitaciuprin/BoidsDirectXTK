@@ -226,8 +226,6 @@ void WorldWindow::Render(World* world)
         DispatchMessage(&msg);
     }
 
-    world->MoveCamera(DirectionWASD());
-
     Clear();
     Paint(world);
 }
