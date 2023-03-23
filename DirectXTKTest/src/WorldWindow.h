@@ -9,7 +9,7 @@ class WorldWindow final : public IDeviceNotify
 {
 public:
     WorldWindow(HINSTANCE hInstance);
-    void Render(World* World);
+    void Render(const World* world);
     bool quit = false;
     void OnDeviceLost() override;
     void OnDeviceRestored() override;
@@ -28,7 +28,7 @@ public:
     Vector2 DirectionWASD();
 private:
     void Clear();
-    void Paint(World* World);
+    void Paint(const World* world);
     void CreateDeviceDependentResources();
     void CreateWindowSizeDependentResources();
     unique_ptr<DeviceResources> m_deviceResources;

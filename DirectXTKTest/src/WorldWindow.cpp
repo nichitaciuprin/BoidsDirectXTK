@@ -218,7 +218,7 @@ Vector2 WorldWindow::DirectionWASD()
     result.Normalize();
     return result;
 }
-void WorldWindow::Render(World* world)
+void WorldWindow::Render(const World* world)
 {
     while (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
     {
@@ -229,7 +229,7 @@ void WorldWindow::Render(World* world)
     Clear();
     Paint(world);
 }
-void WorldWindow::Paint(World* world)
+void WorldWindow::Paint(const World* world)
 {
     m_deviceResources->PIXBeginEvent(L"Render");
 
