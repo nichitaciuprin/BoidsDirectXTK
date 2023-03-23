@@ -26,6 +26,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\World.h" />
+    <ClInclude Include="src\console.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Helper.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\WorldWindow.cpp">
