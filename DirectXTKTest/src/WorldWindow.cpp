@@ -10,6 +10,11 @@ bool suspend = false;
 bool minimized = false;
 bool fullscreen = false;
 
+bool key_w = false;
+bool key_a = false;
+bool key_s = false;
+bool key_d = false;
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     auto worldWindow = reinterpret_cast<WorldWindow*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
@@ -124,10 +129,25 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     worldWindow->quit = true;
                     PostQuitMessage(0);
                     break;
-                default:
-                    break;
+                case 'W': key_w = true; break;
+                case 'A': key_a = true; break;
+                case 'S': key_s = true; break;
+                case 'D': key_d = true; break;
+                default: break;
             }
+            break;
+        case WM_KEYUP:
+            switch (wParam)
+            {
+                case 'W': key_w = false; break;
+                case 'A': key_a = false; break;
+                case 'S': key_s = false; break;
+                case 'D': key_d = false; break;
+                default: break;
+            }
+            break;
     }
+
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
@@ -171,8 +191,7 @@ WorldWindow::WorldWindow(HINSTANCE hInstance)
 
     LPCWSTR g_szAppName = L"TEMP";
     m_hwnd = CreateWindowExW(0, lpszClassName, g_szAppName, WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, hInstance,
-        nullptr);
+        CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, hInstance, nullptr);
     // TODO: Change to CreateWindowExW(WS_EX_TOPMOST, L"TEMPWindowClass", g_szAppName, WS_POPUP,
     // to default to fullscreen.
 
@@ -192,13 +211,29 @@ WorldWindow::WorldWindow(HINSTANCE hInstance)
     auto context = m_deviceResources->GetD3DDeviceContext();
     m_shape = GeometricPrimitive::CreateSphere(context);
 }
+Vector2 DirectionWASD()
+{
+    auto value_1 = key_w ? 1 : 0;
+    auto value_2 = key_a ? -1 : 0;
+    auto value_3 = key_s ? -1 : 0;
+    auto value_4 = key_d ? 1 : 0;
+    auto axisY = value_1 + value_3;
+    auto axisX = value_2 + value_4;
+    Vector2 result = Vector2(axisX, axisY);
+    result.Normalize();
+    return result;
+}
 void WorldWindow::Render(World* world)
 {
-    if (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
+    while (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
+
+    // auto wasdDirection = Vector2()
+
+    world->MoveCamera(DirectionWASD());
 
     Clear();
     Paint(world);

@@ -18,6 +18,9 @@
         "set": "cpp",
         "vector": "cpp",
         "xhash": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "*.rh": "cpp",
+        "coroutine": "cpp",
+        "xmemory": "cpp"
     }
 }

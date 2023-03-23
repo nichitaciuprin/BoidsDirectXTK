@@ -9,5 +9,6 @@ public:
 
     World();
     void Update(float deltaTime);
+    void MoveCamera(Vector2 direction);
 private:
 };
