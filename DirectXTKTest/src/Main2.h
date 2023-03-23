@@ -14,16 +14,18 @@ void wWinMain2(HINSTANCE hInstance)
     {
         if (Helper::EscapePressed()) break;
 
-        long time1 = clock();
+        long oldTime = clock();
 
         auto directionWASD = worldWindow->DirectionWASD();
         world->Update(0.02f,directionWASD,Vector2::Zero);
         worldWindow->Render(world.get());
 
-        long time2 = clock();
-        long diff = time2 - time1;
+        long newTime = clock();
+
+        long diff = newTime - oldTime;
         long timeStep = 20;
         long waitTime = timeStep - diff;
+        if (waitTime < 0) continue;
         Sleep(waitTime);
     }
 }
