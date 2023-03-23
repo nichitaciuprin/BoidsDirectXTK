@@ -10,11 +10,6 @@ bool suspend = false;
 bool minimized = false;
 bool fullscreen = false;
 
-bool key_w = false;
-bool key_a = false;
-bool key_s = false;
-bool key_d = false;
-
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     auto worldWindow = reinterpret_cast<WorldWindow*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
@@ -129,20 +124,20 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     worldWindow->quit = true;
                     PostQuitMessage(0);
                     break;
-                case 'W': key_w = true; break;
-                case 'A': key_a = true; break;
-                case 'S': key_s = true; break;
-                case 'D': key_d = true; break;
+                case 'W': worldWindow->key_w = true; break;
+                case 'A': worldWindow->key_a = true; break;
+                case 'S': worldWindow->key_s = true; break;
+                case 'D': worldWindow->key_d = true; break;
                 default: break;
             }
             break;
         case WM_KEYUP:
             switch (wParam)
             {
-                case 'W': key_w = false; break;
-                case 'A': key_a = false; break;
-                case 'S': key_s = false; break;
-                case 'D': key_d = false; break;
+                case 'W': worldWindow->key_w = false; break;
+                case 'A': worldWindow->key_a = false; break;
+                case 'S': worldWindow->key_s = false; break;
+                case 'D': worldWindow->key_d = false; break;
                 default: break;
             }
             break;
@@ -211,7 +206,7 @@ WorldWindow::WorldWindow(HINSTANCE hInstance)
     auto context = m_deviceResources->GetD3DDeviceContext();
     m_shape = GeometricPrimitive::CreateSphere(context);
 }
-Vector2 DirectionWASD()
+Vector2 WorldWindow::DirectionWASD()
 {
     auto value_1 = key_w ? 1 : 0;
     auto value_2 = key_a ? -1 : 0;

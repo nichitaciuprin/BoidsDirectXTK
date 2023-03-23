@@ -21,6 +21,11 @@ public:
     void OnDisplayChange();
     void OnWindowSizeChanged(int width, int height);
     void GetDefaultSize(int& width, int& height ) const noexcept;
+    bool key_w = false;
+    bool key_a = false;
+    bool key_s = false;
+    bool key_d = false;
+    Vector2 DirectionWASD();
 private:
     void Clear();
     void Paint(World* World);

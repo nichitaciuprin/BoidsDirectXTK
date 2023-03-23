@@ -22,7 +22,7 @@ public:
         //     // https://stackoverflow.com/questions/41600981/how-do-i-check-if-a-key-is-pressed-on-c
         //     cameraPosition += Vector3::Right*deltaTime;
         // }
-        cameraPosition += Vector3(direction.x,direction.y,0) * deltaTime;
+        cameraPosition += Vector3(wasdDirection.x,wasdDirection.y,0) * deltaTime;
         // cameraPosition += Vector3(1,2,0) * deltaTime;
     }
     void MoveCamera(Vector2 direction)

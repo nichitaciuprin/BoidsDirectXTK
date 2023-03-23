@@ -10,7 +10,8 @@ void wWinMain2(HINSTANCE hInstance)
     auto worldWindow = make_unique<WorldWindow>(hInstance);
     while(!worldWindow->quit)
     {
-        world->Update(0.02f,Vector2::Zero,Vector2::Zero);
+        auto directionWASD = worldWindow->DirectionWASD();
+        world->Update(0.02f,directionWASD,Vector2::Zero);
         worldWindow->Render(world.get());
     }
 }
