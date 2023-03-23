@@ -12,9 +12,10 @@ void wWinMain2(HINSTANCE hInstance)
     auto worldWindow = make_unique<WorldWindow>(hInstance);
     while(true)
     {
+        if (Helper::EscapePressed()) break;
+
         long time1 = clock();
 
-        if (Helper::EscapePressed()) break;
         auto directionWASD = worldWindow->DirectionWASD();
         world->Update(0.02f,directionWASD,Vector2::Zero);
         worldWindow->Render(world.get());
