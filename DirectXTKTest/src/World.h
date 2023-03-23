@@ -2,14 +2,14 @@
 #include "pch.h"
 using namespace DirectX::SimpleMath;
 
-// Vector2 m_direction;
-
 class World
 {
 public:
     Vector3 cameraPosition = Vector3::Backward*5;
     Vector2 direction;
-    World();
+    World()
+    {
+    }
     void Update(float deltaTime, Vector2 wasdDirection, Vector2 mouseRotation)
     {
         // SHORT state = GetKeyState(VK_SHIFT);
