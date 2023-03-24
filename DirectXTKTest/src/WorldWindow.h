@@ -15,8 +15,9 @@ bool fullscreen = false;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-LPCWSTR lpszClassName = L"TEMPWindowClass";
+LPCWSTR lpszClassName = L"WorldWindow";
 LPCWSTR lpIconName = L"IDI_ICON";
+LPCWSTR g_szAppName = L"WorldWindow";
 
 bool classRegistered = false;
 void MaybeRegisterClass(HINSTANCE hInstance)
@@ -56,7 +57,6 @@ public:
         auto width = rc.right - rc.left;
         auto height = rc.bottom - rc.top;
 
-        LPCWSTR g_szAppName = L"TEMP";
         m_hwnd = CreateWindowExW(0, lpszClassName, g_szAppName, WS_OVERLAPPEDWINDOW,
             CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, hInstance, nullptr);
         // TODO: Change to CreateWindowExW(WS_EX_TOPMOST, L"TEMPWindowClass", g_szAppName, WS_POPUP,
