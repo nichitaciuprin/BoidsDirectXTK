@@ -15,7 +15,6 @@ bool fullscreen = false;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-
 LPCWSTR lpszClassName = L"TEMPWindowClass";
 LPCWSTR lpIconName = L"IDI_ICON";
 
@@ -137,10 +136,10 @@ public:
     bool key_d = false;
     Vector2 DirectionWASD()
     {
-        auto value_1 = key_w ? 1 : 0;
-        auto value_2 = key_a ? -1 : 0;
-        auto value_3 = key_s ? -1 : 0;
-        auto value_4 = key_d ? 1 : 0;
+        auto value_1 = key_w ?  1.0f : 0.0f;
+        auto value_2 = key_a ? -1.0f : 0.0f;
+        auto value_3 = key_s ? -1.0f : 0.0f;
+        auto value_4 = key_d ?  1.0f : 0.0f;
         auto axisY = value_3 + value_1;
         auto axisX = value_2 + value_4;
         Vector2 result = Vector2(axisX, axisY);
@@ -171,7 +170,7 @@ private:
     {
         m_deviceResources->PIXBeginEvent(L"Render");
 
-        auto context = m_deviceResources->GetD3DDeviceContext();
+        // auto context = m_deviceResources->GetD3DDeviceContext();
         auto size = m_deviceResources->GetOutputSize();
         auto cameraPosition = world->cameraPosition;
         auto cameraTarget = cameraPosition+Vector3::Forward;
