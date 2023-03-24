@@ -36,9 +36,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\WorldWindow.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\DeviceResources.cpp">
       <Filter>src</Filter>
     </ClCompile>

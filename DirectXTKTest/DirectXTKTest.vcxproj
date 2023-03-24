@@ -189,7 +189,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeviceResources.cpp" />
-    <ClCompile Include="src\WorldWindow.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
