@@ -10,6 +10,7 @@ void wWinMain2(HINSTANCE hInstance)
 {
     auto world = make_unique<World>();
     auto worldWindow = make_unique<WorldWindow>(hInstance);
+    Console_Test();
     while(true)
     {
         if (Helper::EscapePressed()) break;
