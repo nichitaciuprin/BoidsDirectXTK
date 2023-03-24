@@ -34,6 +34,9 @@
     <ClInclude Include="src\World.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\WorldWindow2.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeviceResources.cpp">

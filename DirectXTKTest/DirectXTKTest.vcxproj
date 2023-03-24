@@ -186,6 +186,7 @@
     <ClInclude Include="src\Main2.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\StepTimer.h" />
+    <ClInclude Include="src\WorldWindow2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeviceResources.cpp" />
