@@ -1,10 +1,9 @@
 #pragma once
 #include <Windows.h>
 
-class Helper
+namespace Helper
 {
-public:
-    static bool EscapePressed()
+    bool EscapePressed()
     {
         // https://stackoverflow.com/questions/41600981/how-do-i-check-if-a-key-is-pressed-on-c
         auto keyState = GetKeyState(VK_ESCAPE);
@@ -12,4 +11,4 @@ public:
         // auto toggled = keyState & 0x0001;
         return pressed;
     }
-};
+}

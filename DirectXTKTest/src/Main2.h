@@ -7,30 +7,21 @@
 #include "console.h"
 #include <time.h>
 #include <iostream>
-
-class Test
-{
-public:
-    Test()
-    {
-    }
-private:
-};
+#include "MyWindow.h"
 
 void wWinMain2(HINSTANCE hInstance)
 {
     // Console_Test();
     auto world = make_unique<World>();
-    auto worldWindow2 = make_unique<WorldWindow2>(hInstance);
+    MyWindow::Create(hInstance);
     while(true)
     {
         if (Helper::EscapePressed()) break;
 
         long oldTime = clock();
 
-        auto directionWASD = worldWindow2->DirectionWASD();
-        world->Update(0.02f,directionWASD,Vector2::Zero);
-        worldWindow2->Render(world.get());
+        world->Update(0.02f,MyWindow::DirectionWASD(),Vector2::Zero);
+        MyWindow::Render(world.get());
 
         long newTime = clock();
 
