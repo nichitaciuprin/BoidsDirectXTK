@@ -85,18 +85,6 @@ struct WorldWindow final : public IDeviceNotify
     void OnDeviceRestored() override
     {
     }
-    void OnActivated()
-    {
-    }
-    void OnDeactivated()
-    {
-    }
-    void OnSuspending()
-    {
-    }
-    void OnResuming()
-    {
-    }
     void OnWindowMoved()
     {
         auto const r = m_deviceResources->GetOutputSize();
@@ -202,15 +190,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             if (wParam == SIZE_MINIMIZED && !minimized)
             {
                 minimized = true;
-                if (!suspend)
-                    worldWindow->OnSuspending();
                 suspend = true;
             }
             else if (minimized)
             {
                 minimized = false;
-                if (suspend)
-                    worldWindow->OnResuming();
                 suspend = false;
             }
             else if (!sizemove)
@@ -235,25 +219,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                 info->ptMinTrackSize.y = 200;
             }
             break;
-        case WM_ACTIVATEAPP:
-            if (wParam)
-                worldWindow->OnActivated();
-            else
-                worldWindow->OnDeactivated();
-            break;
         case WM_POWERBROADCAST:
             switch (wParam)
             {
                 case PBT_APMQUERYSUSPEND:
                     if (!suspend && worldWindow)
-                        worldWindow->OnSuspending();
                     suspend = true;
                     return TRUE;
                 case PBT_APMRESUMESUSPEND:
                     if (!minimized)
                     {
-                        if (suspend && worldWindow)
-                            worldWindow->OnResuming();
                         suspend = false;
                     }
                     return TRUE;
