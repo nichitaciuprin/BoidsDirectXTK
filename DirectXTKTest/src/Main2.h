@@ -9,8 +9,6 @@ void wWinMain2(HINSTANCE hInstance)
     auto world = make_unique<World>();
     MyWindow2::Create(hInstance);
 
-    ShowCursor(false);
-
     while(true)
     {
         if (Helper::EscapePressed()) break;

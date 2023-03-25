@@ -7,6 +7,7 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 #include "Console.h"
+#include "winuser.h"
 
 namespace MyWindow
 {
@@ -50,9 +51,20 @@ namespace MyWindow
 
         switch (message)
         {
-            case WM_SETCURSOR:
-                Console_Write(1);
-                break;
+            // case WM_SETCURSOR:
+            //     if (LOWORD(lParam) == HTCLIENT)
+            //     {
+            //         RECT clientRect;
+            //         RECT windowRect;
+            //         GetClientRect(hwnd, &clientRect);
+            //         GetWindowRect(hwnd, &windowRect);
+            //         AdjustWindowRect(&clientRect, WS_OVERLAPPEDWINDOW, FALSE);
+            //         RECT finalRect = { windowRect.left, windowRect.top, windowRect.left+clientRect.right, windowRect.top+clientRect.bottom };
+            //         ClipCursor(&windowRect);
+            //         ShowCursor(false);
+            //         // SetCursorPos(300,300);
+            //     }
+            //     break;
             case WM_DISPLAYCHANGE:
                 OnDisplayChange();
                 break;
@@ -157,6 +169,7 @@ namespace MyWindow
 
         RECT rc = { 0, 0, static_cast<LONG>(defaultWidth), static_cast<LONG>(defaultHeight) };
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+
         auto width = rc.right - rc.left;
         auto height = rc.bottom - rc.top;
         m_hwnd = CreateWindowExW(0 /*WS_EX_TOPMOST*/, className, windowName, WS_OVERLAPPEDWINDOW,
