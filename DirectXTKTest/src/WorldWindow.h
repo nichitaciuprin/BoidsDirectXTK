@@ -231,9 +231,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             PostQuitMessage(0);
             break;
         case WM_SYSKEYDOWN:
-            if (wParam == VK_RETURN && (lParam & 0x60000000) == 0x20000000)
+            if (wParam == VK_RETURN) // Alt+Enter
             {
-                // Implements the classic ALT+ENTER fullscreen toggle
                 if (fullscreen)
                 {
                     SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
