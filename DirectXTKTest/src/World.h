@@ -13,7 +13,7 @@ public:
     void Update(float deltaTime, Vector2 wasdDirection, Vector2 mouseRotation)
     {
         auto speed = 10.0f;
-        cameraPosition += Vector3(wasdDirection.x,wasdDirection.y,0) * speed * deltaTime;
+        cameraPosition += Vector3(wasdDirection.x,0,-wasdDirection.y) * speed * deltaTime;
         cameraRotation += Vector3(mouseRotation.x,mouseRotation.y,0);
     }
 private:
