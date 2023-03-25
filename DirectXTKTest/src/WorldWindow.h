@@ -26,14 +26,14 @@ bool classRegistered = false;
 
 struct WorldWindow final : public IDeviceNotify
 {
+    float key_w = 0.0f;
+    float key_a = 0.0f;
+    float key_s = 0.0f;
+    float key_d = 0.0f;
     unique_ptr<DeviceResources> m_deviceResources;
     HWND m_hwnd;
     MSG msg = {};
     unique_ptr<DirectX::GeometricPrimitive> m_shape;
-    bool key_w = false;
-    bool key_a = false;
-    bool key_s = false;
-    bool key_d = false;
     bool windowClosed = false;
 
     WorldWindow(HINSTANCE hInstance)
@@ -41,9 +41,7 @@ struct WorldWindow final : public IDeviceNotify
         m_deviceResources = std::make_unique<DX::DeviceResources>();
         m_deviceResources->RegisterDeviceNotify(this);
         MaybeRegisterClass(hInstance);
-        int w, h;
-        GetDefaultSize(w, h);
-        RECT rc = { 0, 0, static_cast<LONG>(w), static_cast<LONG>(h) };
+        RECT rc = { 0, 0, static_cast<LONG>(defaultWidth), static_cast<LONG>(defaultHeight) };
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
         auto width = rc.right - rc.left;
         auto height = rc.bottom - rc.top;
@@ -61,13 +59,17 @@ struct WorldWindow final : public IDeviceNotify
     }
     void Render(const World* world)
     {
+        HandleWindowMessages();
+        Clear();
+        Paint(world);
+    }
+    void HandleWindowMessages()
+    {
         while (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-        Clear();
-        Paint(world);
     }
     void OnDeviceLost() override
     {
@@ -77,8 +79,8 @@ struct WorldWindow final : public IDeviceNotify
     }
     void OnWindowMoved()
     {
-        auto const r = m_deviceResources->GetOutputSize();
-        m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+        auto outputSize = m_deviceResources->GetOutputSize();
+        m_deviceResources->WindowSizeChanged(outputSize.right, outputSize.bottom);
     }
     void OnDisplayChange()
     {
@@ -89,21 +91,11 @@ struct WorldWindow final : public IDeviceNotify
         if (!m_deviceResources->WindowSizeChanged(width, height))
             return;
     }
-    void GetDefaultSize(int& width, int& height) const noexcept
-    {
-        // TODO: Change to desired default window size (note minimum size is 320x200).
-        width = 800;
-        height = 600;
-    }
     Vector2 DirectionWASD()
     {
-        auto value_1 = key_w ?  1.0f : 0.0f;
-        auto value_2 = key_a ? -1.0f : 0.0f;
-        auto value_3 = key_s ? -1.0f : 0.0f;
-        auto value_4 = key_d ?  1.0f : 0.0f;
-        auto axisY = value_3 + value_1;
-        auto axisX = value_2 + value_4;
-        Vector2 result = Vector2(axisX, axisY);
+        auto axisY = key_w + key_s;
+        auto axisX = key_a + key_d;
+        auto result = Vector2(axisX, axisY);
         result.Normalize();
         return result;
     }
@@ -226,20 +218,20 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wParam)
             {
                 case VK_ESCAPE: PostQuitMessage(0); break;
-                case 'W': worldWindow->key_w = true; break;
-                case 'A': worldWindow->key_a = true; break;
-                case 'S': worldWindow->key_s = true; break;
-                case 'D': worldWindow->key_d = true; break;
+                case 'W': worldWindow->key_w =  1.0f; break;
+                case 'A': worldWindow->key_a = -1.0f; break;
+                case 'S': worldWindow->key_s = -1.0f; break;
+                case 'D': worldWindow->key_d =  1.0f; break;
                 default: break;
             }
             break;
         case WM_KEYUP:
             switch (wParam)
             {
-                case 'W': worldWindow->key_w = false; break;
-                case 'A': worldWindow->key_a = false; break;
-                case 'S': worldWindow->key_s = false; break;
-                case 'D': worldWindow->key_d = false; break;
+                case 'W': worldWindow->key_w = 0.0f; break;
+                case 'A': worldWindow->key_a = 0.0f; break;
+                case 'S': worldWindow->key_s = 0.0f; break;
+                case 'D': worldWindow->key_d = 0.0f; break;
                 default: break;
             }
             break;
