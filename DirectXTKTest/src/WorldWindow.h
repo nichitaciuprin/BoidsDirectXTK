@@ -211,59 +211,43 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             GetClientRect(hwnd, &rc);
             worldWindow->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
             break;
-        case WM_POWERBROADCAST:
-            switch (wParam)
-            {
-                case PBT_APMQUERYSUSPEND:
-                    if (!suspend && worldWindow)
-                    suspend = true;
-                    return TRUE;
-                case PBT_APMRESUMESUSPEND:
-                    if (!minimized)
-                    {
-                        suspend = false;
-                    }
-                    return TRUE;
-            }
-            break;
         case WM_DESTROY:
             worldWindow->quit = true;
-            PostQuitMessage(0);
             break;
         case WM_SYSKEYDOWN:
-            if (wParam == VK_RETURN) // Alt+Enter
+            switch (wParam)
             {
-                if (fullscreen)
-                {
-                    SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
-                    SetWindowLongPtr(hwnd, GWL_EXSTYLE, 0);
-                    int width = 800;
-                    int height = 600;
-                    worldWindow->GetDefaultSize(width, height);
-                    ShowWindow(hwnd, SW_SHOWNORMAL);
-                    SetWindowPos(hwnd, HWND_TOP, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
-                }
-                else
-                {
-                    SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP);
-                    SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
-                    SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
-                    ShowWindow(hwnd, SW_SHOWMAXIMIZED);
-                }
-                fullscreen = !fullscreen;
+                case VK_RETURN: // Alt+Enter
+                    if (fullscreen)
+                    {
+                        SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
+                        SetWindowLongPtr(hwnd, GWL_EXSTYLE, 0);
+                        int width = 800;
+                        int height = 600;
+                        worldWindow->GetDefaultSize(width, height);
+                        ShowWindow(hwnd, SW_SHOWNORMAL);
+                        SetWindowPos(hwnd, HWND_TOP, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
+                    }
+                    else
+                    {
+                        SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP);
+                        SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
+                        SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+                        ShowWindow(hwnd, SW_SHOWMAXIMIZED);
+                    }
+                    fullscreen = !fullscreen;
+                default: break;
             }
             break;
         case WM_MENUCHAR:
+            // Removes error sound during alt+enter
             // A menu is active and the user presses a key that does not correspond
-            // to any mnemonic or accelerator key. Ignore so we don't produce an error beep.
+            // to any mnemonic or accelerator key
             return MAKELRESULT(0, MNC_CLOSE);
         case WM_KEYDOWN:
             switch (wParam)
             {
-                case VK_ESCAPE:
-                    worldWindow->quit = true;
-                    PostQuitMessage(0);
-                    break;
+                case VK_ESCAPE: PostQuitMessage(0); break;
                 case 'W': worldWindow->key_w = true; break;
                 case 'A': worldWindow->key_a = true; break;
                 case 'S': worldWindow->key_s = true; break;
