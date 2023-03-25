@@ -13,11 +13,14 @@ bool suspend = false;
 bool minimized = false;
 bool fullscreen = false;
 
+int defaultWidth = 800;
+int defaultHeight = 600;
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 LPCWSTR lpszClassName = L"WorldWindow";
 LPCWSTR lpIconName = L"IDI_ICON";
-LPCWSTR g_szAppName = L"WorldWindow";
+LPCWSTR lpWindowName = L"WorldWindow";
 bool classRegistered = false;
 
 struct WorldWindow final : public IDeviceNotify
@@ -36,36 +39,22 @@ struct WorldWindow final : public IDeviceNotify
     {
         m_deviceResources = std::make_unique<DX::DeviceResources>();
         m_deviceResources->RegisterDeviceNotify(this);
-
         MaybeRegisterClass(hInstance);
-
         int w, h;
         GetDefaultSize(w, h);
-
         RECT rc = { 0, 0, static_cast<LONG>(w), static_cast<LONG>(h) };
-
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
-
         auto width = rc.right - rc.left;
         auto height = rc.bottom - rc.top;
-
-        m_hwnd = CreateWindowExW(0, lpszClassName, g_szAppName, WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, width, height, nullptr, nullptr, hInstance, nullptr);
-        // TODO: Change to CreateWindowExW(WS_EX_TOPMOST, L"TEMPWindowClass", g_szAppName, WS_POPUP,
-        // to default to fullscreen.
-
+        m_hwnd = CreateWindowExW(0 /*WS_EX_TOPMOST*/, lpszClassName, lpWindowName, WS_OVERLAPPEDWINDOW,
+            0, 0, width, height, nullptr, nullptr, hInstance, nullptr);
         if (!m_hwnd) throw;
-
         ShowWindow(m_hwnd, SW_SHOWNORMAL);
-
         SetWindowLongPtr(m_hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
-
         GetClientRect(m_hwnd, &rc);
-
         m_deviceResources->SetWindow(m_hwnd, width, height);
         m_deviceResources->CreateDeviceResources();
         m_deviceResources->CreateWindowSizeDependentResources();
-
         auto context = m_deviceResources->GetD3DDeviceContext();
         m_shape = GeometricPrimitive::CreateSphere(context);
     }
@@ -202,9 +191,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                 worldWindow->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
             }
             break;
-        case WM_ENTERSIZEMOVE:
-            sizemove = true;
-            break;
         case WM_EXITSIZEMOVE:
             sizemove = false;
             RECT rc;
@@ -222,11 +208,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     {
                         SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
                         SetWindowLongPtr(hwnd, GWL_EXSTYLE, 0);
-                        int width = 800;
-                        int height = 600;
-                        worldWindow->GetDefaultSize(width, height);
                         ShowWindow(hwnd, SW_SHOWNORMAL);
-                        SetWindowPos(hwnd, HWND_TOP, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
+                        SetWindowPos(hwnd, HWND_TOP, 0, 0, defaultWidth, defaultHeight, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
                     }
                     else
                     {
