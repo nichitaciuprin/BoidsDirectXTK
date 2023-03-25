@@ -18,7 +18,7 @@ public:
     }
     bool Closed()
     {
-        return worldWindow->quit;
+        return worldWindow->windowClosed;
     }
     Vector2 DirectionWASD()
     {

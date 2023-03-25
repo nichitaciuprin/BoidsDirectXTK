@@ -30,7 +30,7 @@ struct WorldWindow final : public IDeviceNotify
     bool key_a = false;
     bool key_s = false;
     bool key_d = false;
-    bool quit = false;
+    bool windowClosed = false;
 
     WorldWindow(HINSTANCE hInstance)
     {
@@ -212,7 +212,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             worldWindow->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
             break;
         case WM_DESTROY:
-            worldWindow->quit = true;
+            worldWindow->windowClosed = true;
             break;
         case WM_SYSKEYDOWN:
             switch (wParam)
