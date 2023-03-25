@@ -65,7 +65,6 @@ struct WorldWindow final : public IDeviceNotify
         m_deviceResources->SetWindow(m_hwnd, width, height);
         m_deviceResources->CreateDeviceResources();
         m_deviceResources->CreateWindowSizeDependentResources();
-        CreateWindowSizeDependentResources();
 
         auto context = m_deviceResources->GetD3DDeviceContext();
         m_shape = GeometricPrimitive::CreateSphere(context);
@@ -85,7 +84,6 @@ struct WorldWindow final : public IDeviceNotify
     }
     void OnDeviceRestored() override
     {
-        CreateWindowSizeDependentResources();
     }
     void OnActivated()
     {
@@ -112,8 +110,6 @@ struct WorldWindow final : public IDeviceNotify
     {
         if (!m_deviceResources->WindowSizeChanged(width, height))
             return;
-        CreateWindowSizeDependentResources();
-        // TODO: Game window is being resized.
     }
     void GetDefaultSize(int& width, int& height) const noexcept
     {
@@ -185,10 +181,6 @@ struct WorldWindow final : public IDeviceNotify
         windowClass.hIconSm = LoadIconW(windowClass.hInstance, lpIconName);
         if (!RegisterClassExW(&windowClass)) throw;
         classRegistered = true;
-    }
-    void CreateWindowSizeDependentResources()
-    {
-        // TODO: Initialize windows-size dependent objects here.
     }
 };
 
