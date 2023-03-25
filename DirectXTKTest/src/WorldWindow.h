@@ -31,12 +31,12 @@ struct WorldWindow final : public IDeviceNotify
     unique_ptr<DeviceResources> m_deviceResources;
     HWND m_hwnd;
     MSG msg = {};
-    unique_ptr<DirectX::GeometricPrimitive> m_shape;
+    unique_ptr<GeometricPrimitive> m_shape;
     bool windowClosed = false;
 
     WorldWindow(HINSTANCE hInstance)
     {
-        m_deviceResources = std::make_unique<DX::DeviceResources>();
+        m_deviceResources = make_unique<DeviceResources>();
         m_deviceResources->RegisterDeviceNotify(this);
         MaybeRegisterClass(hInstance);
         RECT rc = { 0, 0, static_cast<LONG>(defaultWidth), static_cast<LONG>(defaultHeight) };
