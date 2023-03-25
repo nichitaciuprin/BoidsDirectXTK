@@ -8,10 +8,6 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 
-bool sizemove = false;
-bool minimized = false;
-bool fullscreen = false;
-
 int defaultWidth = 800;
 int defaultHeight = 600;
 
@@ -24,6 +20,9 @@ bool classRegistered = false;
 
 struct WorldWindow final : public IDeviceNotify
 {
+    bool sizemove = false;
+    bool minimized = false;
+    bool fullscreen = false;
     float key_w = 0.0f;
     float key_a = 0.0f;
     float key_s = 0.0f;
@@ -36,8 +35,6 @@ struct WorldWindow final : public IDeviceNotify
 
     WorldWindow(HINSTANCE hInstance)
     {
-        m_deviceResources = make_unique<DeviceResources>();
-        m_deviceResources->RegisterDeviceNotify(this);
         MaybeRegisterClass(hInstance);
         RECT rc = { 0, 0, static_cast<LONG>(defaultWidth), static_cast<LONG>(defaultHeight) };
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
@@ -49,6 +46,9 @@ struct WorldWindow final : public IDeviceNotify
         ShowWindow(m_hwnd, SW_SHOWNORMAL);
         SetWindowLongPtr(m_hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
         GetClientRect(m_hwnd, &rc);
+
+        m_deviceResources = make_unique<DeviceResources>();
+        m_deviceResources->RegisterDeviceNotify(this);
         m_deviceResources->SetWindow(m_hwnd, width, height);
         m_deviceResources->CreateDeviceResources();
         m_deviceResources->CreateWindowSizeDependentResources();
@@ -114,7 +114,6 @@ struct WorldWindow final : public IDeviceNotify
     {
         m_deviceResources->PIXBeginEvent(L"Render");
 
-        // auto context = m_deviceResources->GetD3DDeviceContext();
         auto size = m_deviceResources->GetOutputSize();
         auto cameraPosition = world->cameraPosition;
         auto cameraTarget = cameraPosition+Vector3::Forward;
@@ -161,21 +160,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             worldWindow->OnWindowMoved();
             break;
         case WM_SIZE:
-            if (wParam == SIZE_MINIMIZED && !minimized)
+            if (wParam == SIZE_MINIMIZED && !worldWindow->minimized)
             {
-                minimized = true;
+                worldWindow->minimized = true;
             }
-            else if (minimized)
+            else if (worldWindow->minimized)
             {
-                minimized = false;
+                worldWindow->minimized = false;
             }
-            else if (!sizemove)
+            else if (!worldWindow->sizemove)
             {
                 worldWindow->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
             }
             break;
         case WM_EXITSIZEMOVE:
-            sizemove = false;
+            worldWindow->sizemove = false;
             RECT rc;
             GetClientRect(hwnd, &rc);
             worldWindow->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
@@ -187,7 +186,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wParam)
             {
                 case VK_RETURN: // Alt+Enter
-                    if (fullscreen)
+                    if (worldWindow->fullscreen)
                     {
                         SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
                         SetWindowLongPtr(hwnd, GWL_EXSTYLE, 0);
@@ -203,7 +202,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                         SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, uFlags);
                         ShowWindow(hwnd, SW_SHOWMAXIMIZED);
                     }
-                    fullscreen = !fullscreen;
+                    worldWindow->fullscreen = !worldWindow->fullscreen;
                 default: break;
             }
             break;
