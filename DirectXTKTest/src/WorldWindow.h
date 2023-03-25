@@ -59,14 +59,6 @@ struct WorldWindow
         Clear();
         Paint(world);
     }
-    void HandleWindowMessages()
-    {
-        while (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
     void OnWindowMoved()
     {
         auto outputSize = m_deviceResources->GetOutputSize();
@@ -88,6 +80,14 @@ struct WorldWindow
         auto result = Vector2(axisX, axisY);
         result.Normalize();
         return result;
+    }
+    void HandleWindowMessages()
+    {
+        while (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
     }
     void Clear()
     {
