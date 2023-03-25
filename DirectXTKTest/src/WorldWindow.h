@@ -18,28 +18,20 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 LPCWSTR lpszClassName = L"WorldWindow";
 LPCWSTR lpIconName = L"IDI_ICON";
 LPCWSTR g_szAppName = L"WorldWindow";
-
 bool classRegistered = false;
-void MaybeRegisterClass(HINSTANCE hInstance)
-{
-    if (classRegistered) return;
-    WNDCLASSEXW windowClass = {};
-    windowClass.cbSize = sizeof(WNDCLASSEXW);
-    windowClass.style = CS_HREDRAW | CS_VREDRAW;
-    windowClass.lpfnWndProc = WndProc;
-    windowClass.hInstance = hInstance;
-    windowClass.hIcon = LoadIconW(hInstance, lpIconName);
-    windowClass.hCursor = LoadCursorW(nullptr, IDC_ARROW);
-    windowClass.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
-    windowClass.lpszClassName = lpszClassName;
-    windowClass.hIconSm = LoadIconW(windowClass.hInstance, lpIconName);
-    if (!RegisterClassExW(&windowClass)) throw;
-    classRegistered = true;
-}
 
-class WorldWindow final : public IDeviceNotify
+struct WorldWindow final : public IDeviceNotify
 {
-public:
+    unique_ptr<DeviceResources> m_deviceResources;
+    HWND m_hwnd;
+    MSG msg = {};
+    unique_ptr<DirectX::GeometricPrimitive> m_shape;
+    bool key_w = false;
+    bool key_a = false;
+    bool key_s = false;
+    bool key_d = false;
+    bool quit = false;
+
     WorldWindow(HINSTANCE hInstance)
     {
         m_deviceResources = std::make_unique<DX::DeviceResources>();
@@ -88,7 +80,6 @@ public:
         Clear();
         Paint(world);
     }
-    bool quit = false;
     void OnDeviceLost() override
     {
     }
@@ -130,10 +121,6 @@ public:
         width = 800;
         height = 600;
     }
-    bool key_w = false;
-    bool key_a = false;
-    bool key_s = false;
-    bool key_d = false;
     Vector2 DirectionWASD()
     {
         auto value_1 = key_w ?  1.0f : 0.0f;
@@ -146,7 +133,6 @@ public:
         result.Normalize();
         return result;
     }
-private:
     void Clear()
     {
         m_deviceResources->PIXBeginEvent(L"Clear");
@@ -184,16 +170,27 @@ private:
         m_deviceResources->PIXEndEvent();
         m_deviceResources->Present();
     }
+    void MaybeRegisterClass(HINSTANCE hInstance)
+    {
+        if (classRegistered) return;
+        WNDCLASSEXW windowClass = {};
+        windowClass.cbSize = sizeof(WNDCLASSEXW);
+        windowClass.style = CS_HREDRAW | CS_VREDRAW;
+        windowClass.lpfnWndProc = WndProc;
+        windowClass.hInstance = hInstance;
+        windowClass.hIcon = LoadIconW(hInstance, lpIconName);
+        windowClass.hCursor = LoadCursorW(nullptr, IDC_ARROW);
+        windowClass.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
+        windowClass.lpszClassName = lpszClassName;
+        windowClass.hIconSm = LoadIconW(windowClass.hInstance, lpIconName);
+        if (!RegisterClassExW(&windowClass)) throw;
+        classRegistered = true;
+    }
     void CreateWindowSizeDependentResources()
     {
         // TODO: Initialize windows-size dependent objects here.
     }
-    unique_ptr<DeviceResources> m_deviceResources;
-    HWND m_hwnd;
-    MSG msg = {};
-    unique_ptr<DirectX::GeometricPrimitive> m_shape;
 };
-
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
