@@ -13,13 +13,12 @@ int defaultHeight = 600;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-LPCWSTR lpszClassName = L"WorldWindow";
-LPCWSTR lpIconName = L"IDI_ICON";
-LPCWSTR lpWindowName = L"WorldWindow";
-bool classRegistered = false;
-
 struct WorldWindow final : public IDeviceNotify
 {
+    static bool classRegistered;
+    const LPCWSTR lpszClassName = L"WorldWindow";
+    const LPCWSTR lpIconName = L"IDI_ICON";
+    const LPCWSTR lpWindowName = L"WorldWindow";
     bool sizemove = false;
     bool minimized = false;
     bool fullscreen = false;
@@ -144,6 +143,7 @@ struct WorldWindow final : public IDeviceNotify
         classRegistered = true;
     }
 };
+bool WorldWindow::classRegistered = false;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
