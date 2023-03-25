@@ -2,11 +2,12 @@
 #include "pch.h"
 #include "World.h"
 #include "DeviceResources.h"
+using namespace std;
+using namespace DX;
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 
-using namespace DX;
 
 bool sizemove = false;
 bool suspend = false;
