@@ -13,7 +13,7 @@ int defaultHeight = 600;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-struct WorldWindow final : public IDeviceNotify
+struct WorldWindow
 {
     static bool classRegistered;
     const LPCWSTR lpszClassName = L"WorldWindow";
@@ -47,7 +47,6 @@ struct WorldWindow final : public IDeviceNotify
         GetClientRect(m_hwnd, &rc);
 
         m_deviceResources = make_unique<DeviceResources>();
-        m_deviceResources->RegisterDeviceNotify(this);
         m_deviceResources->SetWindow(m_hwnd, width, height);
         m_deviceResources->CreateDeviceResources();
         m_deviceResources->CreateWindowSizeDependentResources();
@@ -67,12 +66,6 @@ struct WorldWindow final : public IDeviceNotify
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-    }
-    void OnDeviceLost() override
-    {
-    }
-    void OnDeviceRestored() override
-    {
     }
     void OnWindowMoved()
     {
