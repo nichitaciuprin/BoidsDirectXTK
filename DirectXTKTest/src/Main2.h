@@ -1,7 +1,6 @@
 #pragma once
-#include "pch.h"
-#include "World.h"
 #include "Helper.h"
+#include "World.h"
 #include "MyWindow2.h"
 
 void wWinMain2(HINSTANCE hInstance)

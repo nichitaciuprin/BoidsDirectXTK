@@ -37,12 +37,15 @@
     <ClInclude Include="src\WorldWindow2.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\MyWindow.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MyWindow2.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeviceResources.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Main.cpp">
