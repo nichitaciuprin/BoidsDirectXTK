@@ -6,6 +6,7 @@ using namespace DX;
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
+#include "Console.h"
 
 namespace MyWindow
 {
@@ -49,6 +50,9 @@ namespace MyWindow
 
         switch (message)
         {
+            case WM_SETCURSOR:
+                Console_Write(1);
+                break;
             case WM_DISPLAYCHANGE:
                 OnDisplayChange();
                 break;

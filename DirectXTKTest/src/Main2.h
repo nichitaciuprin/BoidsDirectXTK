@@ -2,11 +2,14 @@
 #include "Helper.h"
 #include "World.h"
 #include "MyWindow2.h"
+#include "winuser.h"
 
 void wWinMain2(HINSTANCE hInstance)
 {
     auto world = make_unique<World>();
     MyWindow2::Create(hInstance);
+
+    ShowCursor(false);
 
     while(true)
     {
