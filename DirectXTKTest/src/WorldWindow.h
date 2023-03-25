@@ -8,9 +8,7 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 
-
 bool sizemove = false;
-bool suspend = false;
 bool minimized = false;
 bool fullscreen = false;
 
@@ -166,12 +164,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             if (wParam == SIZE_MINIMIZED && !minimized)
             {
                 minimized = true;
-                suspend = true;
             }
             else if (minimized)
             {
                 minimized = false;
-                suspend = false;
             }
             else if (!sizemove)
             {
@@ -195,14 +191,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     {
                         SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
                         SetWindowLongPtr(hwnd, GWL_EXSTYLE, 0);
-                        SetWindowPos(hwnd, HWND_TOP, 0, 0, defaultWidth, defaultHeight, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
+                        auto uFlags = SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED;
+                        SetWindowPos(hwnd, HWND_TOP, 0, 0, defaultWidth, defaultHeight, uFlags);
                         ShowWindow(hwnd, SW_SHOWNORMAL);
                     }
                     else
                     {
                         SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP);
                         SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
-                        SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+                        auto uFlags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED;
+                        SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, uFlags);
                         ShowWindow(hwnd, SW_SHOWMAXIMIZED);
                     }
                     fullscreen = !fullscreen;
