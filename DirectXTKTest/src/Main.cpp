@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Main2.h"
 
 // Adds support for clang. Maybe remove

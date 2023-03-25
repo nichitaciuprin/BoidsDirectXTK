@@ -1,5 +1,4 @@
 #pragma once
-#include "pch.h"
 #include "World.h"
 #include "DeviceResources.h"
 #include "MyWindow.h"
