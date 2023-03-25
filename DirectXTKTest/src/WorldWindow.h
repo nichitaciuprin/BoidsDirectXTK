@@ -211,14 +211,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             GetClientRect(hwnd, &rc);
             worldWindow->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
             break;
-        case WM_GETMINMAXINFO:
-            if (lParam)
-            {
-                auto info = reinterpret_cast<MINMAXINFO*>(lParam);
-                info->ptMinTrackSize.x = 320;
-                info->ptMinTrackSize.y = 200;
-            }
-            break;
         case WM_POWERBROADCAST:
             switch (wParam)
             {
