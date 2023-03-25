@@ -110,20 +110,14 @@ struct WorldWindow final : public IDeviceNotify
     void Clear()
     {
         m_deviceResources->PIXBeginEvent(L"Clear");
-
-        // Clear the views.
         auto context = m_deviceResources->GetD3DDeviceContext();
         auto renderTarget = m_deviceResources->GetRenderTargetView();
         auto depthStencil = m_deviceResources->GetDepthStencilView();
-
         context->ClearRenderTargetView(renderTarget, Colors::CornflowerBlue);
         context->ClearDepthStencilView(depthStencil, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
         context->OMSetRenderTargets(1, &renderTarget, depthStencil);
-
-        // Set the viewport.
         auto const viewport = m_deviceResources->GetScreenViewport();
         context->RSSetViewports(1, &viewport);
-
         m_deviceResources->PIXEndEvent();
     }
     void Paint(const World* world)
@@ -209,8 +203,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     {
                         SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
                         SetWindowLongPtr(hwnd, GWL_EXSTYLE, 0);
-                        ShowWindow(hwnd, SW_SHOWNORMAL);
                         SetWindowPos(hwnd, HWND_TOP, 0, 0, defaultWidth, defaultHeight, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
+                        ShowWindow(hwnd, SW_SHOWNORMAL);
                     }
                     else
                     {
