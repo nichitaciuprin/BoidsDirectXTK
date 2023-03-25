@@ -9,18 +9,20 @@ using namespace DirectX::SimpleMath;
 
 namespace MyWindow2
 {
+    void Create(HINSTANCE hInstance)
+    {
+        MyWindow::Create(hInstance);
+    }
     void Render(const World* game)
     {
-        // MyWindow::Create(hInstance);
+        MyWindow::Render(game);
     }
     bool Closed()
     {
-        return false;
-        // return MyWindow::windowClosed;
+        return MyWindow::windowClosed;
     }
     Vector2 DirectionWASD()
     {
-        return Vector2::Zero;
-        // return MyWindow::DirectionWASD();
+        return MyWindow::DirectionWASD();
     }
 }

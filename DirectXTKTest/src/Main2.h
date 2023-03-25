@@ -1,34 +1,24 @@
 #pragma once
 #include "pch.h"
 #include "World.h"
-#include "WorldWindow.h"
-#include "WorldWindow2.h"
 #include "Helper.h"
-#include "console.h"
-#include <time.h>
-#include <iostream>
-#include "MyWindow.h"
+#include "MyWindow2.h"
 
 void wWinMain2(HINSTANCE hInstance)
 {
-    // Console_Test();
     auto world = make_unique<World>();
-    MyWindow::Create(hInstance);
+    MyWindow2::Create(hInstance);
+
     while(true)
     {
         if (Helper::EscapePressed()) break;
 
-        long oldTime = clock();
+        auto oldTime = Helper::GetTime();
 
-        world->Update(0.02f,MyWindow::DirectionWASD(),Vector2::Zero);
-        MyWindow::Render(world.get());
+        world->Update(0.02f,MyWindow2::DirectionWASD(),Vector2::Zero);
+        MyWindow2::Render(world.get());
 
-        long newTime = clock();
-
-        long diff = newTime - oldTime;
-        long timeStep = 20;
-        long waitTime = timeStep - diff;
-        if (waitTime < 0) continue;
-        Sleep(waitTime);
+        auto newTime = Helper::GetTime();
+        Helper::Wait(oldTime,newTime,20);
     }
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <time.h>
 
 namespace Helper
 {
@@ -10,5 +11,16 @@ namespace Helper
         auto pressed = keyState & 0x8000;
         // auto toggled = keyState & 0x0001;
         return pressed;
+    }
+    long GetTime()
+    {
+        return clock();
+    }
+    void Wait(long oldTime, long newTime, long timeStep)
+    {
+        auto diff = newTime - oldTime;
+        long waitTime = timeStep - diff;
+        if (waitTime < 0) return;
+        Sleep(waitTime);
     }
 }
