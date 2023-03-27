@@ -2,7 +2,6 @@
 #include "Helper.h"
 #include "World.h"
 #include "MyWindow2.h"
-#include "winuser.h"
 
 void wWinMain2(HINSTANCE hInstance)
 {
