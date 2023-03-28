@@ -8,6 +8,7 @@ using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 #include "Console.h"
 #include "winuser.h"
+#include "Mouse.h"
 
 namespace MyWindow
 {
@@ -29,6 +30,7 @@ namespace MyWindow
     HWND m_hwnd;
     MSG msg = {};
     unique_ptr<GeometricPrimitive> m_shape;
+    unique_ptr<Mouse> mouse;
 
     void OnDisplayChange()
     {
@@ -51,6 +53,23 @@ namespace MyWindow
 
         switch (message)
         {
+            case WM_MOUSEACTIVATE: return MA_ACTIVATEANDEAT;
+            case WM_ACTIVATE:
+            case WM_ACTIVATEAPP:
+            case WM_INPUT:
+            case WM_MOUSEMOVE:
+            case WM_LBUTTONDOWN:
+            case WM_LBUTTONUP:
+            case WM_RBUTTONDOWN:
+            case WM_RBUTTONUP:
+            case WM_MBUTTONDOWN:
+            case WM_MBUTTONUP:
+            case WM_MOUSEWHEEL:
+            case WM_XBUTTONDOWN:
+            case WM_XBUTTONUP:
+            case WM_MOUSEHOVER:
+                Mouse::ProcessMessage(message, wParam, lParam);
+                break;
             // case WM_SETCURSOR:
             //     if (LOWORD(lParam) == HTCLIENT)
             //     {
@@ -145,6 +164,7 @@ namespace MyWindow
                 }
                 break;
         }
+
         return DefWindowProc(hwnd, message, wParam, lParam);
     }
     void MaybeRegisterClass(HINSTANCE hInstance)
@@ -178,12 +198,21 @@ namespace MyWindow
         ShowWindow(m_hwnd, SW_SHOWNORMAL);
         GetClientRect(m_hwnd, &rc);
 
+        mouse = make_unique<Mouse>();
+        mouse->SetWindow(m_hwnd);
+        mouse->SetMode(Mouse::MODE_RELATIVE);
+
         m_deviceResources = make_unique<DeviceResources>();
         m_deviceResources->SetWindow(m_hwnd, width, height);
         m_deviceResources->CreateDeviceResources();
         m_deviceResources->CreateWindowSizeDependentResources();
         auto context = m_deviceResources->GetD3DDeviceContext();
         m_shape = GeometricPrimitive::CreateSphere(context);
+    }
+    Vector2 MouseLook()
+    {
+        auto state = mouse->GetState();
+        return Vector2((float)state.x,(float)state.y);
     }
     void HandleWindowMessages()
     {

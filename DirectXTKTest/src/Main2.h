@@ -17,7 +17,7 @@ void wWinMain2(HINSTANCE hInstance)
 
         auto oldTime = Helper::GetTime();
 
-        world->Update(timeStepInSeconds,MyWindow2::DirectionWASD(),Vector2::Zero);
+        world->Update(timeStepInSeconds,MyWindow2::DirectionWASD(),MyWindow2::MouseLook());
         MyWindow2::Render(world.get());
 
         auto newTime = Helper::GetTime();

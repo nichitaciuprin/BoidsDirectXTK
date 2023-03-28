@@ -24,4 +24,8 @@ namespace MyWindow2
     {
         return MyWindow::DirectionWASD();
     }
+    Vector2 MouseLook()
+    {
+        return MyWindow::MouseLook();
+    }
 }
