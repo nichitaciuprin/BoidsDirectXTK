@@ -32,8 +32,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     // and creates a new apartment for the thread if one is required.
     if (FAILED(CoInitializeEx(nullptr, COINITBASE_MULTITHREADED))) return 1;
 
-    // throw;
-
     wWinMain2(hInstance);
 
     // Closes the COM library on the current thread, unloads all DLLs loaded by the thread,
