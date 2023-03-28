@@ -9,7 +9,7 @@ void wWinMain2(HINSTANCE hInstance)
     MyWindow2::Create(hInstance);
 
     const long timeStepInMilliseconds = 20;
-    const float timeStepInSeconds = 0.02f;
+    const float timeStepInSeconds = 0.020f;
 
     while(true)
     {
