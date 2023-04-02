@@ -253,11 +253,12 @@ namespace MyWindow
 
         auto size = m_deviceResources->GetOutputSize();
         auto cameraPosition = world->cameraPosition;
+        auto cameraDirection = Helper::ToDirection(world->cameraRotation);
         // cameraPosition.z = -cameraPosition.z;
         auto m_view =
-            Matrix::CreateLookAt(cameraPosition, world->cameraPosition+Vector3::Forward, Vector3::UnitY) *
-            Matrix::CreateRotationX(Helper::ToRadian(world->cameraRotation.x)) *
-            Matrix::CreateRotationY(Helper::ToRadian(world->cameraRotation.y));
+            Matrix::CreateLookAt(cameraPosition, cameraPosition+cameraDirection, Vector3::UnitY);
+            // Matrix::CreateRotationX(Helper::ToRadian(world->cameraRotation.x)) *
+            // Matrix::CreateRotationY(Helper::ToRadian(world->cameraRotation.y));
             // Matrix::CreateRotationX(world->cameraRotation.y/100);
         auto m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, float(size.right) / float(size.bottom), 0.1f, 10.f);
 
