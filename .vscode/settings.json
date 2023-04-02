@@ -23,6 +23,8 @@
         "coroutine": "cpp",
         "xmemory": "cpp",
         "chrono": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "cmath": "cpp",
+        "xstring": "cpp"
     }
 }

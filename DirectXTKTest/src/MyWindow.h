@@ -1,14 +1,15 @@
 #pragma once
+#include "winuser.h"
 #include "World.h"
 #include "DeviceResources.h"
+#include "Console.h"
+#include "Mouse.h"
+#include "Helper.h"
 using namespace std;
 using namespace DX;
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
-#include "Console.h"
-#include "winuser.h"
-#include "Mouse.h"
 
 namespace MyWindow
 {
@@ -212,7 +213,7 @@ namespace MyWindow
     Vector2 MouseLook()
     {
         auto state = mouse->GetState();
-        return Vector2((float)state.x,(float)state.y);
+        return Vector2((float)state.x,(float)-state.y);
     }
     void HandleWindowMessages()
     {
@@ -235,21 +236,40 @@ namespace MyWindow
         context->RSSetViewports(1, &viewport);
         m_deviceResources->PIXEndEvent();
     }
+    Vector3 ToDirection(Vector2 mousePosition)
+    {
+        mousePosition.x = remainderf(mousePosition.x,360);
+        mousePosition.y = remainderf(mousePosition.y,360);
+        if (mousePosition.x < 0) mousePosition.x = 360 - mousePosition.x;
+        if (mousePosition.y < 0) mousePosition.y = 360 - mousePosition.y;
+        auto x = cos(mousePosition.x);
+        auto y = cos(mousePosition.y);
+        auto z = sin(mousePosition.y);
+        return Vector3(x,y,z);
+    }
     void Paint(const World* world)
     {
         m_deviceResources->PIXBeginEvent(L"Render");
 
         auto size = m_deviceResources->GetOutputSize();
         auto cameraPosition = world->cameraPosition;
-        auto cameraTarget = cameraPosition+Vector3::Forward;
-        auto m_view = Matrix::CreateLookAt(cameraPosition, cameraTarget, Vector3::UnitY);
+        // cameraPosition.z = -cameraPosition.z;
+        auto m_view =
+            Matrix::CreateLookAt(cameraPosition, world->cameraPosition+Vector3::Forward, Vector3::UnitY) *
+            Matrix::CreateRotationX(Helper::ToRadian(world->cameraRotation.x)) *
+            Matrix::CreateRotationY(Helper::ToRadian(world->cameraRotation.y));
+            // Matrix::CreateRotationX(world->cameraRotation.y/100);
         auto m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, float(size.right) / float(size.bottom), 0.1f, 10.f);
-        auto m_world_1 = Matrix::CreateWorld(Vector3::Zero, Vector3::Forward, Vector3::Up);
-        auto m_world_2 = Matrix::CreateWorld(Vector3::Zero+Vector3::Right*3, Vector3::Forward, Vector3::Up);
+
+        auto m_world_1 = Matrix::CreateWorld(Vector3::Zero+Vector3::Forward*5,                  Vector3::Forward, Vector3::Up);
+        auto m_world_2 = Matrix::CreateWorld(Vector3::Zero+Vector3::Forward*5+Vector3::Right*2, Vector3::Forward, Vector3::Up);
+        auto m_world_3 = Matrix::CreateWorld(Vector3::Zero+Vector3::Forward*5+Vector3::Up*2,    Vector3::Forward, Vector3::Up);
         m_shape->Draw(m_world_1,m_view,m_proj);
         m_shape->Draw(m_world_2,m_view,m_proj);
+        m_shape->Draw(m_world_3,m_view,m_proj);
 
         m_deviceResources->PIXEndEvent();
+
         m_deviceResources->Present();
     }
     void Render(const World* world)

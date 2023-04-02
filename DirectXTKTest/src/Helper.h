@@ -1,6 +1,8 @@
 #pragma once
 #include <Windows.h>
 #include <time.h>
+#include <cmath>
+// using namespace std;
 
 namespace Helper
 {
@@ -23,4 +25,20 @@ namespace Helper
         if (waitTime < 0) return;
         Sleep(waitTime);
     }
+    float ToDegree(float radian)
+    {
+        auto pi = 3.14159;
+        return radian * (180 / pi);
+    }
+    float ToRadian(float degree)
+    {
+        auto pi = 3.14159;
+        return degree * (pi / 180);
+    }
+    // float NormaliseDegree(float degree)
+    // {
+    //     degree = remainderf(degree,360);
+    //     if (degree < 0) degree = 360 + degree;
+    //     return degree;
+    // }
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+using namespace std;
 // #include <stdio.h>
 
 FILE* fileIn;
@@ -26,7 +27,12 @@ void Console_Write(int msg)
     Console_MaybeCreate();
     std::cout << msg;
 }
-void Console_WriteLine(int msg)
+void Console_WriteLineInt(int msg)
+{
+    Console_MaybeCreate();
+    std::cout << msg << '\n';
+}
+void Console_WriteLine(string msg)
 {
     Console_MaybeCreate();
     std::cout << msg << '\n';
