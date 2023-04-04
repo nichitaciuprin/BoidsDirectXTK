@@ -6,26 +6,27 @@ using namespace DX;
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-namespace MyWindow2
+class MyWindow2
 {
-    void Create(HINSTANCE hInstance)
+public:
+    static void Create(HINSTANCE hInstance)
     {
         MyWindow::Create(hInstance);
     }
-    void Render(const World* game)
+    static void Render(const World* game)
     {
         MyWindow::Render(game);
     }
-    bool Closed()
+    static bool Closed()
     {
         return MyWindow::windowClosed;
     }
-    Vector2 DirectionWASD()
+    static Vector2 DirectionWASD()
     {
         return MyWindow::DirectionWASD();
     }
-    Vector2 MouseLook()
+    static Vector2 MouseLook()
     {
         return MyWindow::MouseLook();
     }
-}
+};
