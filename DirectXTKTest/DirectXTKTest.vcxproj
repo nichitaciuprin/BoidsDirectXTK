@@ -186,7 +186,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\console.h" />
+    <ClInclude Include="src\Console.h" />
     <ClInclude Include="src\DeviceResources.h" />
     <ClInclude Include="src\Helper.h" />
     <ClInclude Include="src\MyWindow.h" />

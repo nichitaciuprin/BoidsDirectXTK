@@ -22,7 +22,7 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\console.h">
+    <ClInclude Include="src\Console.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Helper.h">
