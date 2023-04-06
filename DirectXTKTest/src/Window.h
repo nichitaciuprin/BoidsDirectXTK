@@ -14,7 +14,9 @@ namespace Window
     }
     void Render(const World* game)
     {
-        WindowPrivate::Render(game);
+        WindowPrivate::HandleWindowMessages();
+        WindowPrivate::Clear();
+        WindowPrivate::Paint(game);
     }
     bool Closed()
     {

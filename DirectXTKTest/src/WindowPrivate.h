@@ -268,10 +268,4 @@ namespace WindowPrivate
 
         m_deviceResources->Present();
     }
-    void Render(const World* world)
-    {
-        HandleWindowMessages();
-        Clear();
-        Paint(world);
-    }
 }
