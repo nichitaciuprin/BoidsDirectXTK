@@ -190,7 +190,7 @@
     <ClInclude Include="src\DeviceResources.h" />
     <ClInclude Include="src\Helper.h" />
     <ClInclude Include="src\MyWindow.h" />
-    <ClInclude Include="src\MyWindow2.h" />
+    <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\World.h" />
     <ClInclude Include="src\Main2.h" />
     <ClInclude Include="src\pch.h" />

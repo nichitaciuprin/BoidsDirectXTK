@@ -31,7 +31,7 @@
     <ClInclude Include="src\MyWindow.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\MyWindow2.h">
+    <ClInclude Include="src\Window.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
