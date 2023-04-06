@@ -12,11 +12,11 @@ namespace Window
     {
         WindowPrivate::Create(hInstance);
     }
-    void Render(const World* game)
+    void Render(const World* world)
     {
         WindowPrivate::HandleWindowMessages();
         WindowPrivate::Clear();
-        WindowPrivate::Paint(game);
+        WindowPrivate::Paint(world);
     }
     bool Closed()
     {
