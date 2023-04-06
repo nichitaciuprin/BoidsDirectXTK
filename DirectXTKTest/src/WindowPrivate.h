@@ -210,11 +210,6 @@ namespace WindowPrivate
         auto context = m_deviceResources->GetD3DDeviceContext();
         m_shape = GeometricPrimitive::CreateSphere(context);
     }
-    Vector2 MouseLook()
-    {
-        auto state = mouse->GetState();
-        return Vector2((float)state.x,(float)-state.y);
-    }
     void HandleWindowMessages()
     {
         while (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
