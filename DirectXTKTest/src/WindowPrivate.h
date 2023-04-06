@@ -279,12 +279,4 @@ namespace WindowPrivate
         Clear();
         Paint(world);
     }
-    Vector2 DirectionWASD()
-    {
-        auto axisY = key_w + key_s;
-        auto axisX = key_a + key_d;
-        auto result = Vector2(axisX, axisY);
-        result.Normalize();
-        return result;
-    }
 }
