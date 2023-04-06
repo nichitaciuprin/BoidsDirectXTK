@@ -10,9 +10,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\WorldWindow.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\Main2.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -29,9 +26,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\World.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\WorldWindow2.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\MyWindow.h">

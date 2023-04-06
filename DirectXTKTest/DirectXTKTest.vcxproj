@@ -192,10 +192,8 @@
     <ClInclude Include="src\MyWindow.h" />
     <ClInclude Include="src\MyWindow2.h" />
     <ClInclude Include="src\World.h" />
-    <ClInclude Include="src\WorldWindow.h" />
     <ClInclude Include="src\Main2.h" />
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\WorldWindow2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeviceResources.cpp" />
