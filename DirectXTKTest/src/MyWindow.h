@@ -11,7 +11,7 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 
-namespace MyWindow
+namespace WindowPrivate
 {
     const LPCWSTR className = L"WorldWindow";
     const LPCWSTR windowName = L"WorldWindow";

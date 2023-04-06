@@ -10,22 +10,22 @@ namespace Window
 {
     void Create(HINSTANCE hInstance)
     {
-        MyWindow::Create(hInstance);
+        WindowPrivate::Create(hInstance);
     }
     void Render(const World* game)
     {
-        MyWindow::Render(game);
+        WindowPrivate::Render(game);
     }
     bool Closed()
     {
-        return MyWindow::windowClosed;
+        return WindowPrivate::windowClosed;
     }
     Vector2 DirectionWASD()
     {
-        return MyWindow::DirectionWASD();
+        return WindowPrivate::DirectionWASD();
     }
     Vector2 MouseLook()
     {
-        return MyWindow::MouseLook();
+        return WindowPrivate::MouseLook();
     }
 }
