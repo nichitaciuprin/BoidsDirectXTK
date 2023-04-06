@@ -39,10 +39,6 @@ private:
     static MSG msg;
     static unique_ptr<GeometricPrimitive> m_shape;
     static unique_ptr<Mouse> mouse;
-    static void Init()
-    {
-        msg = {};
-    }
     static LPCWSTR ClassName() { return L"WorldWindow"; }
     static LPCWSTR WindowName() { return L"WorldWindow"; }
     static LPCWSTR IconName() { return L"IDI_ICON"; }
@@ -183,6 +179,7 @@ private:
     }
     static void MaybeRegisterClass(HINSTANCE hInstance)
     {
+        msg = {};
         if (classRegistered) return;
         WNDCLASSEXW windowClass = {};
         windowClass.cbSize = sizeof(WNDCLASSEXW);
@@ -222,6 +219,11 @@ private:
         m_deviceResources->CreateWindowSizeDependentResources();
         auto context = m_deviceResources->GetD3DDeviceContext();
         m_shape = GeometricPrimitive::CreateSphere(context);
+    }
+    static Vector2 MouseLook()
+    {
+        auto state = mouse->GetState();
+        return Vector2((float)state.x,(float)-state.y);
     }
 };
 
