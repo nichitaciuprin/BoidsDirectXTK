@@ -6,7 +6,7 @@ using namespace DX;
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-namespace MyWindow2
+namespace Window
 {
     void Create(HINSTANCE hInstance)
     {
