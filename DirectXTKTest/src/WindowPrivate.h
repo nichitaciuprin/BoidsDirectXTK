@@ -248,14 +248,8 @@ namespace WindowPrivate
 
         auto size = m_deviceResources->GetOutputSize();
         auto cameraPosition = world->cameraPosition;
-        // auto cameraDirection = Helper::ToDirection(world->cameraRotation);
         auto cameraDirection = Vector3::Transform(Vector3::Forward,world->cameraRotation);
-        // cameraPosition.z = -cameraPosition.z;
-        auto m_view =
-            Matrix::CreateLookAt(cameraPosition, cameraPosition+cameraDirection, Vector3::UnitY);
-            // Matrix::CreateRotationX(Helper::ToRadian(world->cameraRotation.x)) *
-            // Matrix::CreateRotationY(Helper::ToRadian(world->cameraRotation.y));
-            // Matrix::CreateRotationX(world->cameraRotation.y/100);
+        auto m_view = Matrix::CreateLookAt(cameraPosition, cameraPosition+cameraDirection, Vector3::UnitY);
         auto m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, float(size.right) / float(size.bottom), 0.1f, 100.f);
 
         auto m_world_1 = Matrix::CreateWorld(Vector3::Zero+Vector3::Forward*5,                  Vector3::Forward, Vector3::Up);
