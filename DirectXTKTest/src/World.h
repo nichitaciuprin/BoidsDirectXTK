@@ -17,6 +17,7 @@ public:
     void Update(float deltaTime, Vector2 wasdDirection, Vector2 mousePositionDelta)
     {
         mousePosition += mousePositionDelta;
+        mousePosition.y = std::clamp(mousePosition.y,-89.0f,89.0f);
         cameraRotation = Quaternion::CreateFromYawPitchRoll(Helper::ToRadian(-mousePosition.x),Helper::ToRadian(mousePosition.y),0);
         if (wasdDirection == Vector2::Zero) return;
         auto wasdDirection2 = Vector3(wasdDirection.x,0,-wasdDirection.y);
