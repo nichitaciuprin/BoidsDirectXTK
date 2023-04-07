@@ -248,7 +248,8 @@ namespace WindowPrivate
 
         auto size = m_deviceResources->GetOutputSize();
         auto cameraPosition = world->cameraPosition;
-        auto cameraDirection = Helper::ToDirection(world->cameraRotation);
+        // auto cameraDirection = Helper::ToDirection(world->cameraRotation);
+        auto cameraDirection = Vector3::Transform(Vector3::Forward,world->cameraRotation);
         // cameraPosition.z = -cameraPosition.z;
         auto m_view =
             Matrix::CreateLookAt(cameraPosition, cameraPosition+cameraDirection, Vector3::UnitY);
