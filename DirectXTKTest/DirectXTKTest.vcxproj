@@ -194,6 +194,7 @@
     <ClInclude Include="src\Console.h" />
     <ClInclude Include="src\DeviceResources.h" />
     <ClInclude Include="src\Helper.h" />
+    <ClInclude Include="src\Subgen.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\WindowPrivate.h" />
     <ClInclude Include="src\World.h" />

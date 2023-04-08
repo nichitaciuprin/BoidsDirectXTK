@@ -37,6 +37,9 @@
     <ClInclude Include="src\AABB.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Subgen.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeviceResources.cpp">
