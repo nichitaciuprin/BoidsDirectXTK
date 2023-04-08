@@ -190,6 +190,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\AABB.h" />
     <ClInclude Include="src\Console.h" />
     <ClInclude Include="src\DeviceResources.h" />
     <ClInclude Include="src\Helper.h" />
