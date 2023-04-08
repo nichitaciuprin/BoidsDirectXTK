@@ -71,20 +71,6 @@ namespace WindowPrivate
             case WM_MOUSEHOVER:
                 Mouse::ProcessMessage(message, wParam, lParam);
                 break;
-            // case WM_SETCURSOR:
-            //     if (LOWORD(lParam) == HTCLIENT)
-            //     {
-            //         RECT clientRect;
-            //         RECT windowRect;
-            //         GetClientRect(hwnd, &clientRect);
-            //         GetWindowRect(hwnd, &windowRect);
-            //         AdjustWindowRect(&clientRect, WS_OVERLAPPEDWINDOW, FALSE);
-            //         RECT finalRect = { windowRect.left, windowRect.top, windowRect.left+clientRect.right, windowRect.top+clientRect.bottom };
-            //         ClipCursor(&windowRect);
-            //         ShowCursor(false);
-            //         // SetCursorPos(300,300);
-            //     }
-            //     break;
             case WM_DISPLAYCHANGE:
                 OnDisplayChange();
                 break;
