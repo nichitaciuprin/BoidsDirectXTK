@@ -26,6 +26,11 @@
         "iostream": "cpp",
         "cmath": "cpp",
         "xstring": "cpp",
-        "stdexcept": "cpp"
+        "stdexcept": "cpp",
+        "forward_list": "cpp",
+        "initializer_list": "cpp",
+        "unordered_map": "cpp",
+        "algorithm": "cpp",
+        "charconv": "cpp"
     }
 }
