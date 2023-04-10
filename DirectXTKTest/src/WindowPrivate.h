@@ -189,7 +189,7 @@ namespace WindowPrivate
 
         mouse = make_unique<Mouse>();
         // mouse->SetWindow(m_hwnd);
-        mouse->SetMode(Mouse::MODE_RELATIVE);
+        // mouse->SetMode(Mouse::MODE_RELATIVE);
 
         m_deviceResources = make_unique<DeviceResources>();
         m_deviceResources->SetWindow(m_hwnd, width, height);
