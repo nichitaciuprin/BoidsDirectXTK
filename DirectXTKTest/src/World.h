@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "Console.h"
+#include "BoidWorld.h"
 using namespace std;
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -11,6 +12,7 @@ public:
     Vector3 cameraPosition;
     Vector3 cameraTarget;
     Vector3 cameraUp;
+    BoidWorld boidWorld;
     World()
     {
         cameraUp = Vector3::Up;
@@ -23,5 +25,6 @@ public:
     {
         auto rotation = Quaternion::CreateFromAxisAngle(Vector3::Up,deltaTime/2);
         cameraPosition = Vector3::Transform(cameraPosition,rotation);
+        boidWorld.Update(deltaTime);
     }
 };

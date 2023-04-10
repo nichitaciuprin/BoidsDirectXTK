@@ -244,12 +244,13 @@ namespace WindowPrivate
         auto groundPosition = Matrix::CreateWorld(Vector3::Zero+Vector3::Down/2, Vector3::Forward, Vector3::Up);
         m_ground->Draw(groundPosition,m_view,m_proj,Colors::Black);
 
-        auto m_world_1 = Matrix::CreateWorld(Vector3::Zero+Vector3::Forward*5,                  Vector3::Forward, Vector3::Up);
-        auto m_world_2 = Matrix::CreateWorld(Vector3::Zero+Vector3::Forward*5+Vector3::Right*2, Vector3::Forward, Vector3::Up);
-        auto m_world_3 = Matrix::CreateWorld(Vector3::Zero+Vector3::Forward*5+Vector3::Up*2,    Vector3::Forward, Vector3::Up);
-        m_shape->Draw(m_world_1,m_view,m_proj);
-        m_shape->Draw(m_world_2,m_view,m_proj);
-        m_shape->Draw(m_world_3,m_view,m_proj);
+        auto length = world->boidWorld.boids.size();
+        for (size_t i = 0; i < length; i++)
+        {
+            auto boid = &world->boidWorld.boids[i];
+            auto boidWorldPosition = Matrix::CreateWorld(boid->pos, Vector3::Forward, Vector3::Up);
+            m_shape->Draw(boidWorldPosition,m_view,m_proj);
+        }
 
         m_deviceResources->PIXEndEvent();
 
