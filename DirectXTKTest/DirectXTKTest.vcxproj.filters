@@ -40,6 +40,15 @@
     <ClInclude Include="src\Subgen.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Boid.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BoidWorld.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector3Extention.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeviceResources.cpp">
