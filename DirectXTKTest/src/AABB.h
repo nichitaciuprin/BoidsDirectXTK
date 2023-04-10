@@ -21,6 +21,17 @@ struct AABB
         result.z = fabs(result.z);
         return result;
     }
+    Vector3 WrapAround(Vector3 point) const
+    {
+        auto size = Size();
+        if      (point.x < MinX()) point.x += size.x;
+        else if (point.x > MaxX()) point.x -= size.x;
+        if      (point.y < MinY()) point.y += size.y;
+        else if (point.y > MaxY()) point.y -= size.y;
+        if      (point.z < MinZ()) point.z += size.z;
+        else if (point.z > MaxZ()) point.z -= size.z;
+        return point;
+    }
     Vector3 ShortPathIn(Vector3 point) const
     {
         auto result = Vector3::Zero;
