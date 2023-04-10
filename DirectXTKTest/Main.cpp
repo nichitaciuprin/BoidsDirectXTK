@@ -5,6 +5,9 @@
 #include "pch.h"
 #include "Game.h"
 
+#include "SimpleMath.h"
+using namespace DirectX::SimpleMath;
+
 using namespace DirectX;
 
 #ifdef __clang__
@@ -88,6 +91,23 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
         g_game->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
     }
+
+    auto rot1 = Quaternion::LookRotation(Vector3::Forward,Vector3::Up);
+    auto rot2 = Quaternion::LookRotation(Vector3::Down,Vector3::Up);
+    auto rot3 = Quaternion::LookRotation(Vector3::Forward+Vector3::Down,Vector3::Up);
+    auto angle1 = rot1.ToEuler()*57.2958;
+    auto angle2 = rot2.ToEuler()*57.2958;
+    auto angle3 = rot3.ToEuler()*57.2958;
+    // auto rot2 = Quaternion::LookRotation(Vector3::Forward+Vector3::Down,Vector3::Up);
+    // auto rot2 = Quaternion::LookRotation(Vector3::Forward+Vector3::Backward,Vector3::Up);
+
+    // auto rot = Quaternion::FromToRotation(Vector3::Forward,Vector3::Forward+Vector3::Down);
+    // // auto rot = Quaternion::LookRotation(Vector3::Forward+Vector3::Down,Vector3::Up);
+    // auto angle = Quaternion::Angle(rot,Quaternion::Identity)*57.2958;
+    // auto angles = rot.ToEuler();
+    // auto xAngle = angles.x * 57.2958;
+    // auto yAngle = angles.y * 57.2958;
+    // auto zAngle = angles.z * 57.2958;
 
     // Main message loop
     MSG msg = {};
