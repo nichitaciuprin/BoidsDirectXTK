@@ -8,18 +8,6 @@
 #pragma clang diagnostic ignored "-Wswitch-enum"
 #endif
 
-// Tell Nvidia/AMD to use high-performance graphics card
-extern "C"
-{
-    // Nvidia specifies this in their Optimus rendering specs.
-    // http://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf
-    __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
-
-    // AMD Specifies this in a tutorial doc for selecting the best graphics device
-    // https://gpuopen.com/learn/amdpowerxpressrequesthighperformance/
-    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
-}
-
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
     // hides compiler warning for unused parameters
