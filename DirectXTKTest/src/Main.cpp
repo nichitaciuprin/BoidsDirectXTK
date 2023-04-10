@@ -2,12 +2,6 @@
 #include <DirectXMath.h>
 #include "Main2.h"
 
-// Adds support for clang. Maybe remove
-#ifdef __clang__
-#pragma clang diagnostic ignored "-Wcovered-switch-default"
-#pragma clang diagnostic ignored "-Wswitch-enum"
-#endif
-
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
     // hides compiler warning for unused parameters
