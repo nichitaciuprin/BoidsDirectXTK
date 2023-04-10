@@ -8,28 +8,20 @@ using namespace DirectX::SimpleMath;
 class World
 {
 public:
-    Vector3 cameraPosition = Vector3::Zero;
-    Quaternion cameraRotation = Quaternion::Identity;
-    Vector2 mousePosition = Vector3::Zero;
+    Vector3 cameraPosition;
+    Vector3 cameraTarget;
+    Vector3 cameraUp;
     World()
     {
+        cameraUp = Vector3::Up;
+        cameraPosition += Vector3::Up*110;
+        cameraPosition += Vector3::Right*175;
+        cameraPosition += Vector3::Backward*175;
+        cameraTarget = Vector3::Up*50;
     }
     void Update(float deltaTime, Vector2 wasdDirection, Vector2 mousePositionDelta)
     {
-        mousePosition += mousePositionDelta;
-        cameraRotation = ToRotation(mousePosition);
-        if (wasdDirection == Vector2::Zero) return;
-        auto wasdDirection2 = Vector3(wasdDirection.x,0,-wasdDirection.y);
-        auto direction = Vector3::Transform(wasdDirection2,cameraRotation);
-        auto speed = 10.0f;
-        cameraPosition += direction * deltaTime * speed;
-    }
-private:
-    Quaternion ToRotation(Vector2 mousePosition)
-    {
-        mousePosition.y = std::clamp(mousePosition.y,-89.0f,89.0f);
-        auto xRadian = Helper::ToRadian(-mousePosition.x);
-        auto yRadian = Helper::ToRadian(mousePosition.y);
-        return Quaternion::CreateFromYawPitchRoll(xRadian,yRadian,0);
+        auto rotation = Quaternion::CreateFromAxisAngle(Vector3::Up,deltaTime/2);
+        cameraPosition = Vector3::Transform(cameraPosition,rotation);
     }
 };
