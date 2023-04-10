@@ -5,11 +5,11 @@
 
 void wWinMain2(HINSTANCE hInstance)
 {
-    auto world = make_unique<World>();
-    Window::Create(hInstance);
-
     const long timeStepInMilliseconds = 10;
     const float timeStepInSeconds = 0.020f;
+
+    auto world = make_unique<World>();
+    Window::Create(hInstance);
 
     while(true)
     {
