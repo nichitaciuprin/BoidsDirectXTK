@@ -21,4 +21,15 @@ struct AABB
         result.z = fabs(result.z);
         return result;
     }
+    Vector3 ShortPathIn(Vector3 point) const
+    {
+        auto result = Vector3::Zero;
+        if      (point.x < MinX()) result.x = MinX() - point.x;
+        else if (point.x > MaxX()) result.x = MaxX() - point.x;
+        if      (point.y < MinY()) result.y = MinY() - point.y;
+        else if (point.y > MaxY()) result.y = MaxY() - point.y;
+        if      (point.z < MinZ()) result.z = MinZ() - point.z;
+        else if (point.z > MaxZ()) result.z = MaxZ() - point.z;
+        return result;
+    }
 };
