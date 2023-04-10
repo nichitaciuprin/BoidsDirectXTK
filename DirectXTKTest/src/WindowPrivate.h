@@ -194,7 +194,9 @@ namespace WindowPrivate
         m_deviceResources->CreateDeviceResources();
         m_deviceResources->CreateWindowSizeDependentResources();
         auto context = m_deviceResources->GetD3DDeviceContext();
-        m_shape = GeometricPrimitive::CreateSphere(context);
+        m_shape = GeometricPrimitive::CreateSphere(context,1);
+        m_box = GeometricPrimitive::CreateBox(context,Vector3(1,1,1));
+        m_ground = GeometricPrimitive::CreateBox(context,Vector3(100,1,100));
     }
     void HandleWindowMessages()
     {
