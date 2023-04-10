@@ -186,7 +186,7 @@ namespace WindowPrivate
         GetClientRect(m_hwnd, &rc);
 
         mouse = make_unique<Mouse>();
-        mouse->SetWindow(m_hwnd);
+        // mouse->SetWindow(m_hwnd);
         mouse->SetMode(Mouse::MODE_RELATIVE);
 
         m_deviceResources = make_unique<DeviceResources>();
