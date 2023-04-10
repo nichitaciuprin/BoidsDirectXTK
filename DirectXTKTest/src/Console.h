@@ -10,7 +10,9 @@ bool consoleCreated = false;
 void Console_MaybeCreate()
 {
     if (consoleCreated) return;
+    auto curentWindow = GetActiveWindow();
     AllocConsole();
+    SetFocus(curentWindow);
     auto consoleWindow = GetConsoleWindow();
     errno_t result;
     result = freopen_s(&fileIn ,"CONIN$" ,"r",stdin ); if (result != 0) throw;
