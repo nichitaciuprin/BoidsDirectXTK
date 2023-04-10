@@ -31,6 +31,8 @@ namespace WindowPrivate
     HWND m_hwnd;
     MSG msg = {};
     unique_ptr<GeometricPrimitive> m_shape;
+    unique_ptr<GeometricPrimitive> m_box;
+    unique_ptr<GeometricPrimitive> m_ground;
     unique_ptr<Mouse> mouse;
 
     void OnDisplayChange()
