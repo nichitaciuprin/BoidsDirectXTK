@@ -49,4 +49,11 @@ namespace Helper
         if (degree < 0) degree = 360 + degree;
         return degree;
     }
+    Quaternion ToRotation(Vector2 mousePosition)
+    {
+        mousePosition.y = std::clamp(mousePosition.y,-89.0f,89.0f);
+        auto xRadian = Helper::ToRadian(-mousePosition.x);
+        auto yRadian = Helper::ToRadian(mousePosition.y);
+        return Quaternion::CreateFromYawPitchRoll(xRadian,yRadian,0);
+    }
 }
