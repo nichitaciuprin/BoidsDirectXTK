@@ -47,16 +47,9 @@ namespace WindowPrivate
     unique_ptr<GeometricPrimitive> m_box;
     unique_ptr<GeometricPrimitive> m_ground;
     unique_ptr<Mouse> mouse;
+    Matrix m_proj;
+    Matrix m_view;
 
-    void OnDisplayChange()
-    {
-        m_deviceResources->UpdateColorSpace();
-    }
-    void OnWindowMoved()
-    {
-        auto outputSize = m_deviceResources->GetOutputSize();
-        m_deviceResources->WindowSizeChanged(outputSize.right, outputSize.bottom);
-    }
     void OnWindowSizeChanged(int width, int height)
     {
         if (!m_deviceResources->WindowSizeChanged(width, height))
@@ -87,10 +80,11 @@ namespace WindowPrivate
                 Mouse::ProcessMessage(message, wParam, lParam);
                 break;
             case WM_DISPLAYCHANGE:
-                OnDisplayChange();
+                m_deviceResources->UpdateColorSpace();
                 break;
             case WM_MOVE:
-                OnWindowMoved();
+                auto outputSize = m_deviceResources->GetOutputSize();
+                m_deviceResources->WindowSizeChanged(outputSize.right, outputSize.bottom);
                 break;
             case WM_SIZE:
                 if (wParam == SIZE_MINIMIZED && !minimized)
@@ -189,7 +183,7 @@ namespace WindowPrivate
     {
         MaybeRegisterClass(hInstance);
 
-        RECT rc = { x, y, static_cast<LONG>(width), static_cast<LONG>(height) };
+        RECT rc = { x, y, width, height };
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
         auto width2 = rc.right - rc.left;
@@ -213,7 +207,7 @@ namespace WindowPrivate
         m_box = GeometricPrimitive::CreateBox(context,Vector3(1,1,1));
         m_ground = GeometricPrimitive::CreateBox(context,Vector3(100,1,100));
     }
-    void HandleWindowMessages()
+    void Update()
     {
         while (PeekMessage(&msg, m_hwnd, 0, 0, PM_REMOVE))
         {
@@ -245,9 +239,6 @@ namespace WindowPrivate
         auto z = sin(mousePosition.y);
         return Vector3(x,y,z);
     }
-
-    Matrix m_proj;
-    Matrix m_view;
 
     void PaintStart()
     {

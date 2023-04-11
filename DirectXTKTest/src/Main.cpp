@@ -3,7 +3,7 @@
 
 void Render(const World* world)
 {
-    WindowPrivate::HandleWindowMessages();
+    WindowPrivate::Update();
     WindowPrivate::Clear();
 
     WindowPrivate::PaintStart();
