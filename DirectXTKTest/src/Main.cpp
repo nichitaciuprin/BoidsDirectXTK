@@ -11,8 +11,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     if (StartMyLib()) return 1;
 
-    const long timeStep = 15;
-    const float timeStepF = 0.015f;
+    const long timeStep = 10;
+    const float timeStepF = 0.010f;
 
     auto world = make_unique<World>();
     Window::Create();
