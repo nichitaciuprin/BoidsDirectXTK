@@ -1,8 +1,8 @@
 #pragma once
 #include <Windows.h>
 #include <time.h>
-#include <cmath>
-#include "pch.h"
+#include <algorithm>
+#include "SimpleMath.h"
 #include "Console.h"
 using namespace std;
 using namespace DirectX;
