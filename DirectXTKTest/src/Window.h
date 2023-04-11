@@ -27,7 +27,7 @@ using Microsoft::WRL::ComPtr;
 class Window
 {
 public:
-    Window(HINSTANCE hInstance, int x, int y, int width, int height)
+    Window(HINSTANCE hInstance, string windowName, int x, int y, int width, int height)
     {
         MaybeRegisterClass(hInstance);
 
@@ -36,7 +36,7 @@ public:
 
         auto width2 = rc.right - rc.left;
         auto height2 = rc.bottom - rc.top;
-        m_hwnd = CreateWindowExW(0 /*WS_EX_TOPMOST*/, className, windowName, WS_OVERLAPPEDWINDOW,
+        m_hwnd = CreateWindowExW(0 /*WS_EX_TOPMOST*/, className, ToLongString(windowName), WS_OVERLAPPEDWINDOW,
             x, y, width2, height2, nullptr, nullptr, hInstance, nullptr);
         if (!m_hwnd) throw;
         ShowWindow(m_hwnd, SW_SHOWNORMAL);
@@ -122,9 +122,8 @@ public:
     }
 private:
     static bool classRegistered;
-    const LPCWSTR className = L"WorldWindow";
-    const LPCWSTR windowName = L"WorldWindow";
-    const LPCWSTR iconName = L"IDI_ICON";
+    static const LPCWSTR className;
+    static const LPCWSTR iconName;
     const int defaultWidth = 800;
     const int defaultHeight = 600;
     bool sizemove = false;
@@ -149,7 +148,7 @@ private:
         if (!m_deviceResources->WindowSizeChanged(width, height))
             return;
     }
-    void MaybeRegisterClass(HINSTANCE hInstance)
+    static void MaybeRegisterClass(HINSTANCE hInstance)
     {
         if (classRegistered) return;
         WNDCLASSEXW windowClass = {};
@@ -176,7 +175,6 @@ private:
         auto z = sin(mousePosition.y);
         return Vector3(x,y,z);
     }
-
     void SetInstance(HWND hwnd)
     {
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
@@ -299,5 +297,11 @@ private:
 
         return DefWindowProc(hwnd, message, wParam, lParam);
     }
+    static LPCWSTR ToLongString(const string str)
+    {
+        return wstring(str.begin(), str.end()).c_str();
+    }
 };
 bool Window::classRegistered = false;
+const LPCWSTR Window::className = L"MyWindow";
+const LPCWSTR Window::iconName = L"IDI_ICON";

@@ -61,7 +61,7 @@ void WindowInit(int x, int y, int width, int height)
 {
     if (tempWindow != NULL) return;
     auto hInstance = GetModuleHandle(NULL);
-    tempWindow = new Window(hInstance,x,y,width,height);
+    tempWindow = new Window(hInstance,"BoidsDirectXTK",x,y,width,height);
 }
 void WindowInitDefault()
 {
