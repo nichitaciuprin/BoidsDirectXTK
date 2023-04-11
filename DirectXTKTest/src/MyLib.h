@@ -2,7 +2,6 @@
 
 #include <Windows.h>
 #include <DirectXMath.h>
-#include "Window.h"
 #include "WindowPrivate.h"
 #include "Helper.h"
 #include "World.h"

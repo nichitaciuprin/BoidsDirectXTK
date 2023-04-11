@@ -198,7 +198,6 @@
     <ClInclude Include="src\Helper.h" />
     <ClInclude Include="src\Subgen.h" />
     <ClInclude Include="src\Vector3Extention.h" />
-    <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\WindowPrivate.h" />
     <ClInclude Include="src\World.h" />
     <ClInclude Include="src\pch.h" />
