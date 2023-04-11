@@ -53,12 +53,15 @@ void ConsoleInit(int x, int y, int width, int height);
 void ConsoleWriteLine(string msg);
 
 void WindowClose();
-void WindowInitDefault()
+void WindowInit(int x, int y, int width, int height)
 {
     auto hInstance = GetModuleHandle(NULL);
-    WindowPrivate::Create(hInstance);
+    WindowPrivate::Create(hInstance,0,0,800,600);
 }
-void WindowInit(int x, int y, int width, int height);
+void WindowInitDefault()
+{
+    WindowInit(0,0,800,600);
+}
 void WindowInitFullscreen();
 void WindowInitFullscreenMonitor(int monitorIndex);
 void WindowClear();

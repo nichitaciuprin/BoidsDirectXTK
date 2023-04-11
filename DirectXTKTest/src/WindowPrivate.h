@@ -185,17 +185,17 @@ namespace WindowPrivate
         if (!RegisterClassExW(&windowClass)) throw;
         classRegistered = true;
     }
-    void Create(HINSTANCE hInstance)
+    void Create(HINSTANCE hInstance, int x, int y, int width, int height)
     {
         MaybeRegisterClass(hInstance);
 
-        RECT rc = { 0, 0, static_cast<LONG>(defaultWidth), static_cast<LONG>(defaultHeight) };
+        RECT rc = { x, y, static_cast<LONG>(width), static_cast<LONG>(height) };
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-        auto width = rc.right - rc.left;
-        auto height = rc.bottom - rc.top;
+        auto width2 = rc.right - rc.left;
+        auto height2 = rc.bottom - rc.top;
         m_hwnd = CreateWindowExW(0 /*WS_EX_TOPMOST*/, className, windowName, WS_OVERLAPPEDWINDOW,
-            0, 0, width, height, nullptr, nullptr, hInstance, nullptr);
+            x, y, width2, height2, nullptr, nullptr, hInstance, nullptr);
         if (!m_hwnd) throw;
         ShowWindow(m_hwnd, SW_SHOWNORMAL);
         GetClientRect(m_hwnd, &rc);
@@ -205,7 +205,7 @@ namespace WindowPrivate
         // mouse->SetMode(Mouse::MODE_RELATIVE);
 
         m_deviceResources = make_unique<DeviceResources>();
-        m_deviceResources->SetWindow(m_hwnd, width, height);
+        m_deviceResources->SetWindow(m_hwnd, width2, height2);
         m_deviceResources->CreateDeviceResources();
         m_deviceResources->CreateWindowSizeDependentResources();
         auto context = m_deviceResources->GetD3DDeviceContext();

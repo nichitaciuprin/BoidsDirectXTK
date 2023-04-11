@@ -8,11 +8,6 @@ using namespace DirectX::SimpleMath;
 
 namespace Window
 {
-    void Create()
-    {
-        auto hInstance = GetModuleHandle(NULL);
-        WindowPrivate::Create(hInstance);
-    }
     void Render(const World* world)
     {
         WindowPrivate::HandleWindowMessages();

@@ -31,6 +31,11 @@ void Console_WriteLineInt(int msg)
     Console_MaybeCreate();
     std::cout << msg << '\n';
 }
+void Console_WriteLineLong(long msg)
+{
+    Console_MaybeCreate();
+    std::cout << msg << '\n';
+}
 void Console_WriteLine(string msg)
 {
     Console_MaybeCreate();
