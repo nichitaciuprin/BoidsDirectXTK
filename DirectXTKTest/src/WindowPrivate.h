@@ -245,28 +245,36 @@ namespace WindowPrivate
         auto z = sin(mousePosition.y);
         return Vector3(x,y,z);
     }
-    void Paint(const World* world)
+
+    Matrix m_proj;
+    Matrix m_view;
+
+    void PaintStart()
     {
         m_deviceResources->PIXBeginEvent(L"Render");
-
+    }
+    void PaintEnd()
+    {
+        m_deviceResources->PIXEndEvent();
+        m_deviceResources->Present();
+    }
+    void PaintSetCamera(Vector3 position, Vector3 target, Vector3 up)
+    {
+        m_view = Matrix::CreateLookAt(position, target, up);
+    }
+    void PaintSetPerpective()
+    {
         auto size = m_deviceResources->GetOutputSize();
-        auto m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, float(size.right) / float(size.bottom), 0.1f, 1000.f);
-
-        auto m_view = Matrix::CreateLookAt(world->cameraPosition, world->cameraTarget, world->cameraUp);
-
+        m_proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, float(size.right) / float(size.bottom), 0.1f, 1000.f);
+    }
+    void PaintGround()
+    {
         auto groundPosition = Matrix::CreateWorld(Vector3::Zero+Vector3::Down/2, Vector3::Forward, Vector3::Up);
         m_ground->Draw(groundPosition,m_view,m_proj,Colors::Black);
-
-        auto length = world->boidWorld.boids.size();
-        for (size_t i = 0; i < length; i++)
-        {
-            auto boid = &world->boidWorld.boids[i];
-            auto boidWorldPosition = Matrix::CreateWorld(boid->pos, Vector3::Forward, Vector3::Up);
-            m_shape->Draw(boidWorldPosition,m_view,m_proj);
-        }
-
-        m_deviceResources->PIXEndEvent();
-
-        m_deviceResources->Present();
+    }
+    void PaintSphere(Vector3 position)
+    {
+        auto m_world = Matrix::CreateWorld(position, Vector3::Forward, Vector3::Up);
+        m_shape->Draw(m_world,m_view,m_proj);
     }
 }

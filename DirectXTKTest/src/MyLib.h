@@ -56,7 +56,7 @@ void WindowClose();
 void WindowInit(int x, int y, int width, int height)
 {
     auto hInstance = GetModuleHandle(NULL);
-    WindowPrivate::Create(hInstance,0,0,800,600);
+    WindowPrivate::Create(hInstance,x,y,width,height);
 }
 void WindowInitDefault()
 {

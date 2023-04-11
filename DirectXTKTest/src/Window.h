@@ -12,7 +12,24 @@ namespace Window
     {
         WindowPrivate::HandleWindowMessages();
         WindowPrivate::Clear();
-        WindowPrivate::Paint(world);
+
+        WindowPrivate::PaintStart();
+
+        WindowPrivate::PaintSetCamera(world->cameraPosition, world->cameraTarget, world->cameraUp);
+        WindowPrivate::PaintSetPerpective();
+
+        WindowPrivate::PaintGround();
+
+        auto length = world->boidWorld.boids.size();
+        for (size_t i = 0; i < length; i++)
+        {
+            auto boid = &world->boidWorld.boids[i];
+            WindowPrivate::PaintSphere(boid->pos);
+        }
+
+        WindowPrivate::PaintEnd();
+
+        // WindowPrivate::Paint(world);
     }
     bool Closed()
     {
