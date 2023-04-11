@@ -43,7 +43,8 @@ namespace Window
     }
     Vector2 MouseLook()
     {
-        auto state = WindowPrivate::mouse->GetState();
-        return Vector2((float)state.x,(float)-state.y);
+        return Vector2::Zero;
+        // auto state = WindowPrivate::mouse->GetState();
+        // return Vector2((float)state.x,(float)-state.y);
     }
 }

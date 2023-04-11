@@ -46,7 +46,7 @@ namespace WindowPrivate
     unique_ptr<GeometricPrimitive> m_shape;
     unique_ptr<GeometricPrimitive> m_box;
     unique_ptr<GeometricPrimitive> m_ground;
-    unique_ptr<Mouse> mouse;
+    // unique_ptr<Mouse> mouse;
     Matrix m_proj;
     Matrix m_view;
 
@@ -62,23 +62,23 @@ namespace WindowPrivate
 
         switch (message)
         {
-            case WM_MOUSEACTIVATE: return MA_ACTIVATEANDEAT;
-            case WM_ACTIVATE:
-            case WM_ACTIVATEAPP:
-            case WM_INPUT:
-            case WM_MOUSEMOVE:
-            case WM_LBUTTONDOWN:
-            case WM_LBUTTONUP:
-            case WM_RBUTTONDOWN:
-            case WM_RBUTTONUP:
-            case WM_MBUTTONDOWN:
-            case WM_MBUTTONUP:
-            case WM_MOUSEWHEEL:
-            case WM_XBUTTONDOWN:
-            case WM_XBUTTONUP:
-            case WM_MOUSEHOVER:
-                Mouse::ProcessMessage(message, wParam, lParam);
-                break;
+            // case WM_MOUSEACTIVATE: return MA_ACTIVATEANDEAT;
+            // case WM_ACTIVATE:
+            // case WM_ACTIVATEAPP:
+            // case WM_INPUT:
+            // case WM_MOUSEMOVE:
+            // case WM_LBUTTONDOWN:
+            // case WM_LBUTTONUP:
+            // case WM_RBUTTONDOWN:
+            // case WM_RBUTTONUP:
+            // case WM_MBUTTONDOWN:
+            // case WM_MBUTTONUP:
+            // case WM_MOUSEWHEEL:
+            // case WM_XBUTTONDOWN:
+            // case WM_XBUTTONUP:
+            // case WM_MOUSEHOVER:
+            //     Mouse::ProcessMessage(message, wParam, lParam);
+            //     break;
             case WM_DISPLAYCHANGE:
                 m_deviceResources->UpdateColorSpace();
                 break;
@@ -194,7 +194,7 @@ namespace WindowPrivate
         ShowWindow(m_hwnd, SW_SHOWNORMAL);
         GetClientRect(m_hwnd, &rc);
 
-        mouse = make_unique<Mouse>();
+        // mouse = make_unique<Mouse>();
         // mouse->SetWindow(m_hwnd);
         // mouse->SetMode(Mouse::MODE_RELATIVE);
 
