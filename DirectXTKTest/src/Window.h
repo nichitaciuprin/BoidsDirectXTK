@@ -92,6 +92,24 @@ public:
         // auto state = Window::mouse->GetState();
         // return Vector2((float)state.x,(float)-state.y);
     }
+    void ToFullscreen()
+    {
+        SetWindowLongPtr(m_hwnd, GWL_STYLE, WS_POPUP);
+        SetWindowLongPtr(m_hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
+        auto uFlags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED;
+        SetWindowPos(m_hwnd, HWND_TOP, 0, 0, 0, 0, uFlags);
+        ShowWindow(m_hwnd, SW_SHOWMAXIMIZED);
+        fullscreen = true;
+    }
+    void ToDefaultSize()
+    {
+        SetWindowLongPtr(m_hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
+        SetWindowLongPtr(m_hwnd, GWL_EXSTYLE, 0);
+        auto uFlags = SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED;
+        SetWindowPos(m_hwnd, HWND_TOP, 0, 0, defaultWidth, defaultHeight, uFlags);
+        ShowWindow(m_hwnd, SW_SHOWNORMAL);
+        fullscreen = false;
+    }
     void PaintStart()
     {
         m_deviceResources->PIXBeginEvent(L"Render");
@@ -248,22 +266,9 @@ private:
                 {
                     case VK_RETURN: // Alt+Enter
                         if (window->fullscreen)
-                        {
-                            SetWindowLongPtr(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
-                            SetWindowLongPtr(hwnd, GWL_EXSTYLE, 0);
-                            auto uFlags = SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED;
-                            SetWindowPos(hwnd, HWND_TOP, 0, 0, window->defaultWidth, window->defaultHeight, uFlags);
-                            ShowWindow(hwnd, SW_SHOWNORMAL);
-                        }
+                            window->ToDefaultSize();
                         else
-                        {
-                            SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP);
-                            SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
-                            auto uFlags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED;
-                            SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, uFlags);
-                            ShowWindow(hwnd, SW_SHOWMAXIMIZED);
-                        }
-                        window->fullscreen = !window->fullscreen;
+                            window->ToFullscreen();
                     default: break;
                 }
                 break;
