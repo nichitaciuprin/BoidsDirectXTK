@@ -28,8 +28,6 @@ namespace Window
         }
 
         WindowPrivate::PaintEnd();
-
-        // WindowPrivate::Paint(world);
     }
     bool Closed()
     {
