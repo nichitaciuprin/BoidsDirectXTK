@@ -14,7 +14,7 @@ public:
     {
         aabb.p0 = Vector3::Backward+Vector3::Left;
         aabb.p1 = Vector3::Forward+Vector3::Right;
-        auto size = 50;
+        auto size = 50.0f;
         aabb.p0 *= size;
         aabb.p1 *= size;
         aabb.p1 += Vector3::Up*size*2;

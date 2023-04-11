@@ -115,12 +115,12 @@ private:
 
         if (count_1 != 0)
         {
-            l_vec_1 /= count_1;
+            l_vec_1 /= (float)count_1;
             l_vec_1 -= pos;
         }
         if (count_2 != 0)
         {
-            l_vec_2 /= count_2;
+            l_vec_2 /= (float)count_2;
             l_vec_2 -= vel;
         }
 
