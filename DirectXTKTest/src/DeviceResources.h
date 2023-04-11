@@ -1,8 +1,8 @@
-//
-// DeviceResources.h - A wrapper for the Direct3D 11 device and swapchain
-//
-
 #pragma once
+
+#include <d3d11_1.h>
+#include <wrl\client.h>
+#include <memory>
 
 namespace DX
 {
