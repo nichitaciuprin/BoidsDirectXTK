@@ -3,24 +3,18 @@
 
 void Render(const World* world)
 {
-    Window::Update();
-    Window::Clear();
-
-    Window::PaintStart();
-
-    Window::PaintSetCamera(world->cameraPosition, world->cameraTarget, world->cameraUp);
-    Window::PaintSetPerpective();
-
-    Window::PaintGround();
-
+    WindowUpdate();
+    WindowClear();
+    WindowRenderStart();
+    WindowSetCamera(world->cameraPosition, world->cameraTarget, world->cameraUp);
+    WindowDrawGround();
     auto length = world->boidWorld.boids.size();
     for (size_t i = 0; i < length; i++)
     {
         auto boid = &world->boidWorld.boids[i];
-        Window::PaintSphere(boid->pos);
+        WindowDrawSphere(boid->pos);
     }
-
-    Window::PaintEnd();
+    WindowRenderEnd();
 }
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
@@ -44,7 +38,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
         auto oldTime = GetTime();
 
-        world->Update(timeStepF,Window::DirectionWASD(),Window::MouseLook());
+        world->Update(timeStepF,Vector2::Zero,Vector2::Zero);
         Render(world.get());
 
         auto newTime = GetTime();

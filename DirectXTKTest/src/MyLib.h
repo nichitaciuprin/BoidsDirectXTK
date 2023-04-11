@@ -7,6 +7,10 @@
 #include "World.h"
 #include <time.h>
 
+//-----TEMP-----
+Window* tempWindow = NULL;
+//--------------
+
 int StartMyLib()                            // Must be called before this library use
 {
     // asserts that DirectXMath can be used
@@ -55,8 +59,9 @@ void ConsoleWriteLine(string msg);
 void WindowClose();
 void WindowInit(int x, int y, int width, int height)
 {
+    if (tempWindow != NULL) return;
     auto hInstance = GetModuleHandle(NULL);
-    Window::Create(hInstance,x,y,width,height);
+    tempWindow = new Window(hInstance,x,y,width,height);
 }
 void WindowInitDefault()
 {
@@ -64,12 +69,32 @@ void WindowInitDefault()
 }
 void WindowInitFullscreen();
 void WindowInitFullscreenMonitor(int monitorIndex);
-void WindowClear();
-void WindowRenderStart();
-void WindowRenderEnd();
+void WindowUpdate()
+{
+    tempWindow->Update();
+}
+void WindowClear()
+{
+    tempWindow->Clear();
+}
+void WindowRenderStart()
+{
+    tempWindow->PaintStart();
+}
+void WindowRenderEnd()
+{
+    tempWindow->PaintEnd();
+}
 void WindowSetCamera(Vector3 position, Vector3 target, Vector3 up)
 {
-    // WindowPrivate::PaintSetCamera(world->cameraPosition, world->cameraTarget, world->cameraUp);
+    tempWindow->PaintSetCamera(position, target, up);
+    tempWindow->PaintSetPerpective();
 }
-void WindowDrawAABB(const AABB& aabb);
-void WindowDrawSphere(const Vector3& position, float radius);
+void WindowDrawGround()
+{
+    tempWindow->PaintGround();
+}
+void WindowDrawSphere(const Vector3& position)
+{
+    tempWindow->PaintSphere(position);
+}
