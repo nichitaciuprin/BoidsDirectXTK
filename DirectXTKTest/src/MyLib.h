@@ -47,3 +47,23 @@ bool EscapePressed()    // Returns true if escape button pressed, otherwise fals
     auto pressed = keyState & 0x8000;
     return pressed;
 }
+
+void ConsoleClose();
+void ConsoleInit(int x, int y, int width, int height);
+void ConsoleWriteLine(string msg);
+
+void WindowClose();
+void WindowInitDefault()
+{
+    auto hInstance = GetModuleHandle(NULL);
+    WindowPrivate::Create(hInstance);
+}
+void WindowInit(int x, int y, int width, int height);
+void WindowInitFullscreen();
+void WindowInitFullscreenMonitor(int monitorIndex);
+void WindowClear();
+void WindowRenderStart();
+void WindowRenderEnd();
+void WindowSetCamera(const Vector3& cameraPosition, const Vector3& cameraTarget, const Vector3& cameraUp);
+void WindowDrawAABB(const AABB& aabb);
+void WindowDrawSphere(const Vector3& position, float radius);
