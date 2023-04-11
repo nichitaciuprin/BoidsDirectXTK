@@ -40,9 +40,9 @@ namespace WindowPrivate
     float key_a = 0.0f;
     float key_s = 0.0f;
     float key_d = 0.0f;
-    unique_ptr<DeviceResources> m_deviceResources;
     HWND m_hwnd;
     MSG msg = {};
+    unique_ptr<DeviceResources> m_deviceResources;
     unique_ptr<GeometricPrimitive> m_shape;
     unique_ptr<GeometricPrimitive> m_box;
     unique_ptr<GeometricPrimitive> m_ground;

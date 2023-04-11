@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <DirectXMath.h>
 #include "Window.h"
+#include "WindowPrivate.h"
 #include "Helper.h"
 #include "World.h"
 #include <time.h>
@@ -67,6 +68,9 @@ void WindowInitFullscreenMonitor(int monitorIndex);
 void WindowClear();
 void WindowRenderStart();
 void WindowRenderEnd();
-void WindowSetCamera(const Vector3& cameraPosition, const Vector3& cameraTarget, const Vector3& cameraUp);
+void WindowSetCamera(Vector3 position, Vector3 target, Vector3 up)
+{
+    // WindowPrivate::PaintSetCamera(world->cameraPosition, world->cameraTarget, world->cameraUp);
+}
 void WindowDrawAABB(const AABB& aabb);
 void WindowDrawSphere(const Vector3& position, float radius);

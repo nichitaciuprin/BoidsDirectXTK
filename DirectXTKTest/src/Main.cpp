@@ -1,6 +1,27 @@
 #include <Windows.h>
 #include "MyLib.h"
 
+void Render(const World* world)
+{
+    WindowPrivate::HandleWindowMessages();
+    WindowPrivate::Clear();
+
+    WindowPrivate::PaintStart();
+
+    WindowPrivate::PaintSetCamera(world->cameraPosition, world->cameraTarget, world->cameraUp);
+    WindowPrivate::PaintSetPerpective();
+
+    WindowPrivate::PaintGround();
+
+    auto length = world->boidWorld.boids.size();
+    for (size_t i = 0; i < length; i++)
+    {
+        auto boid = &world->boidWorld.boids[i];
+        WindowPrivate::PaintSphere(boid->pos);
+    }
+
+    WindowPrivate::PaintEnd();
+}
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
     // hides compiler warning for unused parameters
@@ -24,7 +45,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         auto oldTime = GetTime();
 
         world->Update(timeStepF,Window::DirectionWASD(),Window::MouseLook());
-        Window::Render(world.get());
+        Render(world.get());
 
         auto newTime = GetTime();
         WaitLoop(oldTime,newTime,timeStep);
