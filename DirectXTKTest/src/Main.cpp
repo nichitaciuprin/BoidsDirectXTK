@@ -19,15 +19,15 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     while(true)
     {
-        if (Helper::EscapePressed()) break;
+        if (EscapePressed()) break;
 
-        auto oldTime = Helper::GetTime();
+        auto oldTime = GetTime();
 
         world->Update(timeStepInSeconds,Window::DirectionWASD(),Window::MouseLook());
         Window::Render(world.get());
 
-        auto newTime = Helper::GetTime();
-        Helper::Wait(oldTime,newTime,timeStepInMilliseconds);
+        auto newTime = GetTime();
+        WaitLoop(oldTime,newTime,timeStepInMilliseconds);
     }
 
     EndMyLib();
