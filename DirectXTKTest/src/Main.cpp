@@ -11,8 +11,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     if (StartMyLib()) return 1;
 
-    const long timeStepInMilliseconds = 10;
-    const float timeStepInSeconds = 0.020f;
+    const long timeStep = 15;
+    const float timeStepF = 0.015f;
 
     auto world = make_unique<World>();
     Window::Create();
@@ -23,11 +23,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
         auto oldTime = GetTime();
 
-        world->Update(timeStepInSeconds,Window::DirectionWASD(),Window::MouseLook());
+        world->Update(timeStepF,Window::DirectionWASD(),Window::MouseLook());
         Window::Render(world.get());
 
         auto newTime = GetTime();
-        WaitLoop(oldTime,newTime,timeStepInMilliseconds);
+        WaitLoop(oldTime,newTime,timeStep);
     }
 
     EndMyLib();
