@@ -24,7 +24,7 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using Microsoft::WRL::ComPtr;
 
-namespace WindowPrivate
+namespace Window
 {
     const LPCWSTR className = L"WorldWindow";
     const LPCWSTR windowName = L"WorldWindow";
@@ -230,8 +230,8 @@ namespace WindowPrivate
     }
     Vector2 DirectionWASD()
     {
-        auto axisY = WindowPrivate::key_w + WindowPrivate::key_s;
-        auto axisX = WindowPrivate::key_a + WindowPrivate::key_d;
+        auto axisY = Window::key_w + Window::key_s;
+        auto axisX = Window::key_a + Window::key_d;
         auto result = Vector2(axisX, axisY);
         result.Normalize();
         return result;
@@ -239,7 +239,7 @@ namespace WindowPrivate
     Vector2 MouseLook()
     {
         return Vector2::Zero;
-        // auto state = WindowPrivate::mouse->GetState();
+        // auto state = Window::mouse->GetState();
         // return Vector2((float)state.x,(float)-state.y);
     }
     Vector3 ToDirection(Vector2 mousePosition)

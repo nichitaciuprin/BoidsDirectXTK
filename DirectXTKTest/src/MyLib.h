@@ -2,7 +2,7 @@
 
 #include <Windows.h>
 #include <DirectXMath.h>
-#include "WindowPrivate.h"
+#include "Window.h"
 #include "Helper.h"
 #include "World.h"
 #include <time.h>
@@ -56,7 +56,7 @@ void WindowClose();
 void WindowInit(int x, int y, int width, int height)
 {
     auto hInstance = GetModuleHandle(NULL);
-    WindowPrivate::Create(hInstance,x,y,width,height);
+    Window::Create(hInstance,x,y,width,height);
 }
 void WindowInitDefault()
 {

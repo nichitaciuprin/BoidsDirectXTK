@@ -25,7 +25,7 @@
     <ClInclude Include="src\World.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\WindowPrivate.h">
+    <ClInclude Include="src\Window.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\AABB.h">
