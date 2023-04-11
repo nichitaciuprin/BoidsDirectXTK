@@ -40,6 +40,8 @@ void WaitLoop(long oldTime, long newTime, long timeStep)  // Suspends thread for
     long waitTime = timeStep - diff;
     Wait(waitTime);
 }
+
+bool EscapePressed()    // Returns true if escape button pressed, otherwise false
 {
     auto keyState = GetKeyState(VK_ESCAPE);
     auto pressed = keyState & 0x8000;
