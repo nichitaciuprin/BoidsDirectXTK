@@ -1,5 +1,4 @@
 #pragma once
-#include "pch.h"
 #include "Console.h"
 #include "BoidWorld.h"
 using namespace std;
