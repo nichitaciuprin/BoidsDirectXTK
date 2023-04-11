@@ -10,9 +10,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Main2.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\DeviceResources.h">
       <Filter>src</Filter>
     </ClInclude>

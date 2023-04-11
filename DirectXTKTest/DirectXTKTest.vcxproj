@@ -201,7 +201,6 @@
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\WindowPrivate.h" />
     <ClInclude Include="src\World.h" />
-    <ClInclude Include="src\Main2.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
