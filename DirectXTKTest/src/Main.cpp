@@ -44,7 +44,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
         auto oldTime = GetTime();
 
-        world->Update(timeStepF,Window::DirectionWASD(),Window::MouseLook());
+        world->Update(timeStepF,WindowPrivate::DirectionWASD(),WindowPrivate::MouseLook());
         Render(world.get());
 
         auto newTime = GetTime();

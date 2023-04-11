@@ -228,6 +228,20 @@ namespace WindowPrivate
         context->RSSetViewports(1, &viewport);
         m_deviceResources->PIXEndEvent();
     }
+    Vector2 DirectionWASD()
+    {
+        auto axisY = WindowPrivate::key_w + WindowPrivate::key_s;
+        auto axisX = WindowPrivate::key_a + WindowPrivate::key_d;
+        auto result = Vector2(axisX, axisY);
+        result.Normalize();
+        return result;
+    }
+    Vector2 MouseLook()
+    {
+        return Vector2::Zero;
+        // auto state = WindowPrivate::mouse->GetState();
+        // return Vector2((float)state.x,(float)-state.y);
+    }
     Vector3 ToDirection(Vector2 mousePosition)
     {
         mousePosition.x = remainderf(mousePosition.x,360);
