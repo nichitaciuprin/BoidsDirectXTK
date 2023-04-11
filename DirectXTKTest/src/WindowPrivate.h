@@ -11,7 +11,7 @@ extern "C"
 }
 
 #pragma once
-#include "pch.h"
+#include "GeometricPrimitive.h"
 #include "winuser.h"
 #include "World.h"
 #include "DeviceResources.h"
