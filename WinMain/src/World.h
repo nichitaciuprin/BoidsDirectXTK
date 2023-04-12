@@ -1,10 +1,7 @@
 #pragma once
-#include "Console.h"
-#include "BoidWorld.h"
+
 #include "DirectXTKWrapper.h"
-using namespace std;
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+#include "BoidWorld.h"
 
 class World
 {

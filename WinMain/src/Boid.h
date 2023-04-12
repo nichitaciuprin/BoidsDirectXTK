@@ -1,8 +1,6 @@
 #pragma once
 
 #include "DirectXTKWrapper.h"
-// #include "SimpleMath.h"
-// #include "Vector3Ext.h"
 
 class Boid
 {
