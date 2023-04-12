@@ -7,22 +7,22 @@ class Boid
 public:
     Vector3 pos;
     Vector3 vel;
-    Boid(const AABB& aabb, Subgen& subgen)
+    Boid(const AABB& aabb)
     {
         auto randPointInsideAABB = Vector3
         (
-            subgen.Range(aabb.MinX(),aabb.MaxX()),
-            subgen.Range(aabb.MinY(),aabb.MaxY()),
-            subgen.Range(aabb.MinZ(),aabb.MaxZ())
+            RandomRange(aabb.MinX(),aabb.MaxX()),
+            RandomRange(aabb.MinY(),aabb.MaxY()),
+            RandomRange(aabb.MinZ(),aabb.MaxZ())
         );
         pos = randPointInsideAABB;
 
-        auto xRand = subgen.FractionSigned();
-        auto yRand = subgen.FractionSigned();
-        auto zRand = subgen.FractionSigned();
+        auto xRand = RandomFractionSigned();
+        auto yRand = RandomFractionSigned();
+        auto zRand = RandomFractionSigned();
         auto randDirection = Vector3(xRand,yRand,zRand);
         randDirection.Normalize();
-        auto randSpeed = subgen.Range(minSpeed,maxSpeed);
+        auto randSpeed = RandomRange(minSpeed,maxSpeed);
         vel = randDirection * randSpeed;
     }
     static void Update(vector<Boid>& boids, const AABB& aabb, float deltaTime)

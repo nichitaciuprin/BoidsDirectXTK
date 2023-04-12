@@ -39,7 +39,7 @@ public:
     }
     float Range(float min, float max)
     {
-        return min + ((max - min) * FractionUnsigned());
+        return min + (max - min) * FractionUnsigned();
     }
 private:
     int state[55];

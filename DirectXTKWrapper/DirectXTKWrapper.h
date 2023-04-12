@@ -10,9 +10,8 @@
 #include "AABB.h"
 #include "Subgen.h"
 
-//-----TEMP-----
 Window* tempWindow = NULL;
-//--------------
+Subgen tempSubgen(0);
 
 int StartMyLib()                            // Must be called before this library use
 {
@@ -46,6 +45,19 @@ void WaitLoop(long oldTime, long newTime, long timeStep)  // Suspends thread for
     auto diff = newTime - oldTime;
     long waitTime = timeStep - diff;
     Wait(waitTime);
+}
+
+float RandomFractionUnsigned()                 // returns value (inclusive) from  0f to  1f
+{
+    return tempSubgen.FractionUnsigned();
+}
+float RandomFractionSigned()                   // returns value (inclusive) from -1f to  1f
+{
+    return tempSubgen.FractionSigned();
+}
+float RandomRange(float min, float max)        // returns value (inclusive) from min to max
+{
+    return tempSubgen.Range(min,max);
 }
 
 bool EscapePressed()    // Returns true if escape button pressed, otherwise false
