@@ -115,13 +115,11 @@ void WindowDrawSphere(const Vector3& position)
 
 float ToDegree(float radian)
 {
-    auto pi = 3.14159f;
-    return radian * (180 / pi);
+    return radian * (180 / XM_PI);
 }
 float ToRadian(float degree)
 {
-    auto pi = 3.14159f;
-    return degree * (pi / 180);
+    return degree * (XM_PI / 180);
 }
 Vector3 ToDirection(Vector3 euler)
 {
