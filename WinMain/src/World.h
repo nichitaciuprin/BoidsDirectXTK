@@ -17,6 +17,7 @@ public:
         cameraPosition += Vector3::Right*175;
         cameraPosition += Vector3::Backward*175;
         cameraTarget = Vector3::Up*50;
+        WindowInitDefault();
     }
     void Update(float deltaTime, Vector2 wasdDirection, Vector2 mousePositionDelta)
     {

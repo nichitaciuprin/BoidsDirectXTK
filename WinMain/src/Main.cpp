@@ -16,7 +16,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     const float timeStepF = 0.010f;
 
     auto world = make_unique<World>();
-    WindowInitDefault();
 
     while(true)
     {
