@@ -6,6 +6,18 @@
 #include "pch.h"
 #include "DeviceResources.h"
 
+// Tell Nvidia/AMD to use high-performance graphics card
+extern "C"
+{
+    // Nvidia specifies this in their Optimus rendering specs.
+    // http://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf
+    __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+
+    // AMD Specifies this in a tutorial doc for selecting the best graphics device
+    // https://gpuopen.com/learn/amdpowerxpressrequesthighperformance/
+    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+
 using namespace DirectX;
 using namespace DX;
 
