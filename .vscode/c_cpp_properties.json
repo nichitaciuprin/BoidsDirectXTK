@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 // "${workspaceFolder}/**",
-                "${workspaceFolder}/DirectXTK/Inc/**"
+                "${workspaceFolder}/DirectXTK/Inc/**",
+                "${workspaceFolder}/DirectXTKWraper/**"
             ],
             "defines": [
                 "_DEBUG",
