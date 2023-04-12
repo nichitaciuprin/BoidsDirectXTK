@@ -1,11 +1,12 @@
 #pragma once
 
-#include "GeometricPrimitive.h"
+#include <algorithm>
 #include "winuser.h"
+#include "SimpleMath.h"
+#include "GeometricPrimitive.h"
 #include "DeviceResources.h"
 #include "Console.h"
 #include "Mouse.h"
-#include "Helper.h"
 using namespace std;
 using namespace DX;
 using namespace DirectX;

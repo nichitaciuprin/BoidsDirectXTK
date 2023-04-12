@@ -194,7 +194,6 @@
     <ClInclude Include="..\DirectXTKWrapper\Console.h" />
     <ClInclude Include="..\DirectXTKWrapper\DeviceResources.h" />
     <ClInclude Include="..\DirectXTKWrapper\DirectXTKWrapper.h" />
-    <ClInclude Include="..\DirectXTKWrapper\Helper.h" />
     <ClInclude Include="..\DirectXTKWrapper\MyLib.h" />
     <ClInclude Include="..\DirectXTKWrapper\pch.h" />
     <ClInclude Include="..\DirectXTKWrapper\Subgen.h" />
@@ -202,7 +201,6 @@
     <ClInclude Include="..\DirectXTKWrapper\Window.h" />
     <ClInclude Include="src\Boid.h" />
     <ClInclude Include="src\BoidWorld.h" />
-    <ClInclude Include="src\Helper.h" />
     <ClInclude Include="src\World.h" />
   </ItemGroup>
   <ItemGroup>
