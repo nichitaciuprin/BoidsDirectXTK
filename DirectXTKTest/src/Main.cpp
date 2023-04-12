@@ -1,21 +1,7 @@
 #include <Windows.h>
 #include "MyLib.h"
+#include "World.h"
 
-void Render(const World* world)
-{
-    WindowUpdate();
-    WindowClear();
-    WindowRenderStart();
-    WindowSetCamera(world->cameraPosition, world->cameraTarget, world->cameraUp);
-    WindowDrawGround();
-    auto length = world->boidWorld.boids.size();
-    for (size_t i = 0; i < length; i++)
-    {
-        auto boid = &world->boidWorld.boids[i];
-        WindowDrawSphere(boid->pos);
-    }
-    WindowRenderEnd();
-}
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
     // hides compiler warning for unused parameters
@@ -39,7 +25,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         auto oldTime = GetTime();
 
         world->Update(timeStepF,Vector2::Zero,Vector2::Zero);
-        Render(world.get());
+        world->Render();
 
         auto newTime = GetTime();
         WaitLoop(oldTime,newTime,timeStep);

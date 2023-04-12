@@ -1,3 +1,5 @@
+#pragma once
+
 // Tell Nvidia/AMD to use high-performance graphics card
 extern "C"
 {
@@ -10,10 +12,8 @@ extern "C"
     __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 
-#pragma once
 #include "GeometricPrimitive.h"
 #include "winuser.h"
-#include "World.h"
 #include "DeviceResources.h"
 #include "Console.h"
 #include "Mouse.h"
@@ -42,7 +42,7 @@ public:
         ShowWindow(m_hwnd, SW_SHOWNORMAL);
         GetClientRect(m_hwnd, &rc);
 
-        SetInstance(m_hwnd);
+        SetInstance(m_hwnd,this);
 
         // mouse = make_unique<Mouse>();
         // mouse->SetWindow(m_hwnd);
@@ -161,11 +161,6 @@ private:
     // unique_ptr<Mouse> mouse;
     Matrix m_proj;
     Matrix m_view;
-    void OnWindowSizeChanged(int width, int height)
-    {
-        if (!m_deviceResources->WindowSizeChanged(width, height))
-            return;
-    }
     static void MaybeRegisterClass(HINSTANCE hInstance)
     {
         if (classRegistered) return;
@@ -182,7 +177,7 @@ private:
         if (!RegisterClassExW(&windowClass)) throw;
         classRegistered = true;
     }
-    Vector3 ToDirection(Vector2 mousePosition)
+    static Vector3 ToDirection(Vector2 mousePosition)
     {
         mousePosition.x = remainderf(mousePosition.x,360);
         mousePosition.y = remainderf(mousePosition.y,360);
@@ -193,9 +188,9 @@ private:
         auto z = sin(mousePosition.y);
         return Vector3(x,y,z);
     }
-    void SetInstance(HWND hwnd)
+    static void SetInstance(HWND hwnd, Window* window)
     {
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(window));
     }
     static Window* GetInstance(HWND hwnd)
     {
@@ -305,6 +300,11 @@ private:
     static LPCWSTR ToLongString(const string str)
     {
         return wstring(str.begin(), str.end()).c_str();
+    }
+    void OnWindowSizeChanged(int width, int height)
+    {
+        if (!m_deviceResources->WindowSizeChanged(width, height))
+            return;
     }
 };
 bool Window::classRegistered = false;

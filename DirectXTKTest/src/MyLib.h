@@ -4,7 +4,6 @@
 #include <DirectXMath.h>
 #include "Window.h"
 #include "Helper.h"
-#include "World.h"
 #include <time.h>
 
 //-----TEMP-----
