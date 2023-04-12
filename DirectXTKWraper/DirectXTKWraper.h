@@ -2,9 +2,10 @@
 
 #include <Windows.h>
 #include <DirectXMath.h>
+#include <time.h>
 #include "Window.h"
 #include "Helper.h"
-#include <time.h>
+#include "Vector3Ext.h"
 
 //-----TEMP-----
 Window* tempWindow = NULL;
