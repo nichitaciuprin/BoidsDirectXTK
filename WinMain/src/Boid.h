@@ -1,11 +1,8 @@
 #pragma once
 
-#include "AABB.h"
-#include "Subgen.h"
-#include "SimpleMath.h"
-#include "Vector3Ext.h"
-using namespace std;
-using namespace DirectX::SimpleMath;
+#include "DirectXTKWrapper.h"
+// #include "SimpleMath.h"
+// #include "Vector3Ext.h"
 
 class Boid
 {

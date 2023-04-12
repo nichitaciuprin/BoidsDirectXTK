@@ -5,7 +5,7 @@
             "includePath": [
                 // "${workspaceFolder}/**",
                 "${workspaceFolder}/DirectXTK/Inc/**",
-                "${workspaceFolder}/DirectXTKWraper/**"
+                "${workspaceFolder}/DirectXTKWrapper/**"
             ],
             "defines": [
                 "_DEBUG",

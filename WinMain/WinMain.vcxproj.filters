@@ -22,31 +22,34 @@
     <ClInclude Include="src\BoidWorld.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectXTKWraper\AABB.h">
+    <ClInclude Include="..\DirectXTKWrapper\AABB.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectXTKWraper\Console.h">
+    <ClInclude Include="..\DirectXTKWrapper\Console.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectXTKWraper\DeviceResources.h">
+    <ClInclude Include="..\DirectXTKWrapper\DeviceResources.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectXTKWraper\Helper.h">
+    <ClInclude Include="..\DirectXTKWrapper\Helper.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectXTKWraper\pch.h">
+    <ClInclude Include="..\DirectXTKWrapper\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectXTKWraper\Subgen.h">
+    <ClInclude Include="..\DirectXTKWrapper\Subgen.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectXTKWraper\Vector3Ext.h">
+    <ClInclude Include="..\DirectXTKWrapper\Vector3Ext.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectXTKWraper\Window.h">
+    <ClInclude Include="..\DirectXTKWrapper\Window.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectXTKWraper\MyLib.h">
+    <ClInclude Include="..\DirectXTKWrapper\MyLib.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DirectXTKWrapper\DirectXTKWrapper.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
@@ -54,7 +57,7 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\DirectXTKWraper\DeviceResources.cpp">
+    <ClCompile Include="..\DirectXTKWrapper\DeviceResources.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

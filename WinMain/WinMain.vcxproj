@@ -85,7 +85,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\DirectXTK\Inc;$(SolutionDir)\DirectXTKWraper;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\DirectXTK\Inc;$(SolutionDir)\DirectXTKWrapper;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -110,7 +110,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\DirectXTK\Inc;$(SolutionDir)\DirectXTKWraper;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\DirectXTK\Inc;$(SolutionDir)\DirectXTKWrapper;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -134,7 +134,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\DirectXTK\Inc;$(SolutionDir)\DirectXTKWraper;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\DirectXTK\Inc;$(SolutionDir)\DirectXTKWrapper;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -163,7 +163,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\DirectXTK\Inc;$(SolutionDir)\DirectXTKWraper;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\DirectXTK\Inc;$(SolutionDir)\DirectXTKWrapper;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -190,22 +190,23 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\DirectXTKWraper\AABB.h" />
-    <ClInclude Include="..\DirectXTKWraper\Console.h" />
-    <ClInclude Include="..\DirectXTKWraper\DeviceResources.h" />
-    <ClInclude Include="..\DirectXTKWraper\Helper.h" />
-    <ClInclude Include="..\DirectXTKWraper\MyLib.h" />
-    <ClInclude Include="..\DirectXTKWraper\pch.h" />
-    <ClInclude Include="..\DirectXTKWraper\Subgen.h" />
-    <ClInclude Include="..\DirectXTKWraper\Vector3Ext.h" />
-    <ClInclude Include="..\DirectXTKWraper\Window.h" />
+    <ClInclude Include="..\DirectXTKWrapper\AABB.h" />
+    <ClInclude Include="..\DirectXTKWrapper\Console.h" />
+    <ClInclude Include="..\DirectXTKWrapper\DeviceResources.h" />
+    <ClInclude Include="..\DirectXTKWrapper\DirectXTKWrapper.h" />
+    <ClInclude Include="..\DirectXTKWrapper\Helper.h" />
+    <ClInclude Include="..\DirectXTKWrapper\MyLib.h" />
+    <ClInclude Include="..\DirectXTKWrapper\pch.h" />
+    <ClInclude Include="..\DirectXTKWrapper\Subgen.h" />
+    <ClInclude Include="..\DirectXTKWrapper\Vector3Ext.h" />
+    <ClInclude Include="..\DirectXTKWrapper\Window.h" />
     <ClInclude Include="src\Boid.h" />
     <ClInclude Include="src\BoidWorld.h" />
     <ClInclude Include="src\Helper.h" />
     <ClInclude Include="src\World.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\DirectXTKWraper\DeviceResources.cpp" />
+    <ClCompile Include="..\DirectXTKWrapper\DeviceResources.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>

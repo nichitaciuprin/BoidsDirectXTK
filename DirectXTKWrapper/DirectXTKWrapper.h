@@ -5,7 +5,10 @@
 #include <time.h>
 #include "Window.h"
 #include "Helper.h"
+#include "SimpleMath.h"
 #include "Vector3Ext.h"
+#include "AABB.h"
+#include "Subgen.h"
 
 //-----TEMP-----
 Window* tempWindow = NULL;
