@@ -13,7 +13,7 @@
 Window* tempWindow = NULL;
 Subgen tempSubgen(0);
 
-int StartMyLib()                            // Must be called before this library use
+int StartMyLib()      // Must be called before this library use
 {
     // asserts that DirectXMath can be used
     if (!DirectX::XMVerifyCPUSupport()) return 1;
@@ -24,7 +24,7 @@ int StartMyLib()                            // Must be called before this librar
 
     return 0;
 }
-void EndMyLib()                             // Must be called after  this library use
+void EndMyLib()       // Must be called after  this library use
 {
     // Closes the COM library on the current thread, unloads all DLLs loaded by the thread,
     // frees any other resources that the thread maintains, and forces all RPC connections on the thread to close.
@@ -112,4 +112,34 @@ void WindowDrawGround()
 void WindowDrawSphere(const Vector3& position)
 {
     tempWindow->PaintSphere(position);
+}
+
+float ToDegree(float radian)
+{
+    auto pi = 3.14159f;
+    return radian * (180 / pi);
+}
+float ToRadian(float degree)
+{
+    auto pi = 3.14159f;
+    return degree * (pi / 180);
+}
+Vector3 ToDirection(Vector3 euler)
+{
+    auto quaternion = Quaternion::CreateFromYawPitchRoll(-euler);
+    Vector3 result = Vector3::Transform(Vector3::Forward,quaternion);
+    return result;
+}
+float NormaliseDegree(float degree)
+{
+    degree = remainderf(degree,360);
+    if (degree < 0) degree = 360 + degree;
+    return degree;
+}
+Quaternion ToRotation(Vector2 mousePosition)
+{
+    mousePosition.y = clamp(mousePosition.y,-89.0f,89.0f);
+    auto xRadian = ToRadian(-mousePosition.x);
+    auto yRadian = ToRadian(mousePosition.y);
+    return Quaternion::CreateFromYawPitchRoll(xRadian,yRadian,0);
 }
