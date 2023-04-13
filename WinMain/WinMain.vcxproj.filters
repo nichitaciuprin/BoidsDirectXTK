@@ -10,31 +10,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\DeviceResources.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\pch.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Console.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Helper.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\World.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Window.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\WindowPrivate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AABB.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Subgen.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Boid.h">
@@ -43,20 +19,41 @@
     <ClInclude Include="src\BoidWorld.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vector3Extention.h">
+    <ClInclude Include="..\DirectXTKWrapper\AABB.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DirectXTKWrapper\Console.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DirectXTKWrapper\DeviceResources.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DirectXTKWrapper\pch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DirectXTKWrapper\Subgen.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DirectXTKWrapper\Vector3Ext.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DirectXTKWrapper\Window.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DirectXTKWrapper\MyLib.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DirectXTKWrapper\DirectXTKWrapper.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\DeviceResources.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="resource.rc" />
+    <ClCompile Include="..\DirectXTKWrapper\DeviceResources.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -67,5 +64,10 @@
     <Manifest Include="settings.manifest">
       <Filter>Assets</Filter>
     </Manifest>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>src</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

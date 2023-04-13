@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AABB.h"
+#include "DirectXTKWrapper.h"
 #include "Boid.h"
 
 using namespace std;
@@ -18,9 +18,8 @@ public:
         aabb.p0 *= size;
         aabb.p1 *= size;
         aabb.p1 += Vector3::Up*size*2;
-        auto subgen = Subgen(0);
         for (int i = 0; i < boidCount; i++)
-            boids.push_back(Boid(aabb,subgen));
+            boids.push_back(Boid(aabb));
     }
     void Update(float deltaTime)
     {

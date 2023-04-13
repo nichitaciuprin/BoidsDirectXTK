@@ -32,6 +32,7 @@
         "unordered_map": "cpp",
         "algorithm": "cpp",
         "charconv": "cpp",
-        "cassert": "cpp"
+        "cassert": "cpp",
+        "xiosbase": "cpp"
     }
 }

@@ -1,33 +1,28 @@
 #pragma once
 
-#include "AABB.h"
-#include "Subgen.h"
-#include "SimpleMath.h"
-#include "Vector3Ext.h"
-using namespace std;
-using namespace DirectX::SimpleMath;
+#include "DirectXTKWrapper.h"
 
 class Boid
 {
 public:
     Vector3 pos;
     Vector3 vel;
-    Boid(const AABB& aabb, Subgen& subgen)
+    Boid(const AABB& aabb)
     {
         auto randPointInsideAABB = Vector3
         (
-            subgen.Range(aabb.MinX(),aabb.MaxX()),
-            subgen.Range(aabb.MinY(),aabb.MaxY()),
-            subgen.Range(aabb.MinZ(),aabb.MaxZ())
+            XTKW::RandomRange(aabb.MinX(),aabb.MaxX()),
+            XTKW::RandomRange(aabb.MinY(),aabb.MaxY()),
+            XTKW::RandomRange(aabb.MinZ(),aabb.MaxZ())
         );
         pos = randPointInsideAABB;
 
-        auto xRand = subgen.FractionSigned();
-        auto yRand = subgen.FractionSigned();
-        auto zRand = subgen.FractionSigned();
+        auto xRand = XTKW::RandomFractionSigned();
+        auto yRand = XTKW::RandomFractionSigned();
+        auto zRand = XTKW::RandomFractionSigned();
         auto randDirection = Vector3(xRand,yRand,zRand);
         randDirection.Normalize();
-        auto randSpeed = subgen.Range(minSpeed,maxSpeed);
+        auto randSpeed = XTKW::RandomRange(minSpeed,maxSpeed);
         vel = randDirection * randSpeed;
     }
     static void Update(vector<Boid>& boids, const AABB& aabb, float deltaTime)
