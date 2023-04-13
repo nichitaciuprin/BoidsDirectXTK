@@ -3,6 +3,9 @@
 #include <iostream>
 using namespace std;
 
+// TODO
+// SetPosition ignores invisible border
+// Calling SetPosition(0,0,width,height) makes window position slightly right of monitor
 class Console
 {
 public:
@@ -23,16 +26,6 @@ public:
     static void SetPosition(int x, int y, int width, int height)
     {
         SetWindowPos(hwnd,0,x,y,width,height,SWP_NOSIZE);
-
-        // auto uFlags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED;
-        // SetWindowPos(hwnd,0,x,y,width,height,uFlags);
-
-        // SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP);
-        // SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
-        // SetWindowPos(hwnd,0,x,y,width,height,SWP_FRAMECHANGED);
-
-        RECT rect;
-        GetWindowRect(hwnd, &rect);
     }
     static void Show()
     {
