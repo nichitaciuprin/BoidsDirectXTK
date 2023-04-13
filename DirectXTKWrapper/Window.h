@@ -16,7 +16,7 @@ using Microsoft::WRL::ComPtr;
 class Window
 {
 public:
-    Window(HINSTANCE hInstance, string windowName, int x, int y, int width, int height)
+    Window(HINSTANCE hInstance, const string windowName, int x, int y, int width, int height)
     {
         MaybeRegisterClass(hInstance);
 
@@ -25,7 +25,12 @@ public:
 
         auto width2 = rc.right - rc.left;
         auto height2 = rc.bottom - rc.top;
-        m_hwnd = CreateWindowExW(0 /*WS_EX_TOPMOST*/, className, ToLongString(windowName), WS_OVERLAPPEDWINDOW,
+
+        auto wstringTemp = wstring(windowName.begin(), windowName.end());
+        auto cstringTemp = wstringTemp.c_str();
+        auto windowNameTemp = LPCWSTR(cstringTemp);
+
+        m_hwnd = CreateWindowExW(0, className, windowNameTemp, WS_OVERLAPPEDWINDOW,
             x, y, width2, height2, nullptr, nullptr, hInstance, nullptr);
         if (!m_hwnd) throw;
         ShowWindow(m_hwnd, SW_SHOWNORMAL);
@@ -286,9 +291,11 @@ private:
 
         return DefWindowProc(hwnd, message, wParam, lParam);
     }
-    static LPCWSTR ToLongString(const string str)
+    static wstring ToLongString(const string str)
     {
-        return wstring(str.begin(), str.end()).c_str();
+        return wstring(str.begin(), str.end());
+        // auto duno2 = duno.c_str();
+        // return duno2;
     }
     void OnWindowSizeChanged(int width, int height)
     {
