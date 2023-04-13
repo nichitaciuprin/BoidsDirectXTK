@@ -19,10 +19,8 @@ public:
         cameraTarget = Vector3::Up*50;
         XTKW::WindowInitDefault();
     }
-    void Update(float deltaTime, Vector2 wasdDirection, Vector2 mousePositionDelta)
+    void Update(float deltaTime)
     {
-        UNREFERENCED_PARAMETER(wasdDirection);
-        UNREFERENCED_PARAMETER(mousePositionDelta);
         auto rotation = Quaternion::CreateFromAxisAngle(Vector3::Up,deltaTime/2);
         cameraPosition = Vector3::Transform(cameraPosition,rotation);
         boidWorld.Update(deltaTime);

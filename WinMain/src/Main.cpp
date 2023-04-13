@@ -17,7 +17,7 @@ void BoidMain()
 
         auto oldTime = XTKW::GetTime();
 
-        world->Update(deltaTime,Vector2::Zero,Vector2::Zero);
+        world->Update(deltaTime);
         world->Render();
 
         auto newTime = XTKW::GetTime();
