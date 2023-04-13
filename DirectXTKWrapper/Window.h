@@ -16,7 +16,7 @@ using Microsoft::WRL::ComPtr;
 class Window
 {
 public:
-    Window(HINSTANCE hInstance, const string windowName, int x, int y, int width, int height)
+    Window(HINSTANCE hInstance, const string name, int x, int y, int width, int height)
     {
         MaybeRegisterClass(hInstance);
 
@@ -26,7 +26,7 @@ public:
         auto width2 = rc.right - rc.left;
         auto height2 = rc.bottom - rc.top;
 
-        auto wstringTemp = wstring(windowName.begin(), windowName.end());
+        auto wstringTemp = wstring(name.begin(), name.end());
         auto cstringTemp = wstringTemp.c_str();
         auto windowNameTemp = LPCWSTR(cstringTemp);
 
@@ -290,12 +290,6 @@ private:
         }
 
         return DefWindowProc(hwnd, message, wParam, lParam);
-    }
-    static wstring ToLongString(const string str)
-    {
-        return wstring(str.begin(), str.end());
-        // auto duno2 = duno.c_str();
-        // return duno2;
     }
     void OnWindowSizeChanged(int width, int height)
     {
