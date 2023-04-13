@@ -22,7 +22,7 @@ namespace Vector3Ext
         auto moveVec = diff*delta;
         return fromVector+moveVec;
     }
-    static Vector3 PositionUpdate_Advanced(Vector3 position, Vector3 oldVelocity, Vector3 newVelocity, float deltaTime)
+    static Vector3 PositionUpdateAdvanced(Vector3 position, Vector3 oldVelocity, Vector3 newVelocity, float deltaTime)
     {
         return position + (oldVelocity+newVelocity)/2 * deltaTime;
     }

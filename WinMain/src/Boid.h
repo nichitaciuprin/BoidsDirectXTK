@@ -51,7 +51,7 @@ public:
             Boid& boid = boids[i];
             auto targetVelocity = boid.TargetVelocity(aabb);
             auto newVelocity = Vector3Ext::MoveTowards(boid.vel,targetVelocity,acc*deltaTime);
-            boid.pos = Vector3Ext::PositionUpdate_Advanced(boid.pos,boid.vel,boid.vel,deltaTime);
+            boid.pos = Vector3Ext::PositionUpdateAdvanced(boid.pos,boid.vel,boid.vel,deltaTime);
             boid.vel = newVelocity;
         }
     }
