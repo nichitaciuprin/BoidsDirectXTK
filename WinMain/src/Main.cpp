@@ -10,7 +10,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     UNREFERENCED_PARAMETER(lpCmdLine);
     UNREFERENCED_PARAMETER(nCmdShow);
 
-    if (StartMyLib()) return 1;
+    if (XTKWStart()) return 1;
 
     const long timeStep = 10;
     const float timeStepF = 0.010f;
@@ -27,10 +27,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         world->Render();
 
         auto newTime = GetTime();
+
         WaitLoop(oldTime,newTime,timeStep);
     }
 
-    EndMyLib();
+    XTKWEnd();
 
     return 0;
 }
