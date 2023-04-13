@@ -25,14 +25,17 @@ public:
     }
     static void SetPosition(int x, int y, int width, int height)
     {
+        if (!consoleCreated) return;
         SetWindowPos(hwnd,0,x,y,width,height,SWP_NOSIZE);
     }
     static void Show()
     {
+        if (!consoleCreated) return;
         ShowWindow(hwnd, SW_NORMAL);
     }
     static void ShowFullscreen()
     {
+        if (!consoleCreated) return;
         auto uFlags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED;
         SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP);
         SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
@@ -41,6 +44,7 @@ public:
     }
     static void Close()
     {
+        if (!consoleCreated) return;
         CloseWindow(hwnd);
     }
 private:

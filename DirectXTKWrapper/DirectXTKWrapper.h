@@ -12,7 +12,7 @@
 class XTKW
 {
 public:
-    static int Initialise()  // Must be called before XTKW is used
+    static int Initialise()
     {
         // asserts that DirectXMath can be used
         if (!DirectX::XMVerifyCPUSupport()) return 1;
@@ -23,54 +23,59 @@ public:
 
         return 0;
     }
-    static void Finalize()   // Must be called after  XTKW is used
+    static void Finalize()
     {
         // Closes the COM library on the current thread, unloads all DLLs loaded by the thread,
         // frees any other resources that the thread maintains, and forces all RPC connections on the thread to close.
         CoUninitialize();
     }
-
-    static long GetTime()                                            // Returns curent time in milliseconds
+    static long GetTime()
     {
         return clock();
     }
-    static void Wait(long milliseconds)                              // Suspends thread for milliseconds
+    static void Wait(long milliseconds)
     {
         if (milliseconds < 0) return;
         Sleep(milliseconds);
     }
-    static void WaitLoop(long oldTime, long newTime, long timeStep)  // Suspends thread for time from loop
+    static void WaitLoop(long oldTime, long newTime, long timeStep)
     {
         auto diff = newTime - oldTime;
         long waitTime = timeStep - diff;
         Wait(waitTime);
     }
-
-    static float RandomFractionUnsigned()           // returns value (inclusive) from  0f to  1f
+    static float RandomFractionUnsigned()
     {
         return tempSubgen.FractionUnsigned();
     }
-    static float RandomFractionSigned()             // returns value (inclusive) from -1f to  1f
+    static float RandomFractionSigned()
     {
         return tempSubgen.FractionSigned();
     }
-    static float RandomRange(float min, float max)  // returns value (inclusive) from min to max
+    static float RandomRange(float min, float max)
     {
         return tempSubgen.Range(min,max);
     }
-
-    static bool EscapePressed()  // Returns true if escape button pressed, otherwise false
+    static bool EscapePressed()
     {
         auto keyState = GetKeyState(VK_ESCAPE);
         auto pressed = keyState & 0x8000;
         return pressed;
     }
-
-    static void ConsoleClose();
-    static void ConsoleInit(int x, int y, int width, int height);
-    static void ConsoleWriteLine(string msg);
-
-    static void WindowClose();
+    static void ConsoleInit(int x, int y, int width, int height)
+    {
+        Console::Init();
+        Console::SetPosition(x,y,width,height);
+        Console::Show();
+    }
+    static void ConsoleClose()
+    {
+        Console::Close();
+    }
+    static void ConsoleWriteLine(string msg)
+    {
+        cout << msg << '\n';
+    }
     static void WindowInit(int x, int y, int width, int height)
     {
         if (tempWindow != nullptr) return;
@@ -79,40 +84,59 @@ public:
     }
     static void WindowInitDefault()
     {
-        WindowInit(0,0,800,600);
+        if (tempWindow != nullptr) return;
+        auto hInstance = GetModuleHandle(NULL);
+        tempWindow = std::make_unique<Window>(hInstance,"BoidsDirectXTK",0,0,800,600);
     }
-    static void WindowInitFullscreen();
-    static void WindowInitFullscreenMonitor(int monitorIndex);
+    static void WindowInitFullscreen()
+    {
+        if (tempWindow != nullptr) return;
+        auto hInstance = GetModuleHandle(NULL);
+        tempWindow = std::make_unique<Window>(hInstance,"BoidsDirectXTK",0,0,800,600);
+        tempWindow->ToFullscreen();
+    }
+    static void WindowClose()
+    {
+        if (tempWindow == nullptr) return;
+        auto hInstance = GetModuleHandle(NULL);
+        tempWindow = std::make_unique<Window>(hInstance,"BoidsDirectXTK",0,0,800,600);
+    }
     static void WindowUpdate()
     {
+        if (tempWindow == nullptr) return;
         tempWindow->Update();
     }
     static void WindowClear()
     {
+        if (tempWindow == nullptr) return;
         tempWindow->Clear();
     }
     static void WindowRenderStart()
     {
+        if (tempWindow == nullptr) return;
         tempWindow->PaintStart();
     }
     static void WindowRenderEnd()
     {
+        if (tempWindow == nullptr) return;
         tempWindow->PaintEnd();
     }
     static void WindowSetCamera(Vector3 position, Vector3 target, Vector3 up)
     {
+        if (tempWindow == nullptr) return;
         tempWindow->PaintSetCamera(position, target, up);
         tempWindow->PaintSetPerpective();
     }
     static void WindowDrawGround()
     {
+        if (tempWindow == nullptr) return;
         tempWindow->PaintGround();
     }
     static void WindowDrawSphere(const Vector3& position)
     {
+        if (tempWindow == nullptr) return;
         tempWindow->PaintSphere(position);
     }
-
     static float ToDegree(float radian)
     {
         return XMConvertToDegrees(radian);
@@ -120,12 +144,6 @@ public:
     static float ToRadian(float degree)
     {
         return XMConvertToRadians(degree);
-    }
-    static Vector3 ToDirection(Vector3 euler)
-    {
-        auto quaternion = Quaternion::CreateFromYawPitchRoll(-euler);
-        Vector3 result = Vector3::Transform(Vector3::Forward,quaternion);
-        return result;
     }
     static float NormaliseDegree(float degree)
     {

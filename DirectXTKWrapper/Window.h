@@ -69,19 +69,6 @@ public:
         context->RSSetViewports(1, &viewport);
         m_deviceResources->PIXEndEvent();
     }
-    Vector2 DirectionWASD()
-    {
-        auto axisY = Window::key_w + Window::key_s;
-        auto axisX = Window::key_a + Window::key_d;
-        auto result = Vector2(axisX, axisY);
-        result.Normalize();
-        return result;
-    }
-    Vector2 MouseLook()
-    {
-        // TODO
-        return Vector2::Zero;
-    }
     void ToFullscreen()
     {
         SetWindowLongPtr(m_hwnd, GWL_STYLE, WS_POPUP);
@@ -127,6 +114,19 @@ public:
     {
         auto m_world = Matrix::CreateWorld(position, Vector3::Forward, Vector3::Up);
         m_shape->Draw(m_world,m_view,m_proj);
+    }
+    Vector2 DirectionWASD()
+    {
+        auto axisY = Window::key_w + Window::key_s;
+        auto axisX = Window::key_a + Window::key_d;
+        auto result = Vector2(axisX, axisY);
+        result.Normalize();
+        return result;
+    }
+    Vector2 MouseLook()
+    {
+        // TODO
+        return Vector2::Zero;
     }
 private:
     static bool classRegistered;
