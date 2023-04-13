@@ -9,8 +9,6 @@
 #include "AABB.h"
 #include "Subgen.h"
 
-// using namespace std;
-
 class XTKW
 {
 public:
@@ -149,11 +147,3 @@ private:
 };
 unique_ptr<Window> XTKW::tempWindow = nullptr;
 Subgen XTKW::tempSubgen = Subgen(0);
-
-
-
-
-
-
-
-

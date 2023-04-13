@@ -7,6 +7,7 @@
 #include "DeviceResources.h"
 #include "Console.h"
 #include "Mouse.h"
+
 using namespace std;
 using namespace DX;
 using namespace DirectX;
@@ -37,10 +38,6 @@ public:
         GetClientRect(m_hwnd, &rc);
 
         SetInstance(m_hwnd,this);
-
-        // mouse = make_unique<Mouse>();
-        // mouse->SetWindow(m_hwnd);
-        // mouse->SetMode(Mouse::MODE_RELATIVE);
 
         m_deviceResources = make_unique<DeviceResources>();
         m_deviceResources->SetWindow(m_hwnd, width2, height2);
@@ -82,9 +79,8 @@ public:
     }
     Vector2 MouseLook()
     {
+        // TODO
         return Vector2::Zero;
-        // auto state = Window::mouse->GetState();
-        // return Vector2((float)state.x,(float)-state.y);
     }
     void ToFullscreen()
     {
@@ -148,13 +144,12 @@ private:
     float key_d = 0.0f;
     HWND m_hwnd;
     MSG msg = {};
+    Matrix m_proj;
+    Matrix m_view;
     unique_ptr<DeviceResources> m_deviceResources;
     unique_ptr<GeometricPrimitive> m_shape;
     unique_ptr<GeometricPrimitive> m_box;
     unique_ptr<GeometricPrimitive> m_ground;
-    // unique_ptr<Mouse> mouse;
-    Matrix m_proj;
-    Matrix m_view;
     static void MaybeRegisterClass(HINSTANCE hInstance)
     {
         if (classRegistered) return;
@@ -203,23 +198,6 @@ private:
 
         switch (message)
         {
-            // case WM_MOUSEACTIVATE: return MA_ACTIVATEANDEAT;
-            // case WM_ACTIVATE:
-            // case WM_ACTIVATEAPP:
-            // case WM_INPUT:
-            // case WM_MOUSEMOVE:
-            // case WM_LBUTTONDOWN:
-            // case WM_LBUTTONUP:
-            // case WM_RBUTTONDOWN:
-            // case WM_RBUTTONUP:
-            // case WM_MBUTTONDOWN:
-            // case WM_MBUTTONUP:
-            // case WM_MOUSEWHEEL:
-            // case WM_XBUTTONDOWN:
-            // case WM_XBUTTONUP:
-            // case WM_MOUSEHOVER:
-            //     Mouse::ProcessMessage(message, wParam, lParam);
-            //     break;
             case WM_DISPLAYCHANGE:
                 m_deviceResources->UpdateColorSpace();
                 break;
