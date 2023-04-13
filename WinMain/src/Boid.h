@@ -11,18 +11,18 @@ public:
     {
         auto randPointInsideAABB = Vector3
         (
-            RandomRange(aabb.MinX(),aabb.MaxX()),
-            RandomRange(aabb.MinY(),aabb.MaxY()),
-            RandomRange(aabb.MinZ(),aabb.MaxZ())
+            XTKW::RandomRange(aabb.MinX(),aabb.MaxX()),
+            XTKW::RandomRange(aabb.MinY(),aabb.MaxY()),
+            XTKW::RandomRange(aabb.MinZ(),aabb.MaxZ())
         );
         pos = randPointInsideAABB;
 
-        auto xRand = RandomFractionSigned();
-        auto yRand = RandomFractionSigned();
-        auto zRand = RandomFractionSigned();
+        auto xRand = XTKW::RandomFractionSigned();
+        auto yRand = XTKW::RandomFractionSigned();
+        auto zRand = XTKW::RandomFractionSigned();
         auto randDirection = Vector3(xRand,yRand,zRand);
         randDirection.Normalize();
-        auto randSpeed = RandomRange(minSpeed,maxSpeed);
+        auto randSpeed = XTKW::RandomRange(minSpeed,maxSpeed);
         vel = randDirection * randSpeed;
     }
     static void Update(vector<Boid>& boids, const AABB& aabb, float deltaTime)

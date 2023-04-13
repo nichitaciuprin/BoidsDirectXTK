@@ -17,7 +17,7 @@ public:
         cameraPosition += Vector3::Right*175;
         cameraPosition += Vector3::Backward*175;
         cameraTarget = Vector3::Up*50;
-        WindowInitDefault();
+        XTKW::WindowInitDefault();
     }
     void Update(float deltaTime, Vector2 wasdDirection, Vector2 mousePositionDelta)
     {
@@ -29,17 +29,17 @@ public:
     }
     void Render()
     {
-        WindowUpdate();
-        WindowClear();
-        WindowRenderStart();
-        WindowSetCamera(cameraPosition, cameraTarget, cameraUp);
-        WindowDrawGround();
+        XTKW::WindowUpdate();
+        XTKW::WindowClear();
+        XTKW::WindowRenderStart();
+        XTKW::WindowSetCamera(cameraPosition, cameraTarget, cameraUp);
+        XTKW::WindowDrawGround();
         auto length = boidWorld.boids.size();
         for (size_t i = 0; i < length; i++)
         {
             auto boid = &boidWorld.boids[i];
-            WindowDrawSphere(boid->pos);
+            XTKW::WindowDrawSphere(boid->pos);
         }
-        WindowRenderEnd();
+        XTKW::WindowRenderEnd();
     }
 };

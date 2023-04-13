@@ -10,7 +10,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     UNREFERENCED_PARAMETER(lpCmdLine);
     UNREFERENCED_PARAMETER(nCmdShow);
 
-    if (XTKWStart()) return 1;
+    if (XTKW::Initialise()) return 1;
 
     const long timeStep = 10;
     const float timeStepF = 0.010f;
@@ -19,19 +19,19 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     while(true)
     {
-        if (EscapePressed()) break;
+        if (XTKW::EscapePressed()) break;
 
-        auto oldTime = GetTime();
+        auto oldTime = XTKW::GetTime();
 
         world->Update(timeStepF,Vector2::Zero,Vector2::Zero);
         world->Render();
 
-        auto newTime = GetTime();
+        auto newTime = XTKW::GetTime();
 
-        WaitLoop(oldTime,newTime,timeStep);
+        XTKW::WaitLoop(oldTime,newTime,timeStep);
     }
 
-    XTKWEnd();
+    XTKW::Finalize();
 
     return 0;
 }
