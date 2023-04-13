@@ -12,7 +12,7 @@
 Window* tempWindow = NULL;
 Subgen tempSubgen(0);
 
-int XTKWStart()      // Must be called before this library use
+int XTKWStart()      // Must be called before XTKW is used
 {
     // asserts that DirectXMath can be used
     if (!DirectX::XMVerifyCPUSupport()) return 1;
@@ -23,7 +23,7 @@ int XTKWStart()      // Must be called before this library use
 
     return 0;
 }
-void XTKWEnd()       // Must be called after  this library use
+void XTKWEnd()       // Must be called after  XTKW is used
 {
     // Closes the COM library on the current thread, unloads all DLLs loaded by the thread,
     // frees any other resources that the thread maintains, and forces all RPC connections on the thread to close.
