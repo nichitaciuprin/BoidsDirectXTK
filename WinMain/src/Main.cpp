@@ -2,18 +2,12 @@
 #include "DirectXTKWrapper.h"
 #include "World.h"
 
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+void BoidMain()
 {
-    // hides compiler warning for unused parameters
-    UNREFERENCED_PARAMETER(hInstance);
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
-    UNREFERENCED_PARAMETER(nCmdShow);
+    if (XTKW::Initialise()) throw;
 
-    if (XTKW::Initialise()) return 1;
-
-    const long timeStep = 10;
-    const float timeStepF = 0.010f;
+    long timeStep = 10;
+    float timeStepF = 0.010f;
 
     auto world = make_unique<World>();
 
@@ -32,6 +26,16 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     }
 
     XTKW::Finalize();
+}
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+{
+    // hides compiler warning for unused parameters
+    UNREFERENCED_PARAMETER(hInstance);
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+    UNREFERENCED_PARAMETER(nCmdShow);
+
+    BoidMain();
 
     return 0;
 }
