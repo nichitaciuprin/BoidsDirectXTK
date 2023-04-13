@@ -158,7 +158,6 @@ public:
         auto yRadian = ToRadian(mousePosition.y);
         return Quaternion::CreateFromYawPitchRoll(xRadian,yRadian,0);
     }
-
 private:
     static unique_ptr<Window> tempWindow;
     static Subgen tempSubgen;
