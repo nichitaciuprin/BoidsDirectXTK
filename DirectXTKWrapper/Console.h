@@ -6,7 +6,7 @@ using namespace std;
 class Console
 {
 public:
-    static void Init(int x, int y, int width, int height)
+    static void Init()
     {
         if (consoleCreated) return;
         consoleCreated = true;
@@ -14,28 +14,51 @@ public:
         auto curentWindow = GetActiveWindow();
         AllocConsole();
         SetFocus(curentWindow);
-        auto consoleWindow = GetConsoleWindow();
-        SetWindowPos(consoleWindow,0,x,y,width,height,SWP_NOSIZE);
+        hwnd = GetConsoleWindow();
 
-        errno_t result;
-        result = freopen_s(&fileIn ,"CONIN$" ,"r",stdin ); if (result != 0) throw;
-        result = freopen_s(&fileOut,"CONOUT$","w",stdout); if (result != 0) throw;
-        result = freopen_s(&fileErr,"CONOUT$","w",stderr); if (result != 0) throw;
+        if (freopen_s(&fileIn ,"CONIN$" ,"r",stdin )) throw;
+        if (freopen_s(&fileOut,"CONOUT$","w",stdout)) throw;
+        if (freopen_s(&fileErr,"CONOUT$","w",stderr)) throw;
+    }
+    static void SetPosition(int x, int y, int width, int height)
+    {
+        SetWindowPos(hwnd,0,x,y,width,height,SWP_NOSIZE);
 
-        // FOR FULL
-        // SetWindowLongPtr(consoleWindow, GWL_STYLE, WS_POPUP);
-        // SetWindowLongPtr(consoleWindow, GWL_EXSTYLE, WS_EX_TOPMOST);
         // auto uFlags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED;
-        // SetWindowPos(consoleWindow, HWND_TOP, 0, 0, 0, 0, uFlags);
-        // ShowWindow(consoleWindow, SW_SHOWMAXIMIZED);
+        // SetWindowPos(hwnd,0,x,y,width,height,uFlags);
+
+        // SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP);
+        // SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
+        // SetWindowPos(hwnd,0,x,y,width,height,SWP_FRAMECHANGED);
+
+        RECT rect;
+        GetWindowRect(hwnd, &rect);
+    }
+    static void Show()
+    {
+        ShowWindow(hwnd, SW_NORMAL);
+    }
+    static void ShowFullscreen()
+    {
+        auto uFlags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED;
+        SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP);
+        SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
+        SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, uFlags);
+        ShowWindow(hwnd, SW_SHOWMAXIMIZED);
+    }
+    static void Close()
+    {
+        CloseWindow(hwnd);
     }
 private:
     static bool consoleCreated;
     static FILE* fileIn;
     static FILE* fileOut;
     static FILE* fileErr;
+    static HWND hwnd;
 };
 bool Console::consoleCreated = false;
 FILE* Console::fileIn = nullptr;
 FILE* Console::fileOut = nullptr;
 FILE* Console::fileErr = nullptr;
+HWND Console::hwnd = nullptr;

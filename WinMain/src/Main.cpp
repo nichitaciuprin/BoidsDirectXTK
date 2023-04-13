@@ -15,21 +15,25 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     const long timeStep = 10;
     const float timeStepF = 0.010f;
 
-    auto world = make_unique<World>();
+    Console::Init();
+    Console::SetPosition(0,0,800,600);
+    Wait(10000);
 
-    while(true)
-    {
-        if (EscapePressed()) break;
+    // auto world = make_unique<World>();
 
-        auto oldTime = GetTime();
+    // while(true)
+    // {
+    //     if (EscapePressed()) break;
 
-        world->Update(timeStepF,Vector2::Zero,Vector2::Zero);
-        world->Render();
+    //     auto oldTime = GetTime();
 
-        auto newTime = GetTime();
+    //     world->Update(timeStepF,Vector2::Zero,Vector2::Zero);
+    //     world->Render();
 
-        WaitLoop(oldTime,newTime,timeStep);
-    }
+    //     auto newTime = GetTime();
+
+    //     WaitLoop(oldTime,newTime,timeStep);
+    // }
 
     XTKWEnd();
 
