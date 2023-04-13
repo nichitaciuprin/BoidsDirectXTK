@@ -6,8 +6,8 @@ void BoidMain()
 {
     if (XTKW::Initialise()) throw;
 
-    long timeStep = 10;
-    float timeStepF = 0.010f;
+    auto timeStep = 10L;
+    auto deltaTime = 0.010f;
 
     auto world = make_unique<World>();
 
@@ -17,7 +17,7 @@ void BoidMain()
 
         auto oldTime = XTKW::GetTime();
 
-        world->Update(timeStepF,Vector2::Zero,Vector2::Zero);
+        world->Update(deltaTime,Vector2::Zero,Vector2::Zero);
         world->Render();
 
         auto newTime = XTKW::GetTime();
